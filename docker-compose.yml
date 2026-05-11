@@ -1,6 +1,6 @@
 services:
   postgres_db:
-    image: postgres:15
+    image: postgres:17.4
     hostname: postgres_db
     container_name: postgres_db
     restart: always
@@ -33,9 +33,12 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+      settlr-migrate:
+        condition: service_completed_successfully
 
   prisma-studio:
     image: node:24.15.0
+    container_name: prisma-studio
     working_dir: /app
     volumes:
       - .:/app
@@ -51,6 +54,24 @@ services:
     depends_on: 
       postgres_db: 
         condition: service_healthy
+
+  settlr-migrate:
+    image: node:24.15.0
+    container_name: settlr-migrate
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+    env_file:
+      - .env.pod
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    networks:
+      - prisma-network
+    command: ["npx", "prisma", "migrate", "deploy"]
+    restart: "no"
 
 networks:
   prisma-network:
