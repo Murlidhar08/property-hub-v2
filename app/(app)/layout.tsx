@@ -1,5 +1,6 @@
-// Components
 import { redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 // Lib
 import { getUserSession } from "@/lib/auth/auth";

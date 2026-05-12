@@ -1,5 +1,7 @@
 import { BuildVersion } from "@/components/auth/build-version";
 import { ThemeToggle } from "@/components/theme-toggle";
+
+export const dynamic = "force-dynamic";
 import { isSetupRequired } from "@/lib/setup";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";

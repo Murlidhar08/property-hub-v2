@@ -41,6 +41,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(envServer.BETTER_AUTH_URL),
   title: envClient.NEXT_PUBLIC_APP_NAME,
   description: envClient.NEXT_PUBLIC_APP_DESCRIPTION,
   manifest: "/manifest.json",
