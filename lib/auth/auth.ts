@@ -4,6 +4,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin as adminPlugin, customSession, lastLoginMethod, twoFactor } from "better-auth/plugins";
+import { redirect } from "next/navigation";
 
 // Lib
 import { sendMail } from "../nodemailer";
@@ -174,6 +175,10 @@ export const auth = betterAuth({
       clientId: envServer.DISCORD_CLIENT_ID as string,
       clientSecret: envServer.DISCORD_CLIENT_SECRET as string,
     },
+    facebook: {
+      clientId: envServer.FACEBOOK_CLIENT_ID as string,
+      clientSecret: envServer.FACEBOOK_CLIENT_SECRET as string,
+    },
   },
   session: {
     cookieCache: {
@@ -260,8 +265,6 @@ export const auth = betterAuth({
     }
   }
 });
-
-import { redirect } from "next/navigation";
 
 export type Auth = typeof auth;
 export const getUserSession = async () => {

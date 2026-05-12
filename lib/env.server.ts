@@ -28,7 +28,11 @@ const envSchema = zod.object({
 
   //  Discord
   DISCORD_CLIENT_ID: zod.string().optional(),
-  DISCORD_CLIENT_SECRET: zod.string().optional()
+  DISCORD_CLIENT_SECRET: zod.string().optional(),
+
+  //  Facebook
+  FACEBOOK_CLIENT_ID: zod.string().optional(),
+  FACEBOOK_CLIENT_SECRET: zod.string().optional(),
 })
 
 /**

@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 // Lib
-import { authClient, signIn, signInWithDiscord, signInWithGoogle } from "@/lib/auth/auth-client";
+import { authClient, signIn, signInWithDiscord, signInWithFacebook, signInWithGoogle } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
 import { t } from "@/lib/languages/i18n";
 
@@ -42,6 +42,7 @@ interface LoginFormProps {
   providers: {
     google: boolean;
     discord: boolean;
+    facebook: boolean;
   };
 }
 
@@ -53,6 +54,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [discordLoading, setDiscordLoading] = useState(false);
+  const [facebookLoading, setFacebookLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [lastLogin, setLastLogin] = useState("");
   const searchParams = useSearchParams();
@@ -141,7 +143,17 @@ function LoginFormContent({ providers }: LoginFormProps) {
     }
   }
 
-  const hasSocialLogin = providers.google || providers.discord;
+  const handleFacebookLogin = async () => {
+    setFacebookLoading(true);
+    try {
+      await signInWithFacebook();
+    } catch (err) {
+      console.error(err);
+      setFacebookLoading(false);
+    }
+  }
+
+  const hasSocialLogin = providers.google || providers.discord || providers.facebook;
 
   return (
     <div className="h-screen w-full flex flex-col lg:flex-row select-none bg-background overflow-hidden relative">
@@ -335,7 +347,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
                     {googleLoading ? (
                       <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
                     ) : (
-                      <Image src="/google.svg" alt="Google" width={20} height={20} className="group-hover/google:scale-110 transition-transform" />
+                      <Image src="/images/social/Google.svg" alt="Google" width={20} height={20} className="group-hover/google:scale-110 transition-transform" />
                     )}
                     <span className="font-bold">{googleLoading ? "..." : "Google"}</span>
                     {lastLogin === "google" && !googleLoading && (
@@ -355,10 +367,30 @@ function LoginFormContent({ providers }: LoginFormProps) {
                     {discordLoading ? (
                       <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
                     ) : (
-                      <Image src="/discord.svg" alt="Discord" width={20} height={20} className="group-hover/discord:scale-110 transition-transform" />
+                      <Image src="/images/social/Discord.svg" alt="Discord" width={20} height={20} className="group-hover/discord:scale-110 transition-transform" />
                     )}
                     <span className="font-bold">{discordLoading ? "..." : "Discord"}</span>
                     {lastLogin === "discord" && !discordLoading && (
+                      <Badge variant="secondary" className="absolute -top-3 -right-2 px-3 py-1 bg-background border-primary/20 text-primary shadow-md">Last used</Badge>
+                    )}
+                  </Button>
+                )}
+
+                {providers.facebook && (
+                  <Button
+                    onClick={handleFacebookLogin}
+                    variant="outline"
+                    tabIndex={7}
+                    disabled={facebookLoading || loading || googleLoading}
+                    className="relative rounded-2xl h-14 px-6 flex items-center justify-center gap-3 hover:bg-muted/50 border-border/50 transition-all duration-300 active:scale-[0.98] group/facebook shadow-sm"
+                  >
+                    {facebookLoading ? (
+                      <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                    ) : (
+                      <Image src="/images/social/Facebook.svg" alt="Facebook" width={20} height={20} className="group-hover/facebook:scale-110 transition-transform" />
+                    )}
+                    <span className="font-bold">{facebookLoading ? "..." : "Facebook"}</span>
+                    {lastLogin === "facebook" && !facebookLoading && (
                       <Badge variant="secondary" className="absolute -top-3 -right-2 px-3 py-1 bg-background border-primary/20 text-primary shadow-md">Last used</Badge>
                     )}
                   </Button>
@@ -372,7 +404,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
         <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link tabIndex={7} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
+            <Link tabIndex={8} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
               Get Started
             </Link>
           </p>
