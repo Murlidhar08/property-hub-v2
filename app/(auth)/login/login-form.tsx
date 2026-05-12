@@ -2,21 +2,24 @@
 
 // Packages
 import { AnimatePresence, motion } from "framer-motion";
-import { Eye, EyeOff, Fingerprint, Mail } from "lucide-react";
+import { Eye, EyeOff, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 // Lib
-import { authClient, signIn, signInWithDiscord, signInWithFacebook, signInWithGoogle } from "@/lib/auth/auth-client";
+import { authClient } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
 import { t } from "@/lib/languages/i18n";
 
 // Components
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import DiscordAuth from "./components/discord-auth";
+import EmailAuth from "./components/email-auth";
+import FacebookAuth from "./components/facebook-auth";
+import GoogleAuth from "./components/google-auth";
+import PasskeyAuth from "./components/passkey-auth";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -52,13 +55,12 @@ function LoginFormContent({ providers }: LoginFormProps) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
-  const [discordLoading, setDiscordLoading] = useState(false);
-  const [facebookLoading, setFacebookLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [lastLogin, setLastLogin] = useState("");
   const searchParams = useSearchParams();
   const errorCode = searchParams.get("error");
+
+  const hasSocialLogin = providers.google || providers.discord || providers.facebook;
 
   // Handle URL errors (like session expired)
   useEffect(() => {
@@ -91,79 +93,6 @@ function LoginFormContent({ providers }: LoginFormProps) {
     // Last Login Method
     setLastLogin(authClient.getLastUsedLoginMethod() || "");
   }, [router])
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const result = await signIn.email({ email, password });
-      if (result.error) {
-        if (result.error.code === "BANNED_USER") {
-          router.push(`/banned?reason=${encodeURIComponent(result.error.message || "")}`);
-          return;
-        }
-        setError(result.error.message || "Sign in failed");
-      }
-      else router.push("/dashboard" as any);
-    } catch (err) {
-      setError("An error occurred during sign in");
-      console.error(err)
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handlePasskeySignIn = async () => {
-    setError("");
-    setLoading(true);
-
-    try {
-      const { error } = await authClient.signIn.passkey();
-      if (error) {
-        setError(error.message || "Passkey authentication failed");
-      } else {
-        router.push("/dashboard");
-      }
-    } catch (err) {
-      setError("An unexpected error occurred during passkey sign in");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGoogle = async () => {
-    setGoogleLoading(true);
-    try {
-      await signInWithGoogle();
-    } catch (err) {
-      console.error(err);
-      setGoogleLoading(false);
-    }
-  };
-
-  const handleDiscordLogin = async () => {
-    setDiscordLoading(true);
-    try {
-      await signInWithDiscord();
-    } catch (err) {
-      console.error(err);
-      setDiscordLoading(false);
-    }
-  }
-
-  const handleFacebookLogin = async () => {
-    setFacebookLoading(true);
-    try {
-      await signInWithFacebook();
-    } catch (err) {
-      console.error(err);
-      setFacebookLoading(false);
-    }
-  }
-
-  const hasSocialLogin = providers.google || providers.discord || providers.facebook;
 
   return (
     <div className="h-screen w-full flex flex-col lg:flex-row select-none bg-background overflow-hidden relative">
@@ -225,7 +154,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
             </h2>
           </motion.div>
 
-          <motion.form variants={itemVariants as any} onSubmit={handleSubmit} className="space-y-5">
+          <motion.form variants={itemVariants as any} className="space-y-5">
             <AnimatePresence mode="wait">
               {error && (
                 <motion.div
@@ -291,45 +220,21 @@ function LoginFormContent({ providers }: LoginFormProps) {
               </div>
             </div>
 
-            <Button
-              type="submit"
-              tabIndex={3}
-              disabled={loading || googleLoading || discordLoading}
-              className="relative rounded-2xl h-14 w-full text-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 active:scale-[0.98] mt-2"
-            >
-              {loading ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                  Authenticating...
-                </div>
-              ) : "Sign In"}
-              {lastLogin === "email" && (
-                <Badge variant="secondary" className="absolute -top-3 -right-2 px-3 py-1 bg-background border-primary/20 text-primary shadow-md">Last used</Badge>
-              )}
-            </Button>
+            <EmailAuth
+              lastLogin={lastLogin}
+              loading={loading}
+              email={email}
+              password={password}
+              setLoading={setLoading}
+              setError={setError}
+            />
 
-            <Button
-              type="button"
-              tabIndex={4}
-              onClick={handlePasskeySignIn}
-              disabled={loading || googleLoading || discordLoading}
-              className="relative rounded-2xl h-14 w-full text-lg font-bold shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-all duration-300 active:scale-[0.98] mt-2 bg-muted/40 border border-muted-foreground/10 text-foreground hover:bg-muted/60 group"
-            >
-              {loading ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                  Authenticating...
-                </div>
-              ) : (
-                <div className="flex items-center justify-center gap-3">
-                  <Fingerprint className="size-6 text-primary group-hover:scale-110 transition-transform" />
-                  <span className="tracking-tight">Sign In with Passkey</span>
-                </div>
-              )}
-              {lastLogin === "passkey" && (
-                <Badge variant="secondary" className="absolute -top-3 -right-2 px-3 py-1 bg-background border-primary/20 text-primary shadow-md animate-in fade-in zoom-in duration-300">Last used</Badge>
-              )}
-            </Button>
+            <PasskeyAuth
+              lastLogin={lastLogin}
+              loading={loading}
+              setLoading={setLoading}
+              setError={setError}
+            />
           </motion.form>
 
           {hasSocialLogin && (
@@ -347,63 +252,24 @@ function LoginFormContent({ providers }: LoginFormProps) {
 
               <motion.div variants={itemVariants as any} className={`grid ${providers.google && providers.discord ? 'grid-cols-2' : 'grid-cols-1'} gap-4`}>
                 {providers.google && (
-                  <Button
-                    onClick={handleGoogle}
-                    variant="outline"
-                    tabIndex={5}
-                    disabled={googleLoading || loading || discordLoading}
-                    className="relative rounded-2xl h-14 px-6 flex items-center justify-center gap-3 hover:bg-muted/50 border-border/50 transition-all duration-300 active:scale-[0.98] group/google shadow-sm"
-                  >
-                    {googleLoading ? (
-                      <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                    ) : (
-                      <Image src="/images/social/Google.svg" alt="Google" width={20} height={20} className="group-hover/google:scale-110 transition-transform" />
-                    )}
-                    <span className="font-bold">{googleLoading ? "..." : "Google"}</span>
-                    {lastLogin === "google" && !googleLoading && (
-                      <Badge variant="secondary" className="absolute -top-3 -right-2 px-3 py-1 bg-background border-primary/20 text-primary shadow-md">Last used</Badge>
-                    )}
-                  </Button>
+                  <GoogleAuth
+                    lastLogin={lastLogin}
+                    loading={loading}
+                    setLoading={setLoading} />
                 )}
 
                 {providers.discord && (
-                  <Button
-                    onClick={handleDiscordLogin}
-                    variant="outline"
-                    tabIndex={6}
-                    disabled={discordLoading || loading || googleLoading}
-                    className="relative rounded-2xl h-14 px-6 flex items-center justify-center gap-3 hover:bg-muted/50 border-border/50 transition-all duration-300 active:scale-[0.98] group/discord shadow-sm"
-                  >
-                    {discordLoading ? (
-                      <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                    ) : (
-                      <Image src="/images/social/Discord.svg" alt="Discord" width={20} height={20} className="group-hover/discord:scale-110 transition-transform" />
-                    )}
-                    <span className="font-bold">{discordLoading ? "..." : "Discord"}</span>
-                    {lastLogin === "discord" && !discordLoading && (
-                      <Badge variant="secondary" className="absolute -top-3 -right-2 px-3 py-1 bg-background border-primary/20 text-primary shadow-md">Last used</Badge>
-                    )}
-                  </Button>
+                  <DiscordAuth
+                    lastLogin={lastLogin}
+                    loading={loading}
+                    setLoading={setLoading} />
                 )}
 
                 {providers.facebook && (
-                  <Button
-                    onClick={handleFacebookLogin}
-                    variant="outline"
-                    tabIndex={7}
-                    disabled={facebookLoading || loading || googleLoading}
-                    className="relative rounded-2xl h-14 px-6 flex items-center justify-center gap-3 hover:bg-muted/50 border-border/50 transition-all duration-300 active:scale-[0.98] group/facebook shadow-sm"
-                  >
-                    {facebookLoading ? (
-                      <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                    ) : (
-                      <Image src="/images/social/Facebook.svg" alt="Facebook" width={20} height={20} className="group-hover/facebook:scale-110 transition-transform" />
-                    )}
-                    <span className="font-bold">{facebookLoading ? "..." : "Facebook"}</span>
-                    {lastLogin === "facebook" && !facebookLoading && (
-                      <Badge variant="secondary" className="absolute -top-3 -right-2 px-3 py-1 bg-background border-primary/20 text-primary shadow-md">Last used</Badge>
-                    )}
-                  </Button>
+                  <FacebookAuth
+                    lastLogin={lastLogin}
+                    loading={loading}
+                    setLoading={setLoading} />
                 )}
               </motion.div>
             </>
@@ -419,17 +285,18 @@ function LoginFormContent({ providers }: LoginFormProps) {
             </Link>
           </p>
         </motion.div>
-      </motion.div>
+      </motion.div >
 
       {/* RIGHT SIDE: ILLUSTRATION & FEATURES */}
-      <motion.div
-        initial={{ opacity: 0 }}
+      < motion.div
+        initial={{ opacity: 0 }
+        }
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
         className="hidden lg:flex flex-1 p-12 items-center justify-center bg-linear-to-br from-primary via-primary/90 to-primary/80 relative overflow-hidden"
       >
         {/* Animated Background Elements */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 animate-pulse" />
+        < div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 animate-pulse" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-black/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
 
         {/* Abstract Grid Pattern */}
