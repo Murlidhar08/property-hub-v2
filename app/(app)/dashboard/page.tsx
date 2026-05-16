@@ -3,6 +3,8 @@ import { getUserSession } from "@/lib/auth/auth";
 import { t } from "@/lib/languages/i18n";
 import { getUserConfig } from "@/lib/user-config";
 
+import { DashboardInteractions } from "@/components/dashboard/dashboard-interactions";
+
 // Components
 export default async function Page() {
   const session = await getUserSession();
@@ -25,6 +27,7 @@ export default async function Page() {
         <h1>Here is your email</h1>
         <p>{session?.user.email}</p>
 
+        <DashboardInteractions />
       </div>
     </>
   );
