@@ -1,74 +1,106 @@
 "use client"
 
+import { useSession } from "@/lib/auth/auth-client"
+import { envClient } from "@/lib/env.client"
+import { getInitials } from "@/utility/commonFunction"
+import clsx from "clsx"
 import { motion } from "framer-motion"
 import { Menu } from "lucide-react"
-import ProfileAvatar from "./auth/profile-avatar"
-import { useNav } from "./providers/nav-provider"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import { useNavItems } from "./navbar/use-nav-items"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Button } from "./ui/button"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
 
 interface HeaderProps {
   title: string
   isProfile?: boolean
-  leftAction?: React.ReactNode
 }
 
-const SPRING_TRANSITION = { type: "spring", stiffness: 300, damping: 30 } as const;
 
-const Header = ({ title, isProfile, leftAction }: HeaderProps) => {
-  const { toggleMenu } = useNav()
+const Header = ({ title, isProfile }: HeaderProps) => {
+  const router = useRouter()
+  const pathname = usePathname()
+  const navItems = useNavItems()
+  const { data: session } = useSession()
   const showProfile = isProfile ?? true
+
+  const handleRedirect = () => {
+    router.push("/settings/profile" as any)
+  }
+
 
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="sticky top-0 z-40 flex items-center justify-between bg-background/70 backdrop-blur-2xl px-6 py-5 border-b border-border/50 shadow-sm"
+      className="sticky top-0 z-2 h-14 sm:h-16 flex items-center justify-between bg-background/80 backdrop-blur-md text-foreground px-4 sm:px-6 border-b border-border shadow-sm"
     >
-      <div className="flex items-center gap-4">
-        <motion.button 
-          whileTap={{ scale: 0.9 }}
-          className="lg:hidden p-2 hover:bg-foreground/5 rounded-xl transition-colors"
-          onClick={toggleMenu}
-        >
-          <Menu size={24} />
-        </motion.button>
+      <div className="w-1/4 sm:w-1/3 flex items-center gap-2">
+        <div className="lg:hidden">
+          <Sheet>
+            <SheetTrigger render={
+              <Button variant="ghost" size="icon" className="hover:bg-accent rounded-xl h-9 w-9">
+                <Menu size={22} />
+              </Button>
+            } />
+            <SheetContent side="left" className="bg-sidebar border-r border-sidebar-border p-4 text-sidebar-foreground w-72">
+              <SheetHeader className="mb-6 px-2">
+                <SheetTitle className="flex items-center gap-3 text-sidebar-foreground text-left font-black tracking-tighter text-2xl">
+                  <div className="h-10 w-10 shrink-0 flex items-center justify-center relative rounded-xl bg-sidebar-accent/10">
+                    <Image src="/images/logo/light_logo.svg" alt="Logo" width={28} height={28} className="dark:hidden" />
+                    <Image src="/images/logo/dark_logo.svg" alt="Logo" width={28} height={28} className="hidden dark:block" />
+                  </div>
+                  {envClient.NEXT_PUBLIC_APP_NAME}
+                </SheetTitle>
+              </SheetHeader>
 
-        {leftAction ? (
-          <motion.div
-            layout
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-4"
-          >
-            {leftAction}
-            <h1 className="text-xl font-black tracking-tight lg:text-3xl bg-linear-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">{title}</h1>
-          </motion.div>
-        ) : (
-          <div className="flex items-center gap-4">
-            <motion.div
-              layout
-              layoutId="header-title"
-              transition={SPRING_TRANSITION}
-            >
-              <h1 className="text-2xl font-black tracking-tight lg:text-3xl bg-linear-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
-                {title}
-              </h1>
-            </motion.div>
-          </div>
-        )}
+              <nav className="space-y-1">
+                {navItems.map((item) => {
+                  const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href as any}
+                      className={clsx(
+                        "group flex items-center gap-4 rounded-xl px-4 py-3 font-medium transition-all duration-200",
+                        active
+                          ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-lg shadow-indigo-500/10"
+                          : "text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                      )}
+                    >
+                      <span>{item.icon}</span>
+                      <span className="text-sm tracking-wide">{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
 
-      {/* Profile Container */}
-      {showProfile && (
-        <motion.div 
-          layout
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="relative group"
-        >
-          <div className="absolute inset-0 bg-primary/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
-          <ProfileAvatar />
-        </motion.div>
-      )}
+      <div className="flex-1 flex justify-center overflow-hidden">
+        <h1 className="text-lg font-bold tracking-tight sm:text-xl lg:text-2xl truncate px-2">
+          {title}
+        </h1>
+      </div>
+
+      <div className="w-1/4 sm:w-1/3 flex justify-end">
+        {showProfile && (
+          <Avatar
+            onClick={handleRedirect}
+            className="h-8 w-8 sm:h-9 sm:w-9 ring-2 ring-primary/20 ring-offset-2 ring-offset-background shadow-lg cursor-pointer transition-all hover:ring-primary/50"
+          >
+            <AvatarImage src={session?.user?.image || ''} className="object-cover" />
+            <AvatarFallback className="bg-primary text-primary-foreground text-[10px] sm:text-xs font-bold font-mono">
+              {getInitials(session?.user?.name)}
+            </AvatarFallback>
+          </Avatar>
+        )}
+      </div>
     </motion.header>
   )
 }

@@ -9,8 +9,7 @@ import { isSetupRequired } from "@/lib/setup";
 // Components
 import { ImpersonationIndicator } from "@/components/auth/impersonation-indicator";
 import { LayoutTransitions } from "@/components/layout-transitions";
-import NavBar from "@/components/navbar/nav-bar";
-import { NavProvider } from "@/components/providers/nav-provider";
+import { NavBar } from "@/components/navbar/nav-bar";
 import { UserConfigProvider } from "@/components/providers/user-config-provider";
 import { getDefaultConfig, getUserConfig } from "@/lib/user-config";
 
@@ -32,23 +31,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <UserConfigProvider config={userConfig}>
-      <NavProvider>
-        <div className="h-screen bg-background text-foreground transition-colors duration-300 overflow-hidden">
-          <div className="flex h-full">
-            <NavBar />
+      <div className="h-screen bg-background text-foreground transition-colors duration-300 overflow-hidden">
+        <div className="flex h-full">
+          <NavBar />
 
-            {/* Main Content */}
-            <div className="flex-1 flex flex-col min-w-0 h-full overflow-y-auto overflow-x-hidden">
-              <LayoutTransitions>
-                {children}
-              </LayoutTransitions>
-            </div>
+          {/* Main Content */}
+          <div className="flex-1 flex flex-col min-w-0 h-full overflow-y-auto overflow-x-hidden">
+            <LayoutTransitions>
+              {children}
+            </LayoutTransitions>
           </div>
-
-          {/* Only when admin is impersonating */}
-          <ImpersonationIndicator />
         </div>
-      </NavProvider>
+
+        {/* Only when admin is impersonating */}
+        <ImpersonationIndicator />
+      </div>
+
     </UserConfigProvider >
   );
 }
