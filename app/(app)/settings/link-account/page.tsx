@@ -2,19 +2,18 @@
 
 import { getCredientialAccounts } from "@/actions/user-settings.actions";
 import { BackHeader } from "@/components/back-header";
-import { useUserConfig } from "@/components/providers/user-config-provider";
 import { Skeleton } from "@/components/ui/skeleton";
+import { containerVariants, itemVariants } from "@/lib/animations";
 import { auth } from "@/lib/auth/auth";
-import { t } from "@/lib/languages/i18n";
+import { SUPPORTED_OAUTH_PROVIDERS } from '@/lib/auth/o-auth-providers';
+import { tran } from "@/lib/languages/i18n";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { LinkAccountModalBody } from "./components/link-account-body";
-import { containerVariants } from "@/lib/animations";
+import AccountCard from "./components/account-card";
 
-type Account = Awaited<ReturnType<typeof auth.api.listUserAccounts>>[number];
+type Account = Awaited<ReturnType<typeof auth.api.listUserAccounts>>[number]
 
 export default function LinkAccountPage() {
-    const { language } = useUserConfig();
     const [currAccount, setCurrAccount] = useState<Account[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -32,7 +31,7 @@ export default function LinkAccountPage() {
     return (
         <div className="min-h-screen bg-background pb-20">
             <BackHeader
-                title={t("linked_accounts.title", language)}
+                title={tran("linked_accounts.title")}
                 backUrl="/settings"
             />
 
@@ -42,17 +41,57 @@ export default function LinkAccountPage() {
                 animate="visible"
                 className="mx-auto max-w-4xl mt-6 space-y-8 px-6"
             >
-                <LinkAccountModalBody currentAccounts={currAccount} />
+                <div className="space-y-10">
+                    <section className="space-y-4">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">
+                            {tran("linked_accounts.active_connections")}
+                        </h3>
+
+                        {currAccount?.length === 0 ? (
+                            <motion.div
+                                variants={itemVariants}
+                                className="p-8 text-center bg-card/50 rounded-3xl border border-dashed border-muted-foreground/20 text-muted-foreground"
+                            >
+                                <p className="text-sm font-medium">
+                                    {tran("linked_accounts.no_accounts_linked")}
+                                </p>
+                            </motion.div>
+                        ) : (
+                            <div className="space-y-3">
+                                {currAccount?.map(account => (
+                                    <AccountCard
+                                        key={account.id}
+                                        provider={account.providerId}
+                                        account={account}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </section>
+
+                    <section className="space-y-4">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">
+                            {tran("linked_accounts.available_providers")}
+                        </h3>
+
+                        <div className="grid gap-3">
+                            {SUPPORTED_OAUTH_PROVIDERS.filter(provider =>
+                                !currAccount?.find(acc => acc.providerId === provider)
+                            ).map(provider => (
+                                <AccountCard key={provider} provider={provider} />
+                            ))}
+                        </div>
+                    </section>
+                </div>
             </motion.div>
         </div>
     );
 }
 
 function LinkAccountSkeleton() {
-    const { language } = useUserConfig();
     return (
         <div className="min-h-screen bg-background">
-            <BackHeader title={t("linked_accounts.title", language)} />
+            <BackHeader title={tran("linked_accounts.title")} />
             <div className="mx-auto max-w-lg p-6 mt-6 space-y-8">
                 <div className="space-y-4">
                     <Skeleton className="h-5 w-32" />

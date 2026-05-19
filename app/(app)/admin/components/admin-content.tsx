@@ -1,8 +1,7 @@
 "use client";
 
-import { useUserConfig } from "@/components/providers/user-config-provider";
 import AppTabs from "@/components/tab/app-tabs";
-import { t } from "@/lib/languages/i18n";
+import { tran } from "@/lib/languages/i18n";
 import { useAdminUsers } from "@/tanstacks/admin";
 import { Settings as SettingsIcon, Users } from "lucide-react";
 import { AdminSkeleton } from "./admin-skeleton";
@@ -12,7 +11,6 @@ import { UserList } from "./user-list";
 
 export function AdminContent() {
     const { data: users, isLoading } = useAdminUsers();
-    const { language } = useUserConfig();
 
     if (isLoading) {
         return <AdminSkeleton />;
@@ -32,7 +30,7 @@ export function AdminContent() {
                 tabs={[
                     {
                         id: "user-management",
-                        label: t("admin.user_mng.title", language),
+                        label: tran("admin.user_mng.title"),
                         icon: <Users size={20} />,
                         content: (
                             <>
@@ -41,14 +39,14 @@ export function AdminContent() {
                                     activeUsers={activeUsers}
                                     bannedUsers={bannedUsers}
                                     adminUsers={adminUsers}
-                                />
+                                    />
                                 <UserList />
                             </>
                         )
                     },
                     {
                         id: "application-settings",
-                        label: t("admin.app_config.title", language),
+                        label: tran("admin.app_config.title"),
                         icon: <SettingsIcon size={20} />,
                         content: <AppSettingsTab />
                     }

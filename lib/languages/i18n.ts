@@ -8,6 +8,18 @@ export const translations: Record<Language, any> = {
     hi,
 };
 
+let activeLanguage: Language = "en";
+
+export function setActiveLanguage(lang: string) {
+    if (lang === "hi" || lang === "en") {
+        activeLanguage = lang;
+    }
+}
+
+export function getActiveLanguage(): Language {
+    return activeLanguage;
+}
+
 export const t = (key: string, lang: string = "en", params?: Record<string, string>): string => {
     const language = (lang as Language) || "en";
     const keys = key.split(".");
@@ -31,3 +43,7 @@ export const t = (key: string, lang: string = "en", params?: Record<string, stri
 
     return value;
 };
+
+export function tran(key: string, params?: Record<string, string>): string {
+    return t(key, activeLanguage, params);
+}

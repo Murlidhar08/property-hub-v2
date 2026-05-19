@@ -3,10 +3,9 @@
 import { getListUserAccounts } from "@/actions/user-settings.actions";
 import AppTabs from "@/components/tab/app-tabs";
 import { BackHeader } from "@/components/back-header";
-import { useUserConfig } from "@/components/providers/user-config-provider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/lib/auth/auth-client";
-import { t } from "@/lib/languages/i18n";
+import { tran } from "@/lib/languages/i18n";
 import { motion } from "framer-motion";
 import { Key, Lock, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -18,7 +17,6 @@ import { TwoFactorTab } from "./components/twoFactorTab";
 export default function SecurityPage() {
     const router = useRouter();
     const { data: session, isPending } = useSession();
-    const { language } = useUserConfig();
     const [hasPasswordAccount, setHasPasswordAccount] = useState<boolean | null>(null);
 
     useEffect(() => {
@@ -46,7 +44,7 @@ export default function SecurityPage() {
     return (
         <div className="min-h-screen bg-background pb-20">
             <BackHeader
-                title={t("security.title", language)}
+                title={tran("security.title")}
                 backUrl="/settings"
             />
 
@@ -61,7 +59,7 @@ export default function SecurityPage() {
                     tabs={[
                         {
                             id: "password",
-                            label: t("security.access.title", language),
+                            label: tran("security.access.title"),
                             icon: <Lock size={14} />,
                             content: (
                                 <SecureTab
@@ -72,7 +70,7 @@ export default function SecurityPage() {
                         },
                         {
                             id: "2fa",
-                            label: t("security.two_factor.title", language),
+                            label: tran("security.two_factor.title"),
                             icon: <ShieldCheck size={14} />,
                             content: (
                                 <TwoFactorTab
@@ -83,7 +81,7 @@ export default function SecurityPage() {
                         },
                         {
                             id: "passkeys",
-                            label: t("security.passkeys.title", language),
+                            label: tran("security.passkeys.title"),
                             icon: <Key size={14} />,
                             content: (
                                 <PasskeyTab />
@@ -96,11 +94,11 @@ export default function SecurityPage() {
     );
 }
 
+// @ts-ignore
 function SecuritySkeleton() {
-    const { language } = useUserConfig();
     return (
         <div className="min-h-screen bg-background">
-            <BackHeader title={t("security.title", language)} />
+            <BackHeader title={tran("security.title")} />
             <div className="mx-auto max-w-lg p-6 mt-6 space-y-8">
                 <div className="space-y-4">
                     <Skeleton className="h-5 w-40" />

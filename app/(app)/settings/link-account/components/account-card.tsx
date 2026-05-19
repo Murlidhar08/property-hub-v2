@@ -1,15 +1,14 @@
 'use client'
 
-import { useUserConfig } from '@/components/providers/user-config-provider'
-import { t } from '@/lib/languages/i18n'
 import { BetterAuthActionButton } from '@/components/auth/better-auth-action-button'
+import { itemVariants } from '@/lib/animations'
 import { auth } from '@/lib/auth/auth'
 import { authClient } from '@/lib/auth/auth-client'
 import {
     SUPPORTED_OAUTH_PROVIDER_DETAILS,
-    SUPPORTED_OAUTH_PROVIDERS,
-    SupportedOAuthProvider,
+    SupportedOAuthProvider
 } from '@/lib/auth/o-auth-providers'
+import { tran } from '@/lib/languages/i18n'
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import { Plus, Shield, Trash2 } from 'lucide-react'
@@ -17,70 +16,13 @@ import { useRouter } from 'next/navigation'
 
 type Account = Awaited<ReturnType<typeof auth.api.listUserAccounts>>[number]
 
-const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 }
-};
-
-export function LinkAccountModalBody({ currentAccounts }: { currentAccounts?: Account[] }) {
-    const { language } = useUserConfig()
-    return (
-        <div className="space-y-10">
-            <section className="space-y-4">
-                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">
-                    {t("linked_accounts.active_connections", language)}
-                </h3>
-
-                {currentAccounts?.length === 0 ? (
-                    <motion.div
-                        variants={itemVariants}
-                        className="p-8 text-center bg-card/50 rounded-3xl border border-dashed border-muted-foreground/20 text-muted-foreground"
-                    >
-                        <p className="text-sm font-medium">
-                            {t("linked_accounts.no_accounts_linked", language)}
-                        </p>
-                    </motion.div>
-                ) : (
-                    <div className="space-y-3">
-                        {currentAccounts?.map(account => (
-                            <AccountCard
-                                key={account.id}
-                                provider={account.providerId}
-                                account={account}
-                            />
-                        ))}
-                    </div>
-                )}
-            </section>
-
-            <section className="space-y-4">
-                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">
-                    {t("linked_accounts.available_providers", language)}
-                </h3>
-
-                <div className="grid gap-3">
-                    {SUPPORTED_OAUTH_PROVIDERS.filter(
-                        provider =>
-                            !currentAccounts?.find(
-                                acc => acc.providerId === provider
-                            )
-                    ).map(provider => (
-                        <AccountCard key={provider} provider={provider} />
-                    ))}
-                </div>
-            </section>
-        </div>
-    )
-}
-
-function AccountCard({
+export default function AccountCard({
     provider,
     account,
 }: {
     provider: string
     account?: Account
 }) {
-    const { language } = useUserConfig()
     const router = useRouter()
     const providerDetails =
         SUPPORTED_OAUTH_PROVIDER_DETAILS[
@@ -132,11 +74,11 @@ function AccountCard({
                         <p className="font-bold text-base leading-tight">{providerDetails.name}</p>
                         {account ? (
                             <p className="text-[10px] font-bold uppercase tracking-widest text-primary/60 mt-0.5">
-                                {t("linked_accounts.verified", language)}
+                                {tran("linked_accounts.verified")}
                             </p>
                         ) : (
                             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground opacity-60 mt-0.5">
-                                {t("linked_accounts.not_connected", language)}
+                                {tran("linked_accounts.not_connected")}
                             </p>
                         )}
                     </div>
@@ -150,7 +92,7 @@ function AccountCard({
                         action={unlinkAccount}
                     >
                         <Trash2 className="size-4 mr-2" />
-                        {t("linked_accounts.unlink", language)}
+                        {tran("linked_accounts.unlink")}
                     </BetterAuthActionButton>
                 ) : (
                     <BetterAuthActionButton
@@ -160,7 +102,7 @@ function AccountCard({
                         action={linkAccount}
                     >
                         <Plus className="size-4 mr-2" />
-                        {t("linked_accounts.connect", language)}
+                        {tran("linked_accounts.connect")}
                     </BetterAuthActionButton>
                 )}
             </div>

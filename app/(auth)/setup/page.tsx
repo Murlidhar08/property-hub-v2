@@ -1,36 +1,17 @@
 "use client";
 
 // Lib
+import { setupAdmin } from "@/actions/auth/setup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { containerVariants, itemVariants } from "@/lib/animations";
 import { envClient } from "@/lib/env.client";
 import { AnimatePresence, motion } from "framer-motion";
-import { Eye, EyeOff, Mail, User, ShieldCheck } from "lucide-react";
+import { Eye, EyeOff, Mail, ShieldCheck, User } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { setupAdmin } from "@/actions/auth/setup";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 300, damping: 24 },
-  },
-};
 
 export default function SetupPage() {
   const [name, setName] = useState("");
@@ -96,7 +77,7 @@ export default function SetupPage() {
       >
         {/* LOGO + BRAND */}
         <motion.div
-          variants={itemVariants as any}
+          variants={itemVariants}
           className="flex items-center gap-4 mb-12 group cursor-pointer"
           onClick={() => router.push("/")}
         >
@@ -275,7 +256,7 @@ export default function SetupPage() {
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-black/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
 
         {/* Abstract Grid Pattern */}
-        <div className="absolute inset-0 opacity-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent)]"
+        <div className="absolute inset-0 opacity-10 mask-[radial-gradient(ellipse_at_center,black,transparent)]"
           style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
         <div className="relative z-10 w-full max-w-2xl text-center text-white space-y-12">

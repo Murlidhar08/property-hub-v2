@@ -1,5 +1,4 @@
-import { useUserConfig } from "@/components/providers/user-config-provider";
-import { t } from "@/lib/languages/i18n";
+import { tran } from "@/lib/languages/i18n";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
@@ -11,8 +10,6 @@ const itemVariants = {
 };
 
 export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPasswordAccount: boolean, isTwoFactorEnabled: boolean }) {
-    const { language } = useUserConfig();
-
     return (
         <motion.section
             initial="hidden"
@@ -22,13 +19,13 @@ export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPa
         >
             <div className="flex items-center justify-between ml-2">
                 <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground">
-                    {t("security.two_factor.title", language)}
+                    {tran("security.two_factor.title")}
                 </h3>
                 <div className={cn(
                     "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border",
                     isTwoFactorEnabled ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-muted text-muted-foreground border-transparent"
                 )}>
-                    {isTwoFactorEnabled ? t("security.two_factor.enabled", language) : t("security.two_factor.disabled", language)}
+                    {isTwoFactorEnabled ? tran("security.two_factor.enabled") : tran("security.two_factor.disabled")}
                 </div>
             </div>
 
@@ -38,9 +35,9 @@ export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPa
                         <ShieldCheck size={24} />
                     </div>
                     <div className="space-y-1">
-                        <p className="font-bold text-base">{t("security.two_factor.authenticator_app", language)}</p>
+                        <p className="font-bold text-base">{tran("security.two_factor.authenticator_app")}</p>
                         <p className="text-sm text-muted-foreground leading-relaxed">
-                            {t("security.two_factor.authenticator_description", language)}
+                            {tran("security.two_factor.authenticator_description")}
                         </p>
                     </div>
                 </div>
@@ -49,7 +46,7 @@ export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPa
                     {hasPasswordAccount === false ? (
                         <div className="p-6 text-center">
                             <p className="text-sm text-muted-foreground italic">
-                                {t("security.access.set_password_first", language)}
+                                {tran("security.access.set_password_first")}
                             </p>
                         </div>
                     ) : (
@@ -60,7 +57,7 @@ export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPa
                 {!isTwoFactorEnabled && (
                     <div className="flex items-center gap-2 p-4 rounded-2xl bg-amber-50/50 border border-amber-100/50">
                         <p className="text-[11px] text-amber-700 font-bold uppercase tracking-wide">
-                            {t("security.two_factor.recommended", language)}
+                            {tran("security.two_factor.recommended")}
                         </p>
                     </div>
                 )}

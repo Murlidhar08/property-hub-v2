@@ -3,7 +3,7 @@
 import { BetterAuthActionButton } from '@/components/auth/better-auth-action-button'
 import { useUserConfig } from '@/components/providers/user-config-provider'
 import { authClient } from '@/lib/auth/auth-client'
-import { t } from '@/lib/languages/i18n'
+import { tran } from '@/lib/languages/i18n'
 import { cn } from '@/lib/utils'
 import { formatDate } from '@/utility/commonFunction'
 import { Session } from 'better-auth'
@@ -28,7 +28,6 @@ export function SessionModalBody({
     onUpdate,
 }: SessionModalBodyProps) {
     const router = useRouter()
-    const { language } = useUserConfig()
 
     const currentSession = sessions?.find(s => s.token === currentSessionToken)
     const otherSessions = sessions?.filter(s => s.token !== currentSessionToken)
@@ -47,7 +46,7 @@ export function SessionModalBody({
             {currentSession && (
                 <div className="space-y-4">
                     <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">
-                        {t("session.currently_active", language)}
+                        {tran("session.currently_active")}
                     </h3>
                     <SessionCard session={currentSession} isCurrentSession />
                 </div>
@@ -56,7 +55,7 @@ export function SessionModalBody({
             <div className="space-y-4">
                 <div className="flex items-center justify-between ml-2">
                     <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground">
-                        {t("session.other_devices", language)}
+                        {tran("session.other_devices")}
                     </h3>
 
                     {otherSessions.length > 0 && (
@@ -66,7 +65,7 @@ export function SessionModalBody({
                             className="rounded-xl px-4 font-bold border-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white transition-all text-[11px] uppercase tracking-wider"
                             action={revokeOtherSessions}
                         >
-                            {t("session.revoke_all", language)}
+                            {tran("session.revoke_all")}
                         </BetterAuthActionButton>
                     )}
                 </div>
@@ -77,7 +76,7 @@ export function SessionModalBody({
                         className="p-8 text-center bg-card/50 rounded-[2rem] border border-dashed border-muted-foreground/20 text-muted-foreground"
                     >
                         <p className="text-sm font-medium">
-                            {t("session.no_other_sessions", language)}
+                            {tran("session.no_other_sessions")}
                         </p>
                     </motion.div>
                 ) : (
@@ -101,7 +100,7 @@ function SessionCard({
     onUpdate?: () => void
     isCurrentSession?: boolean
 }) {
-    const { dateFormat, language } = useUserConfig()
+    const { dateFormat } = useUserConfig()
     const router = useRouter()
     const ua = session.userAgent ? (() => {
         const lowerUA = session.userAgent.toLowerCase();
@@ -187,14 +186,14 @@ function SessionCard({
                             <p className="font-bold text-lg leading-tight">{deviceLabel()}</p>
                             {isCurrentSession && (
                                 <span className="bg-primary/10 text-primary text-[9px] font-black uppercase tracking-[0.2em] px-2 py-0.5 rounded-full border border-primary/20">
-                                    {t("session.current", language)}
+                                    {tran("session.current")}
                                 </span>
                             )}
                         </div>
                         <div className="flex items-center gap-3 text-xs text-muted-foreground font-medium opacity-80">
                             <div className="flex items-center gap-1">
                                 <Globe size={12} />
-                                <span>{t("session.session_started", language, { date: format(session.createdAt) })}</span>
+                                <span>{tran("session.session_started", { date: format(session.createdAt) })}</span>
                             </div>
                             <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
                             <span>{getTime(session.createdAt)}</span>
@@ -208,7 +207,7 @@ function SessionCard({
                         variant="ghost"
                         className="h-12 w-12 rounded-2xl text-rose-500 hover:bg-rose-500/10 transition-colors"
                         action={revokeSession}
-                        successMessage={t("session.msg.session_revoked", language)}
+                        successMessage={tran("session.msg.session_revoked")}
                     >
                         <Trash2 className="size-5" />
                     </BetterAuthActionButton>

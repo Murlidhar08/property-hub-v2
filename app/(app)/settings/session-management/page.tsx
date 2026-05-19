@@ -3,8 +3,7 @@
 import { getListSessions } from "@/actions/user-settings.actions";
 import { BackHeader } from "@/components/back-header";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useUserConfig } from "@/components/providers/user-config-provider";
-import { t } from "@/lib/languages/i18n";
+import { tran } from "@/lib/languages/i18n";
 import { useSession } from "@/lib/auth/auth-client";
 import { Session } from "@/lib/generated/prisma/client";
 import { motion } from "framer-motion";
@@ -15,7 +14,6 @@ import { SessionModalBody } from "./components/session-body";
 export default function SessionManagementPage() {
     const router = useRouter();
     const { data: session, isPending } = useSession();
-    const { language } = useUserConfig();
     const [sessionsList, setSessionsList] = useState<Session[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -46,7 +44,7 @@ export default function SessionManagementPage() {
     return (
         <div className="min-h-screen bg-background pb-20">
             <BackHeader
-                title={t("session.title", language)}
+                title={tran("session.title")}
                 backUrl="/settings"
             />
 
@@ -66,11 +64,11 @@ export default function SessionManagementPage() {
     );
 }
 
+// @ts-ignore
 function SessionSkeleton() {
-    const { language } = useUserConfig();
     return (
         <div className="min-h-screen bg-background">
-            <BackHeader title={t("session.title", language)} />
+            <BackHeader title={tran("session.title")} />
             <div className="mx-auto max-w-lg p-6 mt-6 space-y-8">
                 <div className="space-y-4">
                     <Skeleton className="h-5 w-40" />

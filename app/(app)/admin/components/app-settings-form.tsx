@@ -36,8 +36,7 @@ const appConfigSchema = z.object({
 type AppConfigValues = z.infer<typeof appConfigSchema>;
 
 import { FooterButtons } from "@/components/footer-buttons";
-import { useUserConfig } from "@/components/providers/user-config-provider";
-import { t } from "@/lib/languages/i18n";
+import { tran } from "@/lib/languages/i18n";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface AppSettingsFormProps {
@@ -47,18 +46,17 @@ interface AppSettingsFormProps {
 export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
-    const { language } = useUserConfig();
 
     const appConfigSchema = z.object({
-        appName: z.string().min(1, t("admin.app_config.msg.app_name_required", language)),
-        appDescription: z.string().min(1, t("admin.app_config.msg.description_required", language)),
+        appName: z.string().min(1, tran("admin.app_config.msg.app_name_required")),
+        appDescription: z.string().min(1, tran("admin.app_config.msg.description_required")),
         smtpHost: z.string().optional().nullable(),
         smtpPort: z.coerce.number().int().optional().nullable(),
         smtpUser: z.string().optional().nullable(),
         smtpPass: z.string().optional().nullable(),
         smtpSecure: z.boolean().default(false),
         fromEmail: z.string().refine((val) => !val || emailRegex.test(val), {
-            message: t("admin.app_config.msg.invalid_email_format", language),
+            message: tran("admin.app_config.msg.invalid_email_format"),
         }).optional().nullable().or(z.literal("")),
         googleClientId: z.string().optional().nullable(),
         googleClientSecret: z.string().optional().nullable(),
@@ -89,9 +87,9 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
         try {
             await updateAppConfig(data as any);
             queryClient.invalidateQueries({ queryKey: ["admin-app-config"] });
-            toast.success(t("admin.app_config.msg.settings_updated_success", language));
+            toast.success(tran("admin.app_config.msg.settings_updated_success"));
         } catch (error: any) {
-            toast.error(error.message || t("admin.app_config.msg.settings_update_failed", language));
+            toast.error(error.message || tran("admin.app_config.msg.settings_update_failed"));
         } finally {
             setLoading(false);
         }
@@ -99,38 +97,14 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit as any)} className="space-y-10">
-            {/* TODO: PENDING General & Branding Card */}
-            {/* <ConfigCard
-                title={t("admin.app_config.general_branding", language)}
-                description={t("admin.app_config.general_branding_desc", language)}
-                icon={<Layout className="w-5 h-5" />}
-            >
-                <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{t("admin.app_config.app_name", language)}</Label>
-                    <Input
-                        {...form.register("appName")}
-                        className="h-12 rounded-2xl border-none bg-muted/40 shadow-inner focus-visible:ring-primary/20 transition-all font-bold"
-                        placeholder={t("admin.app_config.app_name_placeholder", language)}
-                    />
-                </div>
-                <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{t("admin.app_config.description", language)}</Label>
-                    <Textarea
-                        {...form.register("appDescription")}
-                        className="min-h-[100px] rounded-2xl border-none bg-muted/40 shadow-inner focus-visible:ring-primary/20 transition-all font-bold resize-none"
-                        placeholder={t("admin.app_config.description_placeholder", language)}
-                    />
-                </div>
-            </ConfigCard> */}
-
             {/* Email Server Card */}
             <ConfigCard
-                title={t("admin.app_config.email_server", language)}
-                description={t("admin.app_config.email_server_desc", language)}
+                title={tran("admin.app_config.email_server")}
+                description={tran("admin.app_config.email_server_desc")}
                 icon={<Mail className="w-5 h-5" />}
             >
                 <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{t("admin.app_config.support_email", language)}</Label>
+                    <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{tran("admin.app_config.support_email")}</Label>
                     <Input
                         {...form.register("fromEmail")}
                         className="h-12 rounded-2xl border-none bg-muted/40 shadow-inner focus-visible:ring-primary/20 transition-all font-bold"
@@ -139,7 +113,7 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                 </div>
                 <div className="grid gap-6 sm:grid-cols-3">
                     <div className="sm:col-span-2 space-y-2">
-                        <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{t("admin.app_config.host", language)}</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{tran("admin.app_config.host")}</Label>
                         <Input
                             {...form.register("smtpHost")}
                             className="h-12 rounded-2xl border-none bg-muted/40 shadow-inner focus-visible:ring-primary/20 transition-all font-bold"
@@ -147,7 +121,7 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{t("admin.app_config.port", language)}</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{tran("admin.app_config.port")}</Label>
                         <Input
                             type="number"
                             {...form.register("smtpPort")}
@@ -157,14 +131,14 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2">
                     <div className="space-y-2">
-                        <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{t("admin.app_config.user", language)}</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{tran("admin.app_config.user")}</Label>
                         <Input
                             {...form.register("smtpUser")}
                             className="h-12 rounded-2xl border-none bg-muted/40 shadow-inner focus-visible:ring-primary/20 transition-all font-bold"
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{t("admin.app_config.password", language)}</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest opacity-50 ml-1">{tran("admin.app_config.password")}</Label>
                         <Input
                             type="password"
                             {...form.register("smtpPass")}
@@ -180,16 +154,16 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                         className="rounded-lg h-6 w-6 border-primary/20 data-[state=checked]:bg-primary"
                     />
                     <div className="grid gap-1">
-                        <Label htmlFor="smtpSecure" className="text-sm font-black">{t("admin.app_config.secure_connection", language)}</Label>
-                        <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest italic">{t("admin.app_config.secure_connection_desc", language)}</p>
+                        <Label htmlFor="smtpSecure" className="text-sm font-black">{tran("admin.app_config.secure_connection")}</Label>
+                        <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest italic">{tran("admin.app_config.secure_connection_desc")}</p>
                     </div>
                 </div>
             </ConfigCard>
 
             {/* Email Auth Card (OAuth) */}
             <ConfigCard
-                title={t("admin.app_config.email_auth", language)}
-                description={t("admin.app_config.email_auth_desc", language)}
+                title={tran("admin.app_config.email_auth")}
+                description={tran("admin.app_config.email_auth_desc")}
                 icon={<Fingerprint className="w-5 h-5" />}
             >
                 <div className="space-y-6">
@@ -199,19 +173,19 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                             <div className="w-8 h-8 rounded-full bg-rose-500/10 flex items-center justify-center">
                                 <Globe className="w-4 h-4 text-rose-500" />
                             </div>
-                            <h4 className="font-black text-[11px] uppercase tracking-widest">{t("admin.app_config.google_auth", language)}</h4>
+                            <h4 className="font-black text-[11px] uppercase tracking-widest">{tran("admin.app_config.google_auth")}</h4>
                         </div>
                         <div className="grid gap-4 sm:grid-cols-2">
                             <Input
                                 {...form.register("googleClientId")}
                                 className="h-11 rounded-xl border-none bg-background shadow-inner text-xs font-bold"
-                                placeholder={t("admin.app_config.client_id", language)}
+                                placeholder={tran("admin.app_config.client_id")}
                             />
                             <Input
                                 type="password"
                                 {...form.register("googleClientSecret")}
                                 className="h-11 rounded-xl border-none bg-background shadow-inner text-xs font-bold"
-                                placeholder={t("admin.app_config.client_secret", language)}
+                                placeholder={tran("admin.app_config.client_secret")}
                             />
                         </div>
                     </div>
@@ -222,19 +196,19 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                             <div className="w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center">
                                 <Globe className="w-4 h-4 text-indigo-500" />
                             </div>
-                            <h4 className="font-black text-[11px] uppercase tracking-widest">{t("admin.app_config.discord_auth", language)}</h4>
+                            <h4 className="font-black text-[11px] uppercase tracking-widest">{tran("admin.app_config.discord_auth")}</h4>
                         </div>
                         <div className="grid gap-4 sm:grid-cols-2">
                             <Input
                                 {...form.register("discordClientId")}
                                 className="h-11 rounded-xl border-none bg-background shadow-inner text-xs font-bold"
-                                placeholder={t("admin.app_config.client_id", language)}
+                                placeholder={tran("admin.app_config.client_id")}
                             />
                             <Input
                                 type="password"
                                 {...form.register("discordClientSecret")}
                                 className="h-11 rounded-xl border-none bg-background shadow-inner text-xs font-bold"
-                                placeholder={t("admin.app_config.client_secret", language)}
+                                placeholder={tran("admin.app_config.client_secret")}
                             />
                         </div>
                     </div>
@@ -255,7 +229,7 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                 >
                     <PenLine className="size-5 md:size-6" />
                     <span className="text-center font-black tracking-[0.15em] text-sm hidden md:block">
-                        {loading ? t("admin.app_config.msg.saving_settings", language) : t("admin.app_config.sync_config_button", language)}
+                        {loading ? tran("admin.app_config.msg.saving_settings") : tran("admin.app_config.sync_config_button")}
                     </span>
                 </Button>
             </FooterButtons>

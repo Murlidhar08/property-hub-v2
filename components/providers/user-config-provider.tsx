@@ -2,6 +2,7 @@
 
 import { Currency, ThemeMode } from "@/lib/generated/prisma/enums"
 import { useTheme } from "next-themes"
+import { setActiveLanguage } from "@/lib/languages/i18n"
 import { createContext, useContext, useEffect, useState } from "react"
 
 interface userSettings {
@@ -28,6 +29,9 @@ export const useUserConfig = () => {
 
 
 export function UserConfigProvider({ config, children }: { config: Omit<userSettings, 'setTheme'>, children: React.ReactNode }) {
+  // Set the active language globally for hook-free translations
+  setActiveLanguage(config.language)
+
   const [theme, setThemeState] = useState<ThemeMode>(config.theme)
   const { setTheme: setNextTheme } = useTheme()
 
@@ -35,6 +39,10 @@ export function UserConfigProvider({ config, children }: { config: Omit<userSett
   useEffect(() => {
     setThemeState(config.theme)
   }, [config.theme])
+
+  useEffect(() => {
+    setActiveLanguage(config.language)
+  }, [config.language])
 
   useEffect(() => {
     if (theme) {

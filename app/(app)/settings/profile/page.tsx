@@ -13,11 +13,10 @@ import { toast } from "sonner";
 
 import { BackHeader } from "@/components/back-header";
 import { FooterButtons } from "@/components/footer-buttons";
-import { useUserConfig } from "@/components/providers/user-config-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/lib/auth/auth-client";
-import { t } from "@/lib/languages/i18n";
+import { tran } from "@/lib/languages/i18n";
 import { useCurrentUser } from "@/tanstacks/user";
 import { getInitials } from "@/utility/commonFunction";
 import { containerVariants, itemVariants } from "@/lib/animations";
@@ -25,15 +24,14 @@ import { containerVariants, itemVariants } from "@/lib/animations";
 export default function ProfilePage() {
     const router = useRouter();
     const { data: user, isLoading } = useCurrentUser();
-    const { language } = useUserConfig();
 
     const handleLogout = async () => {
         try {
             await signOut();
-            toast.success(t("profile.msg.logged_out_successfully", language));
+            toast.success(tran("profile.msg.logged_out_successfully"));
             window.location.href = "/login";
         } catch (error) {
-            toast.error(t("profile.msg.failed_to_logout", language));
+            toast.error(tran("profile.msg.failed_to_logout"));
         }
     };
 
@@ -42,7 +40,7 @@ export default function ProfilePage() {
     return (
         <div className="w-full bg-background pb-34">
             <BackHeader
-                title={t("profile.title", language)}
+                title={tran("profile.title")}
                 backUrl="/settings"
             />
             <motion.div
@@ -81,18 +79,18 @@ export default function ProfilePage() {
                 <motion.div variants={itemVariants} className="space-y-4">
                     <DetailRow
                         icon={User}
-                        label={t("profile.full_name", language)}
-                        value={user?.name || t("profile.not_set", language)}
+                        label={tran("profile.full_name")}
+                        value={user?.name || tran("profile.not_set")}
                     />
                     <DetailRow
                         icon={Mail}
-                        label={t("profile.email_address", language)}
-                        value={user?.email || t("profile.not_set", language)}
+                        label={tran("profile.email_address")}
+                        value={user?.email || tran("profile.not_set")}
                     />
                     <DetailRow
                         icon={Phone}
-                        label={t("profile.phone_number", language)}
-                        value={user?.contactNo || t("profile.not_set", language)}
+                        label={tran("profile.phone_number")}
+                        value={user?.contactNo || tran("profile.not_set")}
                     />
                 </motion.div>
 
@@ -104,7 +102,7 @@ export default function ProfilePage() {
                         className="h-14 w-14 md:w-auto md:px-12 rounded-full md:gap-3 font-semibold uppercase bg-primary text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 p-0 md:py-2"
                     >
                         <Edit3 size={18} />
-                        <span className="hidden md:block">{t("profile.edit.title", language)}</span>
+                        <span className="hidden md:block">{tran("profile.edit.title")}</span>
                     </Button>
 
                     {/* Logout */}
@@ -114,7 +112,7 @@ export default function ProfilePage() {
                         className="h-14 w-14 md:w-auto md:px-12 rounded-full md:gap-3 font-semibold uppercase text-rose-600 shadow-lg shadow-rose-600/30 hover:text-white hover:bg-rose-900 hover:shadow-xl p-0 md:py-2"
                     >
                         <LogOut size={18} />
-                        <span className="hidden md:block">{t("profile.logout", language)}</span>
+                        <span className="hidden md:block">{tran("profile.logout")}</span>
                     </Button>
                 </FooterButtons>
             </motion.div>

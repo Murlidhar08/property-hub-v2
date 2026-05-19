@@ -11,7 +11,7 @@ import { Suspense, useEffect, useState } from "react";
 // Lib
 import { authClient } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
-import { t } from "@/lib/languages/i18n";
+import { tran } from "@/lib/languages/i18n";
 
 // Components
 import { Input } from "@/components/ui/input";
@@ -65,7 +65,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
   // Handle URL errors (like session expired)
   useEffect(() => {
     if (errorCode === "session_expired") {
-      setError(t("auth.msg.session_expired", "en"));
+      setError(tran("auth.msg.session_expired"));
     }
   }, [errorCode]);
 

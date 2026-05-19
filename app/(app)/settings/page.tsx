@@ -39,7 +39,7 @@ import {
 import { signOut, useSession } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
 import { Currency, ThemeMode } from "@/lib/generated/prisma/enums";
-import { t } from "@/lib/languages/i18n";
+import { tran } from "@/lib/languages/i18n";
 import { cn } from "@/lib/utils";
 import { getInitials } from "@/utility/commonFunction";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -93,17 +93,17 @@ export default function SettingsPage() {
   ];
 
   const languageItems = [
-    { label: t("languages.en", language), value: "en" },
-    { label: t("languages.hi", language), value: "hi" },
+    { label: tran("languages.en"), value: "en" },
+    { label: tran("languages.hi"), value: "hi" },
   ];
 
   const handleLogout = async () => {
     try {
       await signOut();
-      toast.success(t("profile.msg.logged_out_successfully", language));
+      toast.success(tran("profile.msg.logged_out_successfully"));
       setTimeout(() => router.replace("/login"), 300);
     } catch (error) {
-      toast.error(t("profile.msg.failed_to_logout", language));
+      toast.error(tran("profile.msg.failed_to_logout"));
     }
   };
 
@@ -111,7 +111,7 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background pb-34">
-      <AppHeader title={t("settings.title", language)} />
+      <AppHeader title={tran("settings.title")} />
 
       <motion.div
         variants={containerVariants}
@@ -151,8 +151,8 @@ export default function SettingsPage() {
 
         {/* GENERAL */}
         <motion.div variants={itemVariants}>
-          <Section title={t("settings.general", language)}>
-            <Row icon={DollarSign} label={t("settings.currency", language)}>
+          <Section title={tran("settings.general")}>
+            <Row icon={DollarSign} label={tran("settings.currency")}>
               <Select
                 items={currencyItems}
                 value={currency}
@@ -161,7 +161,7 @@ export default function SettingsPage() {
                   const v = value as Currency
                   setCurrency(v)
                   upsertUserSettings({ currency: v })
-                  toast.success(t("settings.msg.currency_updated", language, { currency: v }))
+                  toast.success(tran("settings.msg.currency_updated", { currency: v }))
                 }}
               >
                 <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
@@ -177,7 +177,7 @@ export default function SettingsPage() {
               </Select>
             </Row>
 
-            <Row icon={Calendar} label={t("settings.date_format", language)}>
+            <Row icon={Calendar} label={tran("settings.date_format")}>
               <Select
                 items={dateFormatItems}
                 value={dateFormat}
@@ -185,7 +185,7 @@ export default function SettingsPage() {
                   if (!value) return
                   setDateFormat(value)
                   void upsertUserSettings({ dateFormat: value })
-                  toast.success(t("settings.msg.date_format_updated", language))
+                  toast.success(tran("settings.msg.date_format_updated"))
                 }}
               >
                 <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
@@ -201,7 +201,7 @@ export default function SettingsPage() {
               </Select>
             </Row>
 
-            <Row icon={Clock} label={t("settings.time_format", language)}>
+            <Row icon={Clock} label={tran("settings.time_format")}>
               <Select
                 items={timeFormatItems}
                 value={timeFormat}
@@ -209,7 +209,7 @@ export default function SettingsPage() {
                   if (!value) return
                   setTimeFormat(value)
                   void upsertUserSettings({ timeFormat: value })
-                  toast.success(t("settings.msg.time_format_updated", language))
+                  toast.success(tran("settings.msg.time_format_updated"))
                 }}
               >
                 <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
@@ -225,7 +225,7 @@ export default function SettingsPage() {
               </Select>
             </Row>
 
-            <Row icon={Languages} label={t("settings.language", language)}>
+            <Row icon={Languages} label={tran("settings.language")}>
               <Select
                 items={languageItems}
                 value={language}
@@ -233,7 +233,7 @@ export default function SettingsPage() {
                   if (!value) return
                   setLanguage(value)
                   void upsertUserSettings({ language: value })
-                  toast.success(t("settings.msg.language_updated", language))
+                  toast.success(tran("settings.msg.language_updated"))
                 }}
               >
                 <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
@@ -250,7 +250,7 @@ export default function SettingsPage() {
             </Row>
 
             {isDebug && (
-              <Row icon={Terminal} label={t("settings.developer_mode", language)}>
+              <Row icon={Terminal} label={tran("settings.developer_mode")}>
                 <Button
                   variant={isDevMode ? "default" : "outline"}
                   size="sm"
@@ -262,7 +262,7 @@ export default function SettingsPage() {
                     const newValue = !isDevMode;
                     setIsDevMode(newValue);
                     localStorage.setItem("dev_mode", String(newValue));
-                    toast.success(t(newValue ? "settings.msg.dev_mode_enabled" : "settings.msg.dev_mode_disabled", language));
+                    toast.success(tran(newValue ? "settings.msg.dev_mode_enabled" : "settings.msg.dev_mode_disabled"));
                   }}
                 >
                   {isDevMode ? "ON" : "OFF"}
@@ -274,13 +274,13 @@ export default function SettingsPage() {
 
         {/* APPEARANCE */}
         <motion.div variants={itemVariants}>
-          <Section title={t("settings.appearance", language)}>
-            <Row icon={PaintbrushIcon} label={t("settings.theme_mode", language)}>
+          <Section title={tran("settings.appearance")}>
+            <Row icon={PaintbrushIcon} label={tran("settings.theme_mode")}>
               <div className="flex gap-1 bg-muted/50 rounded-2xl p-1.5 border-2 border-transparent focus-within:border-primary/10">
                 {[
-                  { id: ThemeMode.AUTO, icon: Laptop, label: t("settings.auto", language) },
-                  { id: ThemeMode.LIGHT, icon: Sun, label: t("settings.light", language) },
-                  { id: ThemeMode.DARK, icon: Moon, label: t("settings.dark", language) },
+                  { id: ThemeMode.AUTO, icon: Laptop, label: tran("settings.auto") },
+                  { id: ThemeMode.LIGHT, icon: Sun, label: tran("settings.light") },
+                  { id: ThemeMode.DARK, icon: Moon, label: tran("settings.dark") },
                 ].map((mode) => (
                   <Button
                     key={mode.id}
@@ -307,25 +307,25 @@ export default function SettingsPage() {
 
         {/* SECURITY */}
         <motion.div variants={itemVariants}>
-          <Section title={t("settings.security_privacy", language)}>
+          <Section title={tran("settings.security_privacy")}>
             <Row
               icon={Link2Icon}
-              label={t("settings.connected_accounts", language)}
+              label={tran("settings.connected_accounts")}
               href="/settings/link-account"
             />
             <Row
               icon={LockKeyhole}
-              label={t("settings.safety_security", language)}
+              label={tran("settings.safety_security")}
               href="/settings/security"
             />
             <Row
               icon={KeyRoundIcon}
-              label={t("settings.active_sessions", language)}
+              label={tran("settings.active_sessions")}
               href="/settings/session-management"
             />
             <Row
               icon={Skull}
-              label={t("settings.danger_zone", language)}
+              label={tran("settings.danger_zone")}
               labelClassName="text-rose-600"
               iconContainerClassName="bg-rose-100 text-rose-600"
               href="/settings/danger"
@@ -346,7 +346,7 @@ export default function SettingsPage() {
           >
             <LogOut className="size-5 md:size-6" />
             <span className="text-center font-black tracking-[0.15em] text-sm hidden md:block">
-              {t("settings.logout", language)}
+              {tran("settings.logout")}
             </span>
           </Button>
         </FooterButtons>

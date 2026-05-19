@@ -9,14 +9,13 @@ import { toast } from 'sonner'
 
 import { BackHeader } from '@/components/back-header'
 import { FooterButtons } from '@/components/footer-buttons'
-import { useUserConfig } from '@/components/providers/user-config-provider'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { LoadingSwap } from '@/components/ui/loading-swap'
 import { Skeleton } from '@/components/ui/skeleton'
 import { authClient } from '@/lib/auth/auth-client'
-import { t } from '@/lib/languages/i18n'
+import { tran } from '@/lib/languages/i18n'
 import { useCurrentUser } from '@/tanstacks/user'
 import { getInitials } from '@/utility/commonFunction'
 import { containerVariants, itemVariants } from '@/lib/animations'
@@ -30,7 +29,6 @@ type ProfileFormValues = {
 export default function EditProfilePage() {
   const router = useRouter()
   const { data: user, isLoading } = useCurrentUser()
-  const { language } = useUserConfig()
 
   const { register, handleSubmit, formState: { isSubmitting }, reset } = useForm<ProfileFormValues>({
     defaultValues: {
@@ -78,25 +76,25 @@ export default function EditProfilePage() {
       const emailResult = res[1] ?? { error: false }
 
       if (updateUserResult?.error) {
-        toast.error(updateUserResult.error.message || t("profile.edit.msg.failed_to_update_profile", language))
+        toast.error(updateUserResult.error.message || tran("profile.edit.msg.failed_to_update_profile"))
         return
       }
 
       if (emailResult?.error) {
-        toast.error(emailResult.error.message || t("profile.edit.msg.failed_to_change_email", language))
+        toast.error(emailResult.error.message || tran("profile.edit.msg.failed_to_change_email"))
         return
       }
 
       if (data.email !== user?.email) {
-        toast.success(t("profile.edit.msg.verify_email_notice", language))
+        toast.success(tran("profile.edit.msg.verify_email_notice"))
       } else {
-        toast.success(t("profile.edit.msg.profile_updated_successfully", language))
+        toast.success(tran("profile.edit.msg.profile_updated_successfully"))
       }
 
       router.refresh()
       router.push('/settings/profile' as any)
     } catch (error) {
-      toast.error(t("profile.edit.msg.something_went_wrong", language));
+      toast.error(tran("profile.edit.msg.something_went_wrong"));
       console.error('Something went wrong', error);
     }
   }
@@ -104,7 +102,7 @@ export default function EditProfilePage() {
   return (
     <div className="w-full bg-background pb-34">
       <BackHeader
-        title={t("profile.title", language)}
+        title={tran("profile.title")}
         backUrl="/settings"
       />
       <motion.div
@@ -133,34 +131,34 @@ export default function EditProfilePage() {
               </motion.button>
               <div className="absolute inset-0 rounded-full bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl -z-10" />
             </div>
-            <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-primary/60">{t("profile.edit.upload_new_avatar", language)}</p>
+            <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-primary/60">{tran("profile.edit.upload_new_avatar")}</p>
           </motion.section>
 
           {/* Form Fields */}
           <motion.section variants={itemVariants} className="mx-auto flex w-full max-w-lg flex-col gap-6 px-6">
             <Field
-              label={t("profile.edit.name_label", language)}
+              label={tran("profile.edit.name_label")}
               icon={User}
-              registration={register('name', { required: t("profile.edit.msg.name_required", language) })}
+              registration={register('name', { required: tran("profile.edit.msg.name_required") })}
             />
 
             <Field
-              label={t("profile.phone_number", language)}
+              label={tran("profile.phone_number")}
               icon={Phone}
               registration={register('contactNo')}
-              placeholder={t("profile.edit.phone_placeholder", language)}
+              placeholder={tran("profile.edit.phone_placeholder")}
             />
 
             <Field
-              label={t("profile.email_address", language)}
+              label={tran("profile.email_address")}
               icon={Mail}
               type="email"
               disabled={true}
-              registration={register('email', { required: t("profile.edit.msg.email_required", language) })}
+              registration={register('email', { required: tran("profile.edit.msg.email_required") })}
             />
             <div className="flex items-center gap-2 p-4 rounded-2xl bg-muted/30 border border-dashed border-muted-foreground/20">
               <CheckCircle2 size={16} className="text-muted-foreground" />
-              <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t("profile.edit.msg.email_verification_notice", language)}</p>
+              <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{tran("profile.edit.msg.email_verification_notice")}</p>
             </div>
           </motion.section>
 
@@ -173,7 +171,7 @@ export default function EditProfilePage() {
               <LoadingSwap isLoading={isSubmitting}>
                 <div className="flex items-center gap-2">
                   <Edit3 size={18} />
-                  <span className="hidden md:block">{t("profile.edit.update_profile_button", language)}</span>
+                  <span className="hidden md:block">{tran("profile.edit.update_profile_button")}</span>
                 </div>
               </LoadingSwap>
             </Button>
@@ -185,10 +183,9 @@ export default function EditProfilePage() {
 }
 
 function EditProfileSkeleton() {
-  const { language } = useUserConfig()
   return (
     <div className="min-h-screen bg-background">
-      <BackHeader title={t("profile.edit.title", language)} />
+      <BackHeader title={tran("profile.edit.title")} />
       <div className="flex flex-col items-center py-10 space-y-4">
         <Skeleton className="h-32 w-32 rounded-full" />
         <Skeleton className="h-4 w-32" />
