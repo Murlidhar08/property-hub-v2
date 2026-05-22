@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SessionModalBody } from "./components/session-body";
+import { containerVariants } from "@/lib/animations";
 
 export default function SessionManagementPage() {
     const router = useRouter();
@@ -26,16 +27,6 @@ export default function SessionManagementPage() {
     useEffect(() => {
         fetchSessions();
     }, []);
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    };
 
     if (isPending || loading) {
         return <SessionSkeleton />;

@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { PasskeyTab } from "./components/passkeyTab";
 import { SecureTab } from "./components/secureTab";
 import { TwoFactorTab } from "./components/twoFactorTab";
+import { containerVariants } from "@/lib/animations";
 
 export default function SecurityPage() {
     const router = useRouter();
@@ -26,16 +27,6 @@ export default function SecurityPage() {
                 setHasPasswordAccount(hasPassAcc);
             })
     }, [])
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    };
 
     if (isPending || hasPasswordAccount === null) {
         return <SecuritySkeleton />;

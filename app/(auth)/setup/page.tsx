@@ -114,7 +114,7 @@ export default function SetupPage() {
 
         {/* CENTER FORM AREA */}
         <div className="flex flex-col justify-center max-w-sm mx-auto w-full py-8 lg:py-0">
-          <motion.div variants={itemVariants as any} className="mb-8">
+          <motion.div variants={itemVariants} className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-wider mb-4 border border-primary/20">
               <ShieldCheck className="w-3.5 h-3.5" />
               Instance Configuration
@@ -127,7 +127,7 @@ export default function SetupPage() {
             </p>
           </motion.div>
 
-          <motion.form variants={itemVariants as any} onSubmit={handleSubmit} className="space-y-4">
+          <motion.form variants={itemVariants} onSubmit={handleSubmit} className="space-y-4">
             <AnimatePresence mode="wait">
               {error && (
                 <motion.div
@@ -237,7 +237,7 @@ export default function SetupPage() {
         </div>
 
         {/* BOTTOM DECORATION */}
-        <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
+        <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground text-sm font-medium">
             Self-hosted instance of {envClient.NEXT_PUBLIC_APP_NAME}
           </p>

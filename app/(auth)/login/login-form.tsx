@@ -20,26 +20,7 @@ import EmailAuth from "./components/email-auth";
 import FacebookAuth from "./components/facebook-auth";
 import GoogleAuth from "./components/google-auth";
 import PasskeyAuth from "./components/passkey-auth";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 300, damping: 24 },
-  },
-};
+import { containerVariants, itemVariants } from "@/lib/animations";
 
 interface LoginFormProps {
   providers: {
@@ -101,7 +82,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
       >
         {/* LOGO + BRAND */}
         <motion.div
-          variants={itemVariants as any}
+          variants={itemVariants}
           className="flex items-center gap-4 mb-12 group cursor-pointer"
           onClick={() => router.push("/")}
         >
@@ -138,13 +119,13 @@ function LoginFormContent({ providers }: LoginFormProps) {
 
         {/* CENTER FORM AREA */}
         <div className="flex flex-col justify-center max-w-sm mx-auto w-full py-8 lg:py-0">
-          <motion.div variants={itemVariants as any} className="mb-6">
+          <motion.div variants={itemVariants} className="mb-6">
             <h2 className="text-3xl font-bold tracking-tight mb-3">
               Welcome back
             </h2>
           </motion.div>
 
-          <motion.form variants={itemVariants as any} className="space-y-5">
+          <motion.form variants={itemVariants} className="space-y-5">
             <AnimatePresence mode="wait">
               {error && (
                 <motion.div
@@ -227,7 +208,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
 
           {hasSocialLogin && (
             <>
-              <motion.div variants={itemVariants as any} className="relative my-10">
+              <motion.div variants={itemVariants} className="relative my-10">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-border/50"></div>
                 </div>
@@ -238,7 +219,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
                 </div>
               </motion.div>
 
-              <motion.div variants={itemVariants as any} className={`grid ${providers.google && providers.discord ? 'grid-cols-2' : 'grid-cols-1'} gap-4`}>
+              <motion.div variants={itemVariants} className={`grid ${providers.google && providers.discord ? 'grid-cols-2' : 'grid-cols-1'} gap-4`}>
                 {providers.google && (
                   <GoogleAuth
                     lastLogin={lastLogin}
@@ -265,7 +246,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
         </div>
 
         {/* SIGN UP */}
-        <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
+        <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground">
             Don&apos;t have an account?{" "}
             <Link tabIndex={8} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">

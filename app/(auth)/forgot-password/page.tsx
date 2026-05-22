@@ -82,7 +82,7 @@ export default function ForgotPasswordPage() {
 
         {/* LOGO + BRAND */}
         <motion.div
-          variants={itemVariants as any}
+          variants={itemVariants}
           className="flex items-center gap-4 mb-12 group cursor-pointer"
           onClick={() => router.push("/")}
         >
@@ -229,7 +229,7 @@ export default function ForgotPasswordPage() {
         </div>
 
         {/* BOTTOM DECORATION / FOOTER */}
-        <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
+        <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground text-sm">
             Need help? <a href="mailto:support@example.app" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</a>
           </p>

@@ -3,6 +3,7 @@
 // Lib
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { containerVariants, itemVariants } from "@/lib/animations";
 import { authClient } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
 import { AnimatePresence, motion } from "framer-motion";
@@ -12,26 +13,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 300, damping: 24 },
-  },
-};
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -112,7 +93,7 @@ export default function SignupPage() {
       >
         {/* LOGO + BRAND */}
         <motion.div
-          variants={itemVariants as any}
+          variants={itemVariants}
           className="flex items-center gap-4 mb-12 group cursor-pointer"
           onClick={() => router.push("/")}
         >
@@ -149,7 +130,7 @@ export default function SignupPage() {
 
         {/* CENTER FORM AREA */}
         <div className="flex flex-col justify-center max-w-sm mx-auto w-full py-8 lg:py-0">
-          <motion.div variants={itemVariants as any} className="mb-8">
+          <motion.div variants={itemVariants} className="mb-8">
             <h2 className="text-4xl font-bold tracking-tight mb-3">
               Create account
             </h2>
@@ -158,7 +139,7 @@ export default function SignupPage() {
             </p>
           </motion.div>
 
-          <motion.form variants={itemVariants as any} onSubmit={handleSubmit} className="space-y-4">
+          <motion.form variants={itemVariants} onSubmit={handleSubmit} className="space-y-4">
             <AnimatePresence mode="wait">
               {error && (
                 <motion.div
@@ -268,7 +249,7 @@ export default function SignupPage() {
         </div>
 
         {/* BOTTOM LINK */}
-        <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
+        <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground">
             Already have an account?{" "}
             <Link href="/login" className="font-bold text-primary hover:text-primary/80 transition-colors">

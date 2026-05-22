@@ -8,26 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BackupCodeTab } from "./components/backup-code-tab";
 import { TotpForm } from "./components/totp-form";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 300, damping: 24 },
-  },
-};
+import { containerVariants, itemVariants } from "@/lib/animations";
 
 export default function TwoFactorPage() {
   const router = useRouter();
@@ -56,7 +37,7 @@ export default function TwoFactorPage() {
       >
         {/* LOGO + BRAND */}
         <motion.div
-          variants={itemVariants as any}
+          variants={itemVariants}
           className="flex items-center gap-4 mb-12 group cursor-pointer"
           onClick={() => router.push("/")}
         >
@@ -93,7 +74,7 @@ export default function TwoFactorPage() {
 
         {/* CENTER FORM AREA */}
         <div className="flex flex-col justify-center max-w-sm mx-auto w-full py-8 lg:py-0">
-          <motion.div variants={itemVariants as any} className="mb-8">
+          <motion.div variants={itemVariants} className="mb-8">
             <h2 className="text-4xl font-bold tracking-tight mb-3">
               {showBackup ? "Backup Access" : "Security Check"}
             </h2>
@@ -105,7 +86,7 @@ export default function TwoFactorPage() {
           </motion.div>
 
           <motion.div
-            variants={itemVariants as any}
+            variants={itemVariants}
             className="bg-muted/40 border border-border/50 p-6 sm:p-8 rounded-[2rem] shadow-sm backdrop-blur-sm overflow-hidden"
           >
             <AnimatePresence mode="wait">
@@ -160,7 +141,7 @@ export default function TwoFactorPage() {
         </div>
 
         {/* BOTTOM DECORATION / FOOTER */}
-        <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50 text-center">
+        <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50 text-center">
           <p className="text-muted-foreground text-sm font-medium">
             Need help? <a href="mailto:support@example.app" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</a>
           </p>

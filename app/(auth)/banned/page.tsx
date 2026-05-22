@@ -14,26 +14,7 @@ import { envClient } from "@/lib/env.client";
 // Components
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 300, damping: 24 },
-  },
-};
+import { containerVariants, itemVariants } from "@/lib/animations";
 
 export default function BannedPage() {
   const router = useRouter();
@@ -91,7 +72,7 @@ export default function BannedPage() {
       >
         {/* LOGO + BRAND */}
         <motion.div
-          variants={itemVariants as any}
+          variants={itemVariants}
           className="flex items-center gap-4 mb-12 group cursor-pointer"
           onClick={() => router.push("/")}
         >
@@ -128,7 +109,7 @@ export default function BannedPage() {
 
         {/* CENTER CONTENT AREA */}
         <div className="flex flex-col justify-center max-w-sm md:max-w-xl mx-auto w-full py-4 lg:py-0">
-          <motion.div variants={itemVariants as any} className="mb-8 flex md:flex-row flex-col gap-6">
+          <motion.div variants={itemVariants} className="mb-8 flex md:flex-row flex-col gap-6">
             <div className="w-20 h-20 bg-destructive/10 rounded-3xl flex items-center justify-center mb-6 ring-8 ring-destructive/5">
               <AlertCircle className="w-10 h-10 text-destructive" />
             </div>
@@ -142,7 +123,7 @@ export default function BannedPage() {
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants as any} className="space-y-6">
+          <motion.div variants={itemVariants} className="space-y-6">
             <div className="bg-muted/40 border border-border/50 p-6 rounded-3xl relative overflow-hidden group hover:bg-muted/60 transition-all duration-500">
               <div className="absolute top-0 right-0 w-24 h-24 bg-destructive/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 mb-3">
@@ -175,7 +156,7 @@ export default function BannedPage() {
         </div>
 
         {/* FOOTER */}
-        <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+        <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           {user?.id ? (
             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-40">
               REF ID: {user.id.slice(-12).toUpperCase()}

@@ -120,7 +120,7 @@ function ResetPasswordForm() {
 
         {/* LOGO + BRAND */}
         <motion.div
-          variants={itemVariants as any}
+          variants={itemVariants}
           className="flex items-center gap-4 mb-12 group cursor-pointer"
           onClick={() => router.push("/")}
         >
@@ -157,7 +157,7 @@ function ResetPasswordForm() {
 
         {/* CENTER FORM AREA */}
         <div className="flex flex-col justify-center max-w-sm mx-auto w-full py-8 lg:py-0">
-          <motion.div variants={itemVariants as any} className="mb-8">
+          <motion.div variants={itemVariants} className="mb-8">
             <h2 className="text-4xl font-bold tracking-tight mb-3">
               Reset Password
             </h2>
@@ -166,7 +166,7 @@ function ResetPasswordForm() {
             </p>
           </motion.div>
 
-          <motion.form variants={itemVariants as any} onSubmit={handleSubmit} className="space-y-5">
+          <motion.form variants={itemVariants} onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-4">
               {/* New Password */}
               <div className="space-y-2">
@@ -267,7 +267,7 @@ function ResetPasswordForm() {
         </div>
 
         {/* BOTTOM DECORATION / FOOTER */}
-        <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
+        <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground text-sm">
             Need help? <a href="mailto:support@example.app" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</a>
           </p>
