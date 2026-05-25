@@ -6,8 +6,6 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const appConfigSchema = z.object({
-  appName: z.string().min(1),
-  appDescription: z.string().min(1),
   smtpHost: z.string().optional().nullable(),
   smtpPort: z.number().int().optional().nullable(),
   smtpUser: z.string().optional().nullable(),

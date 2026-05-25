@@ -109,8 +109,6 @@ CREATE TABLE "userSettings" (
 -- CreateTable
 CREATE TABLE "appConfig" (
     "id" TEXT NOT NULL DEFAULT 'singleton',
-    "appName" TEXT NOT NULL DEFAULT 'App Name',
-    "appDescription" TEXT NOT NULL DEFAULT 'This is the application description',
     "smtpHost" TEXT,
     "smtpPort" INTEGER DEFAULT 587,
     "smtpUser" TEXT,

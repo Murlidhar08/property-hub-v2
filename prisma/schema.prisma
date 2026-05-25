@@ -135,8 +135,6 @@ model UserSettings {
 
 model AppConfig {
   id                  String   @id @default("singleton")
-  appName             String   @default("App Name")
-  appDescription      String   @default("This is the application description")
   smtpHost            String?
   smtpPort            Int?     @default(587)
   smtpUser            String?

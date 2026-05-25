@@ -17,8 +17,6 @@ import * as z from "zod";
 const emailRegex = /^([^<]+<)?([^@\s<>]+@[^@\s<>.]+\.[^@\s<>.]+)>?$/;
 
 const appConfigSchema = z.object({
-    appName: z.string().min(1, "App name is required"),
-    appDescription: z.string().min(1, "Description is required"),
     smtpHost: z.string().optional().nullable(),
     smtpPort: z.coerce.number().int().optional().nullable(),
     smtpUser: z.string().optional().nullable(),
@@ -48,8 +46,6 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
     const queryClient = useQueryClient();
 
     const appConfigSchema = z.object({
-        appName: z.string().min(1, tran("admin.app_config.msg.app_name_required")),
-        appDescription: z.string().min(1, tran("admin.app_config.msg.description_required")),
         smtpHost: z.string().optional().nullable(),
         smtpPort: z.coerce.number().int().optional().nullable(),
         smtpUser: z.string().optional().nullable(),
@@ -67,8 +63,6 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
     const form = useForm<AppConfigValues>({
         resolver: zodResolver(appConfigSchema) as any,
         defaultValues: {
-            appName: initialData.appName || "",
-            appDescription: initialData.appDescription || "",
             smtpHost: initialData.smtpHost || "",
             smtpPort: initialData.smtpPort || 587,
             smtpUser: initialData.smtpUser || "",
