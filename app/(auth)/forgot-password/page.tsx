@@ -111,9 +111,6 @@ export default function ForgotPasswordPage() {
             <h1 className="text-2xl font-black tracking-tight bg-clip-text text-transparent bg-linear-to-br from-foreground to-foreground/70 leading-none">
               {envClient.NEXT_PUBLIC_APP_NAME}
             </h1>
-            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-60">
-              Finance Architecture
-            </p>
           </div>
         </motion.div>
 

@@ -7,7 +7,9 @@
 
 # Disable remote branch push
 `git remote set-url --push upstream DISABLE`
+`git remote -v`
 
 # Add from upstream
 `git fetch upstream`
 `git merge upstream/main --allow-unrelated-histories`
+`git push origin main`
