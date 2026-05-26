@@ -2,24 +2,24 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Home } from "lucide-react";
 
 const MESSAGES = [
-    "Calculating your financial peace...",
-    "Organizing the chaos...",
-    "Polishing your balance sheet...",
-    "Settling the scores...",
-    "Securing your data with love...",
-    "Dreaming of debt-free days...",
-    "Syncing with the universe...",
-    "Building your financial future...",
-    "Counting the pennies...",
-    "Optimizing your workflow...",
-    "Preparing your dashboard...",
-    "Gathering insights...",
-    "Making things pretty...",
-    "Almost there...",
-    "Just a few more adjustments...",
-    "Loading the magic...",
+    "Finding your perfect properties...",
+    "Organizing your portfolio...",
+    "Polishing your lease documents...",
+    "Calculating rental yields...",
+    "Securing tenant databases...",
+    "Optimizing your real estate workflows...",
+    "Mapping out prime locations...",
+    "Preparing your property dashboard...",
+    "Gathering market insights...",
+    "Analyzing property valuations...",
+    "Reviewing listing details...",
+    "Arranging virtual tours...",
+    "Almost home...",
+    "Loading your property hub...",
+    "Syncing with property databases...",
 ];
 
 const ANIMATION_VARIANTS = [
@@ -95,15 +95,17 @@ export function LoadingScreen() {
                         className="absolute inset-4 rounded-full border-t-2 border-primary shadow-[0_0_15px_rgba(var(--primary),0.5)]"
                     />
 
-                    {/* Center pulsing core */}
+                    {/* Center pulsing core with Home icon */}
                     <motion.div
                         animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0.5, 1, 0.5]
+                            scale: [0.95, 1.05, 0.95],
+                            opacity: [0.8, 1, 0.8]
                         }}
                         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-4 h-4 bg-primary rounded-full shadow-[0_0_20px_var(--primary)]"
-                    />
+                        className="w-12 h-12 bg-primary/10 rounded-full border border-primary/20 flex items-center justify-center shadow-[0_0_20px_rgba(var(--primary),0.3)] text-primary z-10"
+                    >
+                        <Home className="w-6 h-6 text-primary" />
+                    </motion.div>
 
                     {/* Orbiting particles */}
                     {[0, 120, 240].map((angle, i) => (
@@ -159,7 +161,7 @@ export function LoadingScreen() {
                     className="mt-6 flex flex-col items-center gap-1.5"
                 >
                     <span className="text-[10px] uppercase font-black tracking-[0.3em] text-primary/60">
-                        Initializing
+                        Preparing Hub
                     </span>
                     <div className="flex gap-1">
                         {[0, 1, 2].map((i) => (

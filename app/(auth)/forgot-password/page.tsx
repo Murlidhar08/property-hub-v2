@@ -140,6 +140,7 @@ export default function ForgotPasswordPage() {
                     <div className="relative group">
                       <Input
                         type="email"
+                        tabIndex={1}
                         placeholder="name@company.com"
                         className="h-14 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                         value={email}
@@ -166,6 +167,7 @@ export default function ForgotPasswordPage() {
 
                   <Button
                     type="submit"
+                    tabIndex={2}
                     className="relative rounded-2xl h-14 w-full text-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 active:scale-[0.98]"
                     disabled={loading}
                   >
@@ -180,6 +182,7 @@ export default function ForgotPasswordPage() {
                   <div className="text-center">
                     <Link
                       href="/login"
+                      tabIndex={3}
                       className="text-primary font-bold hover:text-primary/80 transition-colors"
                     >
                       Back to Sign In
@@ -228,7 +231,7 @@ export default function ForgotPasswordPage() {
         {/* BOTTOM DECORATION / FOOTER */}
         <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground text-sm">
-            Need help? <a href="mailto:support@example.app" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</a>
+            Need help? <a href="mailto:support@propertyhub.com" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</a>
           </p>
         </motion.div>
       </motion.div>
@@ -278,8 +281,8 @@ export default function ForgotPasswordPage() {
               transition={{ delay: 0.3 }}
               className="text-5xl font-black tracking-tight leading-tight"
             >
-              Secure Identity <br />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">Protection.</span>
+              Secure Property <br />
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">Operations.</span>
             </motion.h2>
 
             <motion.p

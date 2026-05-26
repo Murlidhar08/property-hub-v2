@@ -146,6 +146,7 @@ export default function SetupPage() {
                 <div className="relative group">
                   <Input
                     type="text"
+                    tabIndex={1}
                     placeholder="Administrator Name"
                     className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                     value={name}
@@ -162,6 +163,7 @@ export default function SetupPage() {
                 <div className="relative group">
                   <Input
                     type="email"
+                    tabIndex={2}
                     placeholder="admin@company.com"
                     className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                     value={email}
@@ -179,6 +181,7 @@ export default function SetupPage() {
                   <div className="relative group">
                     <Input
                       type={showPassword ? "text" : "password"}
+                      tabIndex={3}
                       placeholder="••••••••"
                       className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                       value={password}
@@ -200,6 +203,7 @@ export default function SetupPage() {
                   <div className="relative group">
                     <Input
                       type={showConfirm ? "text" : "password"}
+                      tabIndex={4}
                       placeholder="••••••••"
                       className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                       value={confirmPassword}
@@ -220,6 +224,7 @@ export default function SetupPage() {
 
             <Button
               disabled={loading}
+              tabIndex={5}
               type="submit"
               className="relative rounded-2xl h-14 w-full text-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 active:scale-[0.98] mt-4"
             >
@@ -286,8 +291,8 @@ export default function SetupPage() {
               transition={{ delay: 0.3 }}
               className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tight leading-tight"
             >
-              Deployment <br />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">Successful.</span>
+              Setup Real Estate <br />
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">Portal.</span>
             </motion.h2>
 
             <motion.p
@@ -296,7 +301,7 @@ export default function SetupPage() {
               transition={{ delay: 0.5 }}
               className="text-white/80 text-xl font-medium max-w-lg mx-auto leading-relaxed"
             >
-              You are just one step away from launching your private financial architect platform.
+              You are just one step away from launching your premium real estate management platform.
             </motion.p>
           </div>
         </div>

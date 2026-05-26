@@ -162,6 +162,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
                   <label className="text-sm font-semibold text-foreground/70">Password</label>
                   <Link
                     href="/forgot-password"
+                    tabIndex={3}
                     className="text-xs font-bold text-primary hover:text-primary/80 transition-colors"
                   >
                     Forgot Password?
@@ -246,7 +247,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
         <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link tabIndex={8} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
+            <Link tabIndex={9} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
               Get Started
             </Link>
           </p>
@@ -300,7 +301,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
               className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tight leading-tight"
             >
               Master your <br />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">financial destiny.</span>
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">property portfolio.</span>
             </motion.h2>
 
             <motion.p
@@ -309,7 +310,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
               transition={{ delay: 0.5 }}
               className="text-white/80 text-xl font-medium max-w-lg mx-auto leading-relaxed"
             >
-              Experience the next generation of finance management with real-time insights and enterprise security.
+              Experience the next generation of real estate operations with real-time tracking, seamless workflows, and ultimate listing control.
             </motion.p>
           </div>
         </div>

@@ -132,7 +132,7 @@ export default function SignupPage() {
               Create account
             </h2>
             <p className="text-muted-foreground text-lg font-medium leading-relaxed">
-              Start your financial journey with {envClient.NEXT_PUBLIC_APP_NAME} today.
+              Start your real estate journey with {envClient.NEXT_PUBLIC_APP_NAME} today.
             </p>
           </motion.div>
 
@@ -158,6 +158,7 @@ export default function SignupPage() {
                 <div className="relative group">
                   <Input
                     type="text"
+                    tabIndex={1}
                     placeholder="John Doe"
                     className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                     value={name}
@@ -174,6 +175,7 @@ export default function SignupPage() {
                 <div className="relative group">
                   <Input
                     type="email"
+                    tabIndex={2}
                     placeholder="name@company.com"
                     className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                     value={email}
@@ -191,6 +193,7 @@ export default function SignupPage() {
                   <div className="relative group">
                     <Input
                       type={showPassword ? "text" : "password"}
+                      tabIndex={3}
                       placeholder="••••••••"
                       className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                       value={password}
@@ -212,6 +215,7 @@ export default function SignupPage() {
                   <div className="relative group">
                     <Input
                       type={showConfirm ? "text" : "password"}
+                      tabIndex={4}
                       placeholder="••••••••"
                       className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                       value={confirmPassword}
@@ -232,6 +236,7 @@ export default function SignupPage() {
 
             <Button
               disabled={loading}
+              tabIndex={5}
               type="submit"
               className="relative rounded-2xl h-14 w-full text-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 active:scale-[0.98] mt-4"
             >
@@ -249,7 +254,7 @@ export default function SignupPage() {
         <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" className="font-bold text-primary hover:text-primary/80 transition-colors">
+            <Link tabIndex={6} href="/login" className="font-bold text-primary hover:text-primary/80 transition-colors">
               Sign In
             </Link>
           </p>
@@ -302,7 +307,7 @@ export default function SignupPage() {
               className="text-5xl font-black tracking-tight leading-tight"
             >
               The future of <br />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">wealth management.</span>
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">property management.</span>
             </motion.h2>
 
             <motion.p
@@ -311,7 +316,7 @@ export default function SignupPage() {
               transition={{ delay: 0.5 }}
               className="text-white/80 text-xl font-medium max-w-lg mx-auto leading-relaxed"
             >
-              Join thousands of professionals using {envClient.NEXT_PUBLIC_APP_NAME} to streamline their financial operations.
+              Join thousands of real estate professionals using {envClient.NEXT_PUBLIC_APP_NAME} to manage listings, clients, and agents effortlessly.
             </motion.p>
           </div>
         </div>
