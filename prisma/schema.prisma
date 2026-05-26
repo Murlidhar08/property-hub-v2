@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Enums
+enum ThemeMode {
+  AUTO
+  LIGHT
+  DARK
+}
+
+// Better Auth tables
+model User {
+  id               String         @id
+  name             String
+  email            String
+  emailVerified    Boolean        @default(false)
+  image            String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  role             String?
+  banned           Boolean?       @default(false)
+  banReason        String?
+  banExpires       DateTime?
+  twoFactorEnabled Boolean?       @default(false)
+  contactNo        String?
+  address          String?
+  sessions         Session[]
+  accounts         Account[]
+  twofactors       TwoFactor[]
+  passkeys         Passkey[]
+  userSettings     UserSettings[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id             String   @id
+  expiresAt      DateTime
+  token          String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  ipAddress      String?
+  userAgent      String?
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy String?
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model TwoFactor {
+  id          String   @id
+  secret      String
+  backupCodes String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verified    Boolean? @default(true)
+
+  @@index([secret])
+  @@index([userId])
+  @@map("twoFactor")
+}
+
+model Passkey {
+  id           String    @id
+  name         String?
+  publicKey    String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialID String
+  counter      Int
+  deviceType   String
+  backedUp     Boolean
+  transports   String?
+  createdAt    DateTime?
+  aaguid       String?
+
+  @@index([userId])
+  @@index([credentialID])
+  @@map("passkey")
+}
+
+// Application settings tables
+model UserSettings {
+  userId     String    @id
+  dateFormat String    @default("dd/MM/yyyy")
+  timeFormat String    @default("hh:mm a")
+  language   String    @default("en")
+  theme      ThemeMode @default(AUTO)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("userSettings")
+}
+
+model AppConfig {
+  id                  String   @id @default("singleton")
+  smtpHost            String?
+  smtpPort            Int?     @default(587)
+  smtpUser            String?
+  smtpPass            String?
+  smtpSecure          Boolean? @default(false)
+  fromEmail           String?
+  googleClientId      String?
+  googleClientSecret  String?
+  discordClientId     String?
+  discordClientSecret String?
+
+  @@map("appConfig")
+}
