@@ -162,7 +162,6 @@ function LoginFormContent({ providers }: LoginFormProps) {
                   <label className="text-sm font-semibold text-foreground/70">Password</label>
                   <Link
                     href="/forgot-password"
-                    tabIndex={3}
                     className="text-xs font-bold text-primary hover:text-primary/80 transition-colors"
                   >
                     Forgot Password?
@@ -247,7 +246,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
         <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link tabIndex={9} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
+            <Link tabIndex={8} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
               Get Started
             </Link>
           </p>

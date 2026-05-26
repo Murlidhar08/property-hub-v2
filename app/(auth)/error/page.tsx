@@ -94,7 +94,6 @@ function ErrorContent() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Button
-                tabIndex={1}
                 className="h-14 rounded-2xl bg-linear-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-bold uppercase tracking-widest text-xs shadow-[0_10px_40px_rgba(225,29,72,0.3)] hover:shadow-[0_15px_50px_rgba(225,29,72,0.4)] transition-all active:scale-[0.98] border-t border-white/20"
               >
                 <Link className="flex" href="/dashboard">
@@ -104,7 +103,6 @@ function ErrorContent() {
               </Button>
               <Button
                 variant="outline"
-                tabIndex={2}
                 className="h-14 rounded-2xl border-2 border-rose-500/20 bg-rose-500/5 text-rose-600 hover:bg-rose-500/10 hover:border-rose-500/40 font-bold uppercase tracking-widest text-xs transition-all active:scale-[0.98] group"
               >
                 <Link className="flex" href="/login">
