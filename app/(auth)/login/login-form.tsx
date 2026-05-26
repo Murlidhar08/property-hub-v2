@@ -8,8 +8,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
-// Lib
-import { authClient } from "@/lib/auth/auth-client";
+import { authClient, signIn } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
 import { tran } from "@/lib/languages/i18n";
 
@@ -64,6 +63,29 @@ function LoginFormContent({ providers }: LoginFormProps) {
     // Last Login Method
     setLastLogin(authClient.getLastUsedLoginMethod() || "");
   }, [router])
+
+  const handleEmailLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const result = await signIn.email({ email, password });
+      if (result.error) {
+        if (result.error.code === "BANNED_USER") {
+          router.push(`/banned?reason=${encodeURIComponent(result.error.message || "")}`);
+          return;
+        }
+        setError(result.error.message || "Sign in failed");
+      }
+      else router.push("/dashboard");
+    } catch (err) {
+      setError("An error occurred during sign in");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="h-screen w-full flex flex-col lg:flex-row select-none bg-background overflow-hidden relative">
@@ -122,7 +144,7 @@ function LoginFormContent({ providers }: LoginFormProps) {
             </h2>
           </motion.div>
 
-          <motion.form variants={itemVariants} className="space-y-5">
+          <motion.form variants={itemVariants} onSubmit={handleEmailLogin} className="space-y-5">
             <AnimatePresence mode="wait">
               {error && (
                 <motion.div
@@ -191,9 +213,6 @@ function LoginFormContent({ providers }: LoginFormProps) {
             <EmailAuth
               lastLogin={lastLogin}
               loading={loading}
-              email={email}
-              password={password}
-              setLoading={setLoading}
             />
 
             <PasskeyAuth
