@@ -105,7 +105,6 @@ export default function TwoFactorPage() {
                     <div className="relative flex justify-center text-xs uppercase">
                       <button
                         onClick={() => setShowBackup(true)}
-                        tabIndex={3}
                         className="bg-background px-4 py-2 rounded-full text-muted-foreground font-bold tracking-widest border border-border/50 shadow-xs hover:bg-muted transition-colors"
                       >
                         Use backup code
@@ -127,7 +126,6 @@ export default function TwoFactorPage() {
                   <div className="text-center">
                     <button
                       onClick={() => setShowBackup(false)}
-                      tabIndex={3}
                       className="text-primary font-bold hover:text-primary/80 transition-colors"
                     >
                       Back to Security Code
@@ -142,7 +140,7 @@ export default function TwoFactorPage() {
         {/* BOTTOM DECORATION / FOOTER */}
         <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-border/50 text-center">
           <p className="text-muted-foreground text-sm font-medium">
-            Need help? <a href="mailto:support@propertyhub.com" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</a>
+            Need help? <a href="mailto:support@example.app" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</a>
           </p>
         </motion.div>
       </motion.div>
