@@ -27,28 +27,59 @@ enum UserStatus {
 
 // Better Auth tables
 model User {
-  id               String         @id
+  id               String    @id @default(cuid())
   name             String
-  email            String
-  emailVerified    Boolean        @default(false)
+  email            String    @unique
+  emailVerified    Boolean   @default(false)
   image            String?
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  role             UserRole?
-  status           UserStatus     @default(pendingapproval)
-  banned           Boolean?       @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  twoFactorEnabled Boolean?  @default(false)
+  banned           Boolean   @default(false)
   banReason        String?
   banExpires       DateTime?
-  twoFactorEnabled Boolean?       @default(false)
-  contactNo        String?
-  address          String?
-  sessions         Session[]
-  accounts         Account[]
-  twofactors       TwoFactor[]
-  passkeys         Passkey[]
-  userSettings     UserSettings[]
+  role             UserRole  @default(user)
 
-  @@unique([email])
+  // Custom fields from userinfo
+  contactNo   String?
+  username    String?    @unique
+  status      UserStatus @default(pendingapproval)
+  occupation  String?
+  address     String?    @db.Text
+  description String?    @db.Text
+
+  sessions     Session[]
+  accounts     Account[]
+  twofactors   TwoFactor[]
+  passkeys     Passkey[]
+  userSettings UserSettings[]
+
+  // Relations to original app models
+  createdProperty          Property[]                 @relation("PropertyCreatedBy")
+  updatedProperty          Property[]                 @relation("PropertyUpdatedBy")
+  createdRequirements      Requirement[]              @relation("RequirementCreatedBy")
+  updatedRequirements      Requirement[]              @relation("RequirementUpdatedBy")
+  propertyMappings         PropertyUserMapping[]
+  sharedLinks              PropertySharedLink[]
+  userDocuments            UserDocument[]             @relation("UserDocuments")
+  createdUserDocuments     UserDocument[]             @relation("UserDocumentCreator")
+  propertyAgreementsOwner  PropertyAgreement[]        @relation("AgreementOwner")
+  propertyAgreementsClient PropertyAgreement[]        @relation("AgreementClient")
+  createdAgreements        PropertyAgreement[]        @relation("AgreementCreator")
+  createdPayments          PropertyAgreementPayment[] @relation("PaymentCreator")
+  userRoleMappings         UserRoleMapping[]
+
+  createdBy                 String?
+  updatedBy                 String?
+  creatorUser               User?                      @relation("UserCreator", fields: [createdBy], references: [id])
+  updaterUser               User?                      @relation("UserUpdater", fields: [updatedBy], references: [id])
+  createdUsers              User[]                     @relation("UserCreator")
+  updatedUsers              User[]                     @relation("UserUpdater")
+  properties                Property[]
+  requirements              Requirement[]
+  propertyAgreements        PropertyAgreement[]
+  propertyAgreementPayments PropertyAgreementPayment[]
+
   @@map("user")
 }
 
@@ -159,4 +190,274 @@ model AppConfig {
   discordClientSecret String?
 
   @@map("appConfig")
+}
+
+// Application Enums
+enum UserType {
+  agent
+  client
+  owner
+}
+
+enum PropertyType {
+  agricultural
+  nonagricultural
+  hotel
+  tenament
+  flat
+  plot
+}
+
+enum MeasurementType {
+  sqfoot
+  acer
+  bigha
+  guntha
+}
+
+enum PropertyStatus {
+  rent
+  rented
+  sell
+  soldout
+  buy
+  hold
+  draft
+}
+
+enum PropertyDocumentType {
+  preview
+  document
+  agreement
+}
+
+enum DurationType {
+  month
+  year
+}
+
+enum AgreementStatus {
+  active
+  complete
+  expired
+  terminated
+  pending
+  hold
+}
+
+enum RequirementStatus {
+  active
+  completed
+  terminated
+}
+
+enum UserDocumentType {
+  aadhar_card
+  pan_card
+  election_card
+  other
+}
+
+// Application tables
+model UserRoleMapping {
+  id       String   @id @default(cuid())
+  userId   String
+  roleType UserType
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_role_mapping")
+}
+
+model Property {
+  id               String           @id @default(cuid())
+  title            String
+  propertyType     PropertyType
+  address          String
+  measurementValue Decimal?         @db.Decimal(10, 2)
+  measurementType  MeasurementType?
+  coordinates      Json?
+  description      String?          @db.Text
+  createdBy        String
+  createdAt        DateTime         @default(now())
+  updatedBy        String
+  updatedAt        DateTime         @updatedAt
+
+  creator User @relation("PropertyCreatedBy", fields: [createdBy], references: [id])
+  updater User @relation("PropertyUpdatedBy", fields: [updatedBy], references: [id])
+
+  documents   PropertyDocument[]
+  status      PropertyStatusMapping[]
+  users       PropertyUserMapping[]
+  agreements  PropertyAgreement[]
+  sharedLinks PropertySharedLink[]
+  user        User?                   @relation(fields: [userId], references: [id])
+  userId      String?
+
+  @@index([createdBy])
+  @@index([propertyType])
+  @@map("property")
+}
+
+model Requirement {
+  id              String            @id @default(cuid())
+  title           String
+  propertyType    PropertyType
+  location        String
+  status          RequirementStatus @default(active)
+  measurementType MeasurementType?
+  minMeasurement  Decimal?          @db.Decimal(10, 2)
+  maxMeasurement  Decimal?          @db.Decimal(10, 2)
+  minPrice        Decimal?          @db.Decimal(15, 2)
+  maxPrice        Decimal?          @db.Decimal(15, 2)
+  propertyForType PropertyStatus
+  clientId        String?
+  agentId         String?
+  description     String?           @db.Text
+  createdBy       String
+  createdAt       DateTime          @default(now())
+  updatedBy       String
+  updatedAt       DateTime          @updatedAt
+
+  creator User    @relation("RequirementCreatedBy", fields: [createdBy], references: [id])
+  updater User    @relation("RequirementUpdatedBy", fields: [updatedBy], references: [id])
+  user    User?   @relation(fields: [userId], references: [id])
+  userId  String?
+
+  @@index([createdBy])
+  @@index([clientId])
+  @@index([agentId])
+  @@map("requirement")
+}
+
+model PropertyStatusMapping {
+  id             String         @id @default(cuid())
+  propertyId     String
+  status         PropertyStatus
+  price          Decimal?       @db.Decimal(15, 2)
+  durationTypeId DurationType?
+
+  property Property @relation(fields: [propertyId], references: [id])
+
+  @@index([propertyId])
+  @@map("property_status_mapping")
+}
+
+model PropertyUserMapping {
+  id         Int    @id @default(autoincrement())
+  propertyId String
+  userId     String
+  userType   Int
+
+  property Property @relation(fields: [propertyId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+
+  @@index([propertyId])
+  @@index([userId])
+  @@map("property_user_mapping")
+}
+
+model PropertyDocument {
+  id           String               @id @default(cuid())
+  fileName     String               @db.VarChar(500)
+  extension    String               @db.VarChar(45)
+  relativePath String               @db.VarChar(500)
+  propertyId   String
+  agreementId  Int?
+  documentType PropertyDocumentType
+  orderId      Int
+  isPrivate    Boolean              @default(false)
+  uploadedBy   String
+  createdAt    DateTime             @default(now())
+
+  property  Property           @relation(fields: [propertyId], references: [id])
+  agreement PropertyAgreement? @relation(fields: [agreementId], references: [id])
+
+  @@index([propertyId])
+  @@index([agreementId])
+  @@map("property_document")
+}
+
+model PropertyAgreement {
+  id          Int             @id @default(autoincrement())
+  propertyId  String
+  ownerId     String
+  clientId    String
+  typeId      Int
+  price       Decimal         @db.Decimal(15, 2)
+  status      AgreementStatus @default(pending)
+  date        DateTime        @db.Date
+  validTill   DateTime?       @db.Date
+  description String?         @db.Text
+  createdBy   String
+  createdAt   DateTime        @default(now())
+  updatedBy   String
+  updatedAt   DateTime        @updatedAt
+
+  property  Property                   @relation(fields: [propertyId], references: [id])
+  owner     User                       @relation("AgreementOwner", fields: [ownerId], references: [id])
+  client    User                       @relation("AgreementClient", fields: [clientId], references: [id])
+  creator   User                       @relation("AgreementCreator", fields: [createdBy], references: [id])
+  payments  PropertyAgreementPayment[]
+  documents PropertyDocument[]
+  user      User?                      @relation(fields: [userId], references: [id])
+  userId    String?
+
+  @@index([propertyId])
+  @@index([ownerId])
+  @@index([clientId])
+  @@map("property_agreement")
+}
+
+model PropertyAgreementPayment {
+  id          Int      @id @default(autoincrement())
+  agreementId Int
+  label       String   @db.VarChar(255)
+  amount      Decimal  @db.Decimal(15, 2)
+  paidDate    DateTime @db.Date
+  createdBy   String
+  createdAt   DateTime @default(now())
+
+  agreement PropertyAgreement @relation(fields: [agreementId], references: [id])
+  creator   User              @relation("PaymentCreator", fields: [createdBy], references: [id])
+  user      User?             @relation(fields: [userId], references: [id])
+  userId    String?
+
+  @@map("property_agreement_payment")
+}
+
+model PropertySharedLink {
+  id         String    @id @default(cuid())
+  label      String?   @db.VarChar(500)
+  propertyId String
+  expiry     DateTime?
+  detail     Json
+  sharedBy   String
+  visitCount Int       @default(0)
+  createdAt  DateTime  @default(now())
+
+  user           User     @relation(fields: [sharedBy], references: [id])
+  targetProperty Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([propertyId])
+  @@index([sharedBy])
+  @@map("property_shared_link")
+}
+
+model UserDocument {
+  id                   String           @id @default(cuid())
+  userId               String
+  fileName             String           @db.VarChar(255)
+  extension            String           @db.VarChar(20)
+  documentRelativePath String           @db.VarChar(500)
+  documentType         UserDocumentType
+  orderId              Int              @default(0)
+  createdBy            String
+  createdAt            DateTime         @default(now())
+
+  user    User @relation("UserDocuments", fields: [userId], references: [id])
+  creator User @relation("UserDocumentCreator", fields: [createdBy], references: [id])
+
+  @@index([userId])
+  @@index([createdBy])
+  @@map("user_document")
 }

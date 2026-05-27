@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth/auth";
-import { UserRole } from "@/lib/generated/prisma/enums";
+import { UserRole, UserStatus } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma/prisma";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -42,6 +42,7 @@ export async function setupAdmin(formData: FormData) {
     data: {
       role: UserRole.admin,
       emailVerified: true,
+      status: UserStatus.approved
     },
   });
 

@@ -10,6 +10,13 @@ export default {
         dashboard: "Dashboard",
         admin: "Admin",
         settings: "Settings",
+        properties: "Property",
+        requirements: "Requirement",
+        clients: "Client",
+        agents: "Agent",
+        owners: "Owner",
+        heat_map: "Heat Map",
+        tools: "Tool"
     },
     languages: {
         en: "English",
@@ -22,6 +29,25 @@ export default {
     },
     dashboard: {
         title: "Dashboard",
+        stats: {
+            properties: "Total Properties",
+            active_requirements: "Active Requirements",
+            total_users: "Approved Users",
+            agreements: "Active Agreements",
+        },
+        recent_activity: "Recent Activity",
+        view_all: "View All",
+        revenue_trend: "Market Trend",
+        occupancy_overview: "Portfolio Overview",
+        no_activity: "No recent activity",
+    },
+    properties: {
+        title: "Properties",
+        overview: "Portfolio Overview",
+        total: "{count} Properties",
+        new: "Add Property",
+        not_found: "No properties found",
+        description: "Manage your real estate assets, units, and documentations in one place.",
     },
     settings: {
         title: "Settings",
