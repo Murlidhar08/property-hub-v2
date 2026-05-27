@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/auth-client";
 import {
+    Activity,
     Ban,
     Check,
     Filter,
@@ -34,12 +35,15 @@ import { toast } from "sonner";
 import { comprehensiveDeleteUser } from "@/actions/admin.actions";
 import { tran } from "@/lib/languages/i18n";
 import { useAdminUsers } from "@/tanstacks/admin";
+import { UserRole, UserStatus } from "@/lib/generated/prisma/enums";
+import { UserStatusModal } from "./user-status-modal";
 
 interface User {
     id: string;
     email: string;
     name: string;
     role?: string | null;
+    status?: UserStatus | null;
     banned?: boolean | null;
     image?: string | null;
     createdAt: Date;
@@ -59,6 +63,9 @@ export function UserList() {
     const [filterRole, setFilterRole] = useState<string>("all");
     const [filterStatus, setFilterStatus] = useState<string>("all");
     const [filterVerified, setFilterVerified] = useState<string>("all");
+
+    // User Status Update
+    const [selectedUserForStatus, setSelectedUserForStatus] = useState<User | null>(null);
 
     const users = usersData || [];
 
@@ -96,7 +103,7 @@ export function UserList() {
     const setRole = async (userId: string, role: string) => {
         await handleAction(
             userId,
-            () => authClient.admin.setRole({ userId, role: role as "admin" | "user" }),
+            () => authClient.admin.setRole({ userId, role: role as UserRole }),
             tran("admin.user_mng.msg.success_role_updated", { role })
         );
     };
@@ -188,8 +195,8 @@ export function UserList() {
                         />
                         <DropdownMenuContent className="rounded-2xl w-48 p-2 border-2 border-primary/5">
                             <DropdownMenuItem onClick={() => setFilterRole("all")} className="rounded-xl font-bold">{tran("admin.user_mng.all_roles")}</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setFilterRole("admin")} className="rounded-xl font-bold text-indigo-600">{tran("admin.user_mng.admins_only")}</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setFilterRole("user")} className="rounded-xl font-bold">{tran("admin.user_mng.users_only")}</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilterRole(UserRole.admin)} className="rounded-xl font-bold text-indigo-600">{tran("admin.user_mng.admins_only")}</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilterRole(UserRole.user)} className="rounded-xl font-bold">{tran("admin.user_mng.users_only")}</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
 
@@ -274,9 +281,25 @@ export function UserList() {
                                                     {tran("admin.user_mng.verified")}
                                                 </Badge>
                                             )}
-                                            {user.role === "admin" && (
+                                            {user.role === UserRole.admin && (
                                                 <Badge variant="secondary" className="bg-indigo-500/10 text-indigo-600 border border-indigo-500/20 text-[9px] font-black uppercase tracking-widest h-5 px-2 shadow-sm shadow-indigo-500/5">
                                                     {tran("admin.user_mng.admins_only").replace(" Only", "").replace("केवल ", "")}
+                                                </Badge>
+                                            )}
+                                            {user.status && (
+                                                <Badge
+                                                    variant="secondary"
+                                                    className={`text-[9px] font-black uppercase tracking-widest h-5 px-2 shadow-sm border ${
+                                                        user.status === UserStatus.approved
+                                                            ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-emerald-500/5"
+                                                            : user.status === UserStatus.pendingapproval
+                                                            ? "bg-amber-500/10 text-amber-600 border-amber-500/20 shadow-amber-500/5"
+                                                            : user.status === UserStatus.suspended
+                                                            ? "bg-rose-500/10 text-rose-600 border-rose-500/20 shadow-rose-500/5"
+                                                            : "bg-muted text-muted-foreground border-muted-foreground/20"
+                                                    }`}
+                                                >
+                                                    {user.status === UserStatus.pendingapproval ? "Pending Approval" : user.status}
                                                 </Badge>
                                             )}
                                         </div>
@@ -308,12 +331,27 @@ export function UserList() {
                                         />
                                         <DropdownMenuContent align="end" className="w-60 rounded-3xl p-2 border-none shadow-2xl bg-background/95 backdrop-blur-xl">
                                             <DropdownMenuGroup>
+                                                <DropdownMenuItem
+                                                    onClick={() => {
+                                                        setSelectedUserForStatus(user);
+                                                    }}
+                                                    className="rounded-2xl gap-3 p-3 focus:bg-orange-500 focus:text-white transition-all duration-300 cursor-pointer active:scale-95 mt-1"
+                                                >
+                                                    <div className="p-2 bg-orange-500/10 rounded-xl">
+                                                        <Activity size={16} className="text-orange-500" />
+                                                    </div>
+                                                    <div className="flex flex-col">
+                                                        <span className="font-bold text-sm">Status</span>
+                                                        <span className="text-[10px] text-muted-foreground/60">Update Account Status</span>
+                                                    </div>
+                                                </DropdownMenuItem>
+
                                                 {/* Role Management */}
                                                 <DropdownMenuItem
-                                                    onClick={() => setRole(user.id, user.role === "admin" ? "user" : "admin")}
+                                                    onClick={() => setRole(user.id, user.role === UserRole.admin ? UserRole.user : UserRole.admin)}
                                                     className="group rounded-2xl gap-3 p-2.5 focus:bg-indigo-600 focus:text-white transition-all duration-300 cursor-pointer active:scale-95"
                                                 >
-                                                    {user.role === "admin" ? (
+                                                    {user.role === UserRole.admin ? (
                                                         <>
                                                             <div className="p-2.5 bg-muted rounded-xl group-focus:bg-white/20 transition-colors">
                                                                 <UserMinus size={18} className="text-muted-foreground group-focus:text-white" />
@@ -368,8 +406,8 @@ export function UserList() {
                                                 <DropdownMenuItem
                                                     onClick={() => user.banned ? unbanUser(user.id) : banUser(user.id)}
                                                     className={`group rounded-2xl gap-3 p-2.5 transition-all duration-300 cursor-pointer active:scale-95 mt-1 ${user.banned
-                                                            ? "focus:bg-emerald-600 focus:text-white"
-                                                            : "focus:bg-rose-600 focus:text-white"
+                                                        ? "focus:bg-emerald-600 focus:text-white"
+                                                        : "focus:bg-rose-600 focus:text-white"
                                                         }`}
                                                 >
                                                     {user.banned ? (
@@ -416,6 +454,12 @@ export function UserList() {
                         )))}
                 </div>
             </div>
+
+            <UserStatusModal
+                user={selectedUserForStatus}
+                onClose={() => setSelectedUserForStatus(null)}
+                onSuccess={refetch}
+            />
         </div>
     );
 }

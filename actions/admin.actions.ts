@@ -2,19 +2,20 @@
 
 import { getAppConfig } from "@/lib/app-config";
 import { auth, getUserSession } from "@/lib/auth/auth";
+import { UserRole, UserStatus } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma/prisma";
 import { headers } from "next/headers";
 
 export async function getAdminAppConfig() {
     const session = await getUserSession();
-    if (session?.user.role !== "admin") throw new Error("Unauthorized");
+    if (session?.user.role !== UserRole.admin) throw new Error("Unauthorized");
 
     return await getAppConfig();
 }
 
 export async function getAdminUsers() {
     const session = await getUserSession();
-    if (session?.user.role !== "admin") throw new Error("Unauthorized");
+    if (session?.user.role !== UserRole.admin) throw new Error("Unauthorized");
 
     const usersList = await auth.api.listUsers({
         headers: await headers(),
@@ -44,7 +45,7 @@ export async function getAdminUsers() {
 
 export async function comprehensiveDeleteUser(userId: string) {
     const session = await getUserSession();
-    if (session?.user.role !== "admin") throw new Error("Unauthorized");
+    if (session?.user.role !== UserRole.admin) throw new Error("Unauthorized");
 
     try {
         await prisma.$transaction(async (tx) => {
@@ -58,5 +59,22 @@ export async function comprehensiveDeleteUser(userId: string) {
     } catch (error: any) {
         console.error("Failed to delete user comprehensively:", error);
         return { error: error.message || "Failed to delete user" };
+    }
+}
+
+export async function updateUserStatus(userId: string, status: UserStatus) {
+    const session = await getUserSession();
+    if (session?.user.role !== UserRole.admin) throw new Error("Unauthorized");
+
+    try {
+        await prisma.user.update({
+            where: { id: userId },
+            data: { status }
+        });
+
+        return { success: true };
+    } catch (error: any) {
+        console.error("Failed to update user status:", error);
+        return { error: error.message || "Failed to update user status" };
     }
 }

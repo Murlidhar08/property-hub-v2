@@ -10,13 +10,14 @@ import { AdminSkeleton } from "./components/admin-skeleton";
 import { AppHeader } from "@/components/app-header";
 import { getUserSession } from "@/lib/auth/auth";
 import { t } from "@/lib/languages/i18n";
+import { UserRole } from "@/lib/generated/prisma/enums";
 
 export default async function AdminPage() {
     const session = await getUserSession();
     const language = session?.session.userSettings.language ?? "en";
 
     // Guard: Only admins can access this page
-    if (session?.user.role !== "admin") {
+    if (session?.user.role !== UserRole.admin) {
         return <Restricted language={language} />;
     }
 
