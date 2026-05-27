@@ -49,3 +49,16 @@ export const itemVariants = {
   hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0 }
 };
+
+/**
+ * Gentle floating animation for cards, illustrations, or logos.
+ */
+export const floatAnimate = {
+  y: [0, -10, 0],
+};
+
+export const floatTransition: Transition = {
+  duration: 4,
+  repeat: Infinity,
+  ease: "easeInOut",
+};

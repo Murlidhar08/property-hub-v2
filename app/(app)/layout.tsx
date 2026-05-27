@@ -12,6 +12,7 @@ import { LayoutTransitions } from "@/components/layout-transitions";
 import { NavBar } from "@/components/navbar/nav-bar";
 import { UserConfigProvider } from "@/components/providers/user-config-provider";
 import { getDefaultConfig, getUserConfig } from "@/lib/user-config";
+import { UserStatus } from "@/lib/generated/prisma/enums";
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Check if setup is needed
@@ -20,14 +21,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   }
 
   // User Config
-  let userConfig = await getUserConfig()
-  userConfig = userConfig ?? getDefaultConfig()
-
-  // Get session on the server
+  const userConfig = await getUserConfig() ?? getDefaultConfig()
   const session = await getUserSession();
+  const status = session.user.status;
 
-  if (session.user.banned)
-    redirect("/banned" as any);
+  // Handle Redirection based on status
+  if (session.user.banned) redirect("/banned");
+  if (status === UserStatus.pendingapproval) redirect("/pending-approval");
+  if (status === UserStatus.suspended) redirect("/suspended");
 
   return (
     <UserConfigProvider config={userConfig}>

@@ -14,6 +14,17 @@ enum ThemeMode {
   DARK
 }
 
+enum UserRole {
+  admin
+  user
+}
+
+enum UserStatus {
+  pendingapproval
+  approved
+  suspended
+}
+
 // Better Auth tables
 model User {
   id               String         @id
@@ -23,7 +34,8 @@ model User {
   image            String?
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
-  role             String?
+  role             UserRole?
+  status           UserStatus     @default(pendingapproval)
   banned           Boolean?       @default(false)
   banReason        String?
   banExpires       DateTime?

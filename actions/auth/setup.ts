@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth/auth";
+import { UserRole } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma/prisma";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -39,7 +40,7 @@ export async function setupAdmin(formData: FormData) {
   await prisma.user.update({
     where: { id: user.user.id },
     data: {
-      role: "admin",
+      role: UserRole.admin,
       emailVerified: true,
     },
   });

@@ -201,6 +201,7 @@ export const auth = betterAuth({
           role: true,
           banned: true,
           banReason: true,
+          status: true,
 
           // current session context
           sessions: {
@@ -242,6 +243,7 @@ export const auth = betterAuth({
 
         user: {
           ...user,
+          status: dbUser?.status,
           role: dbUser?.role,
           contactNo: dbUser?.contactNo,
           address: dbUser?.address,
@@ -278,7 +280,7 @@ export const getUserSession = async () => {
   });
 
   if (session == null) {
-    redirect("/login?error=session_expired" as any);
+    redirect("/login" as any);
   }
 
   return session;
