@@ -9,20 +9,20 @@ import { AdminSkeleton } from "./components/admin-skeleton";
 // Hooks
 import { AppHeader } from "@/components/app-header";
 import { getUserSession } from "@/lib/auth/auth";
-import { t } from "@/lib/languages/i18n";
+import { tran } from "@/lib/languages/i18n";
+import { UserRole } from "@/lib/generated/prisma/enums";
 
 export default async function AdminPage() {
     const session = await getUserSession();
-    const language = session?.session.userSettings.language ?? "en";
 
     // Guard: Only admins can access this page
-    if (session?.user.role !== "admin") {
-        return <Restricted language={language} />;
+    if (session?.user.role !== UserRole.admin) {
+        return <Restricted />;
     }
 
     return (
         <>
-            <AppHeader title={t("admin.title", language)} />
+            <AppHeader title={tran("admin.title")} />
             <Suspense fallback={<AdminSkeleton />}>
                 <AdminContent />
             </Suspense>
@@ -30,7 +30,7 @@ export default async function AdminPage() {
     );
 }
 
-function Restricted({ language }: { language: string }) {
+function Restricted() {
     return (
         <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-8 animate-in fade-in zoom-in duration-500">
             <div className="relative">
@@ -40,14 +40,14 @@ function Restricted({ language }: { language: string }) {
                 </div>
             </div>
             <div className="space-y-2">
-                <h2 className="text-2xl font-bold tracking-tight text-foreground">{t("admin.access_restricted", language)}</h2>
+                <h2 className="text-2xl font-bold tracking-tight text-foreground">{tran("admin.access_restricted")}</h2>
                 <p className="text-sm text-muted-foreground font-medium max-w-sm mx-auto leading-relaxed">
-                    {t("admin.restricted_description", language)}
+                    {tran("admin.restricted_description")}
                 </p>
             </div>
             <a href="/dashboard">
                 <button className="px-10 py-3 bg-foreground text-background font-semibold rounded-xl hover:shadow-lg transition-all active:scale-[0.98] text-[11px] uppercase tracking-widest">
-                    {t("admin.return_to_dashboard", language)}
+                    {tran("admin.return_to_dashboard")}
                 </button>
             </a>
         </div>

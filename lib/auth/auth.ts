@@ -3,7 +3,7 @@ import { passkey } from "@better-auth/passkey";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
-import { admin as adminPlugin, customSession, haveIBeenPwned, lastLoginMethod, multiSession, twoFactor } from "better-auth/plugins";
+import { admin as adminPlugin, customSession, haveIBeenPwned, lastLoginMethod, multiSession, twoFactor, username } from "better-auth/plugins";
 import { redirect } from "next/navigation";
 
 // Lib
@@ -167,18 +167,24 @@ export const auth = betterAuth({
     }
   },
   socialProviders: {
-    google: {
-      clientId: envServer.GOOGLE_CLIENT_ID as string,
-      clientSecret: envServer.GOOGLE_CLIENT_SECRET as string,
-    },
-    discord: {
-      clientId: envServer.DISCORD_CLIENT_ID as string,
-      clientSecret: envServer.DISCORD_CLIENT_SECRET as string,
-    },
-    facebook: {
-      clientId: envServer.FACEBOOK_CLIENT_ID as string,
-      clientSecret: envServer.FACEBOOK_CLIENT_SECRET as string,
-    },
+    ...(envServer.GOOGLE_CLIENT_ID && envServer.GOOGLE_CLIENT_SECRET ? {
+      google: {
+        clientId: envServer.GOOGLE_CLIENT_ID as string,
+        clientSecret: envServer.GOOGLE_CLIENT_SECRET as string,
+      }
+    } : {}),
+    ...(envServer.DISCORD_CLIENT_ID && envServer.DISCORD_CLIENT_SECRET ? {
+      discord: {
+        clientId: envServer.DISCORD_CLIENT_ID as string,
+        clientSecret: envServer.DISCORD_CLIENT_SECRET as string,
+      }
+    } : {}),
+    ...(envServer.FACEBOOK_CLIENT_ID && envServer.FACEBOOK_CLIENT_SECRET ? {
+      facebook: {
+        clientId: envServer.FACEBOOK_CLIENT_ID as string,
+        clientSecret: envServer.FACEBOOK_CLIENT_SECRET as string,
+      }
+    } : {}),
   },
   session: {
     cookieCache: {
@@ -187,7 +193,6 @@ export const auth = betterAuth({
   },
   plugins: [
     adminPlugin(),
-    nextCookies(),
     twoFactor(),
     lastLoginMethod(),
     passkey(),
@@ -201,6 +206,7 @@ export const auth = betterAuth({
           role: true,
           banned: true,
           banReason: true,
+          status: true,
 
           // current session context
           sessions: {
@@ -224,7 +230,7 @@ export const auth = betterAuth({
         },
       })
 
-      const settings = dbUser?.userSettings[0];
+      const settings = dbUser?.userSettings;
       const dbSession = dbUser?.sessions[0];
 
       return {
@@ -242,6 +248,7 @@ export const auth = betterAuth({
 
         user: {
           ...user,
+          status: dbUser?.status,
           role: dbUser?.role,
           contactNo: dbUser?.contactNo,
           address: dbUser?.address,
@@ -257,7 +264,9 @@ export const auth = betterAuth({
     haveIBeenPwned({
       enabled: envServer.NODE_ENV === 'production',
       customPasswordCompromisedMessage: "This password has appeared in data breaches. Please choose a stronger, unique password."
-    })
+    }),
+    username(),
+    nextCookies()
   ],
   databaseHooks: {
     user: {
@@ -278,7 +287,7 @@ export const getUserSession = async () => {
   });
 
   if (session == null) {
-    redirect("/login?error=session_expired" as any);
+    redirect("/login" as any);
   }
 
   return session;

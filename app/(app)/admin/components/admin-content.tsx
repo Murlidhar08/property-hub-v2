@@ -8,6 +8,10 @@ import { AdminSkeleton } from "./admin-skeleton";
 import { AdminStats } from "./admin-stats";
 import { AppSettingsTab } from "./app-settings-tab";
 import { UserList } from "./user-list";
+import { UserRole } from "@/lib/generated/prisma/enums";
+import { FooterButtons } from "@/components/footer-buttons";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function AdminContent() {
     const { data: users, isLoading } = useAdminUsers();
@@ -19,7 +23,7 @@ export function AdminContent() {
     if (!users) return null;
 
     const totalUsers = users.length;
-    const adminUsers = users.filter((u: any) => u.role === "admin").length;
+    const adminUsers = users.filter((u: any) => u.role === UserRole.admin).length;
     const bannedUsers = users.filter((u: any) => u.banned).length;
     const activeUsers = totalUsers - bannedUsers;
 
@@ -39,8 +43,17 @@ export function AdminContent() {
                                     activeUsers={activeUsers}
                                     bannedUsers={bannedUsers}
                                     adminUsers={adminUsers}
-                                    />
+                                />
+
                                 <UserList />
+
+                                <FooterButtons>
+                                    <Link href={"/user/add" as any}>
+                                        <Button className="rounded-full px-12 h-12 font-black shadow-lg shadow-primary/20">
+                                            Add User
+                                        </Button>
+                                    </Link>
+                                </FooterButtons>
                             </>
                         )
                     },

@@ -1,6 +1,12 @@
 -- CreateEnum
 CREATE TYPE "ThemeMode" AS ENUM ('AUTO', 'LIGHT', 'DARK');
 
+-- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('admin', 'user');
+
+-- CreateEnum
+CREATE TYPE "UserStatus" AS ENUM ('pendingapproval', 'approved', 'suspended');
+
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
@@ -10,13 +16,16 @@ CREATE TABLE "user" (
     "image" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "role" TEXT,
+    "role" "UserRole",
+    "status" "UserStatus" NOT NULL DEFAULT 'pendingapproval',
     "banned" BOOLEAN DEFAULT false,
     "banReason" TEXT,
     "banExpires" TIMESTAMP(3),
     "twoFactorEnabled" BOOLEAN DEFAULT false,
     "contactNo" TEXT,
     "address" TEXT,
+    "username" TEXT,
+    "displayUsername" TEXT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -125,6 +134,9 @@ CREATE TABLE "appConfig" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
 
 -- CreateIndex
 CREATE INDEX "session_userId_idx" ON "session"("userId");
