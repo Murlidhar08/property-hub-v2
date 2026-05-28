@@ -1,9 +1,7 @@
 /*
   Warnings:
 
-  - A unique constraint covering the columns `[username]` on the table `user` will be added. If there are existing duplicate values, this will fail.
   - Made the column `role` on table `user` required. This step will fail if there are existing NULL values in that column.
-  - Made the column `banned` on table `user` required. This step will fail if there are existing NULL values in that column.
 
 */
 -- CreateEnum
@@ -38,10 +36,8 @@ ALTER TABLE "user" ADD COLUMN     "createdBy" TEXT,
 ADD COLUMN     "description" TEXT,
 ADD COLUMN     "occupation" TEXT,
 ADD COLUMN     "updatedBy" TEXT,
-ADD COLUMN     "username" TEXT,
 ALTER COLUMN "role" SET NOT NULL,
-ALTER COLUMN "role" SET DEFAULT 'user',
-ALTER COLUMN "banned" SET NOT NULL;
+ALTER COLUMN "role" SET DEFAULT 'user';
 
 -- CreateTable
 CREATE TABLE "user_role_mapping" (
@@ -248,9 +244,6 @@ CREATE INDEX "user_document_userId_idx" ON "user_document"("userId");
 
 -- CreateIndex
 CREATE INDEX "user_document_createdBy_idx" ON "user_document"("createdBy");
-
--- CreateIndex
-CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
 
 -- AddForeignKey
 ALTER TABLE "user" ADD CONSTRAINT "user_createdBy_fkey" FOREIGN KEY ("createdBy") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;
