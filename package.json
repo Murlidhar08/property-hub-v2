@@ -1,6 +1,6 @@
 {
-  "name": "next-template",
-  "version": "0.0.1",
+  "name": "property-hub-v2",
+  "version": "4.0.0",
   "private": true,
   "engines": {
     "node": ">=22"

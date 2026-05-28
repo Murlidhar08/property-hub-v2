@@ -20,7 +20,7 @@ services:
       timeout: 2s
       retries: 20
 
-  app:
+  property_hub_v2:
     build:
       context: .
       args:
@@ -29,7 +29,7 @@ services:
         - BETTER_AUTH_URL=${BETTER_AUTH_URL}
         - DATABASE_URL=${DATABASE_URL}
         - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
-    container_name: app-next
+    container_name: property_hub_v2
     env_file:
       - .env.production
     ports:
@@ -40,7 +40,7 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
-      app-migrate:
+      property_hub_v2-migrate:
         condition: service_completed_successfully
 
   prisma-studio:
@@ -62,9 +62,9 @@ services:
       postgres_db: 
         condition: service_healthy
 
-  app-migrate:
+  property_hub_v2-migrate:
     image: node:24.15.0
-    container_name: app-migrate
+    container_name: property_hub_v2-migrate
     working_dir: /app
     volumes:
       - .:/app
