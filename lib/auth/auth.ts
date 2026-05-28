@@ -167,18 +167,24 @@ export const auth = betterAuth({
     }
   },
   socialProviders: {
-    google: {
-      clientId: envServer.GOOGLE_CLIENT_ID as string,
-      clientSecret: envServer.GOOGLE_CLIENT_SECRET as string,
-    },
-    discord: {
-      clientId: envServer.DISCORD_CLIENT_ID as string,
-      clientSecret: envServer.DISCORD_CLIENT_SECRET as string,
-    },
-    facebook: {
-      clientId: envServer.FACEBOOK_CLIENT_ID as string,
-      clientSecret: envServer.FACEBOOK_CLIENT_SECRET as string,
-    },
+    ...(envServer.GOOGLE_CLIENT_ID && envServer.GOOGLE_CLIENT_SECRET ? {
+      google: {
+        clientId: envServer.GOOGLE_CLIENT_ID as string,
+        clientSecret: envServer.GOOGLE_CLIENT_SECRET as string,
+      }
+    } : {}),
+    ...(envServer.DISCORD_CLIENT_ID && envServer.DISCORD_CLIENT_SECRET ? {
+      discord: {
+        clientId: envServer.DISCORD_CLIENT_ID as string,
+        clientSecret: envServer.DISCORD_CLIENT_SECRET as string,
+      }
+    } : {}),
+    ...(envServer.FACEBOOK_CLIENT_ID && envServer.FACEBOOK_CLIENT_SECRET ? {
+      facebook: {
+        clientId: envServer.FACEBOOK_CLIENT_ID as string,
+        clientSecret: envServer.FACEBOOK_CLIENT_SECRET as string,
+      }
+    } : {}),
   },
   session: {
     cookieCache: {

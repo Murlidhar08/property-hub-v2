@@ -69,3 +69,12 @@ export async function getCredientialAccounts() {
 export async function getAppVersion() {
   return packageJson.version;
 }
+
+export async function getEnabledOAuthProviders() {
+  const { envServer } = await import("@/lib/env.server");
+  return {
+    google: !!(envServer.GOOGLE_CLIENT_ID && envServer.GOOGLE_CLIENT_SECRET),
+    discord: !!(envServer.DISCORD_CLIENT_ID && envServer.DISCORD_CLIENT_SECRET),
+    facebook: !!(envServer.FACEBOOK_CLIENT_ID && envServer.FACEBOOK_CLIENT_SECRET),
+  };
+}
