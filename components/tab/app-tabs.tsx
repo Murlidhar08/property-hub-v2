@@ -85,7 +85,7 @@ export default function AppTabs({ tabs, defaultTab, className = "w-full" }: AppT
                     onMouseUp={handleMouseUp}
                     onMouseMove={handleMouseMove}
                     className={cn(
-                        "relative w-full flex items-center justify-start h-auto p-1.5 bg-slate-100/30 dark:bg-slate-900/30 backdrop-blur-xl rounded-[1.25rem] border border-slate-200/50 dark:border-slate-800/50 overflow-x-auto scrollbar-hide no-scrollbar flex-nowrap shrink-0 transition-all select-none",
+                        "relative w-full flex items-center justify-start h-auto p-1.5 bg-slate-100/30 dark:bg-slate-900/30 backdrop-blur-xl rounded-4xl border border-slate-200/50 dark:border-slate-800/50 overflow-x-auto scrollbar-hide no-scrollbar flex-nowrap shrink-0 transition-all select-none",
                         isDragging ? "cursor-grabbing" : "cursor-grab"
                     )}
                 >
@@ -93,6 +93,7 @@ export default function AppTabs({ tabs, defaultTab, className = "w-full" }: AppT
                         const isActive = activeTab === tab.id;
                         return (
                             <TabsTrigger
+                                hidden={tab.hidden}
                                 key={tab.id}
                                 value={tab.id}
                                 className="group relative flex items-center gap-2 px-5 py-2.5 rounded-xl text-muted-foreground data-[state=active]:text-primary font-black text-[10px] tracking-widest transition-all uppercase whitespace-nowrap bg-transparent z-10 border-none shadow-none ring-0 focus-visible:ring-0 shrink-0 flex-none"

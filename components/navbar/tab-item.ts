@@ -6,4 +6,5 @@ export type TabItem = {
     icon?: React.ReactNode;
     badgeCount?: number;
     active?: boolean;
+    hidden?: boolean;
 };
