@@ -10,7 +10,7 @@ export function AppSettingsTab() {
     if (isLoading) {
         return (
             <div className="space-y-6 animate-in fade-in duration-500">
-                <Skeleton className="h-[500px] w-full rounded-2xl" />
+                <Skeleton className="h-125 w-full rounded-2xl" />
             </div>
         );
     }

@@ -272,7 +272,7 @@ export function UserList() {
                                     </div>
                                     <div className="flex flex-col min-w-0">
                                         <div className="flex flex-wrap items-center gap-2 mb-1">
-                                            <span className="font-black text-[16px] tracking-tight text-foreground truncate max-w-[140px] sm:max-w-none">
+                                            <span className="font-black text-[16px] tracking-tight text-foreground truncate max-w-35 sm:max-w-none">
                                                 {user.name}
                                             </span>
                                             {user.emailVerified && (
@@ -289,22 +289,21 @@ export function UserList() {
                                             {user.status && (
                                                 <Badge
                                                     variant="secondary"
-                                                    className={`text-[9px] font-black uppercase tracking-widest h-5 px-2 shadow-sm border ${
-                                                        user.status === UserStatus.approved
-                                                            ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-emerald-500/5"
-                                                            : user.status === UserStatus.pendingapproval
+                                                    className={`text-[9px] font-black uppercase tracking-widest h-5 px-2 shadow-sm border ${user.status === UserStatus.approved
+                                                        ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-emerald-500/5"
+                                                        : user.status === UserStatus.pendingapproval
                                                             ? "bg-amber-500/10 text-amber-600 border-amber-500/20 shadow-amber-500/5"
                                                             : user.status === UserStatus.suspended
-                                                            ? "bg-rose-500/10 text-rose-600 border-rose-500/20 shadow-rose-500/5"
-                                                            : "bg-muted text-muted-foreground border-muted-foreground/20"
-                                                    }`}
+                                                                ? "bg-rose-500/10 text-rose-600 border-rose-500/20 shadow-rose-500/5"
+                                                                : "bg-muted text-muted-foreground border-muted-foreground/20"
+                                                        }`}
                                                 >
                                                     {user.status === UserStatus.pendingapproval ? "Pending Approval" : user.status}
                                                 </Badge>
                                             )}
                                         </div>
                                         <div className="flex items-center gap-4">
-                                            <span className="text-[12px] font-bold text-muted-foreground/60 truncate max-w-[180px]">{user.email}</span>
+                                            <span className="text-[12px] font-bold text-muted-foreground/60 truncate max-w-45">{user.email}</span>
                                             {user.contactNo && (
                                                 <div className="hidden md:flex items-center gap-1.5 text-[10px] font-bold text-muted-foreground/30 uppercase tracking-widest bg-muted/5 px-2 py-0.5 rounded border border-border/20">
                                                     <Phone size={10} className="text-primary/40" />

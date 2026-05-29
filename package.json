@@ -6,7 +6,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 5263",
     "build": "next build --webpack",
     "start": "node server.js",
     "lint": "eslint",

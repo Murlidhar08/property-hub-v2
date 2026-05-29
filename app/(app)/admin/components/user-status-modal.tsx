@@ -55,7 +55,7 @@ export function UserStatusModal({ user, onClose, onSuccess }: UserStatusModalPro
 
     return (
         <Dialog open={!!user} onOpenChange={(open) => !open && onClose()}>
-            <DialogContent className="sm:max-w-[400px] rounded-[2rem] border-none shadow-2xl bg-background/95 backdrop-blur-xl p-8">
+            <DialogContent className="sm:max-w-100 rounded-[2rem] border-none shadow-2xl bg-background/95 backdrop-blur-xl p-8">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-black tracking-tight text-foreground uppercase">Update Status</DialogTitle>
                     <p className="text-xs text-muted-foreground font-medium">Changing status for <span className="text-primary font-bold">{user?.name}</span></p>

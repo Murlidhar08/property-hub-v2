@@ -30,8 +30,8 @@ export default function MobileNav({ navItems: propNavItems, onChange }: MobileNa
 
     return (
         <>
-            <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center lg:hidden px-6">
-                <nav className="w-full max-w-[440px] h-16 p-2 bg-background/70 dark:bg-card/60 backdrop-blur-3xl border border-border/50 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] dark:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] rounded-3xl flex items-center justify-between relative overflow-hidden">
+            <div className="fixed bottom-2 left-0 right-0 z-50 flex justify-center lg:hidden px-6">
+                <nav className="w-full max-w-110 h-16 p-2 bg-background/70 dark:bg-card/60 backdrop-blur-3xl border border-border/50 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] dark:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] rounded-3xl flex items-center justify-between relative overflow-hidden">
                     {navItems.map((item) => {
                         const active = item.active !== undefined
                             ? item.active

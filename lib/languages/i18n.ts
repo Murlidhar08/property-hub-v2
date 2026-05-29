@@ -9,6 +9,7 @@ export const translations: Record<Language, any> = {
 };
 
 let activeLanguage: Language = "en";
+
 export function setActiveLanguage(lang: string) {
     activeLanguage = lang as Language;
 }

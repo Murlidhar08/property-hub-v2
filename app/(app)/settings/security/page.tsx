@@ -8,7 +8,6 @@ import { useSession } from "@/lib/auth/auth-client";
 import { tran } from "@/lib/languages/i18n";
 import { motion } from "framer-motion";
 import { Key, Lock, ShieldCheck } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PasskeyTab } from "./components/passkeyTab";
 import { SecureTab } from "./components/secureTab";
@@ -16,7 +15,6 @@ import { TwoFactorTab } from "./components/twoFactorTab";
 import { containerVariants } from "@/lib/animations";
 
 export default function SecurityPage() {
-    const router = useRouter();
     const { data: session, isPending } = useSession();
     const [hasPasswordAccount, setHasPasswordAccount] = useState<boolean | null>(null);
 

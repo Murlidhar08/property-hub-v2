@@ -2,9 +2,7 @@
 
 import { envClient } from "@/lib/env.client";
 import clsx from "clsx";
-import {
-    ChevronLeft
-} from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,7 +12,6 @@ import { useNavItems } from "./use-nav-items";
 const NavBar = () => {
     const [collapsed, setCollapsed] = useState(true);
     const pathname = usePathname();
-
     const navItems = useNavItems()
 
     return (
