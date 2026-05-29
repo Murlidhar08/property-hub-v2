@@ -111,7 +111,7 @@ export function LoadingScreen() {
                             key={i}
                             animate={{ rotate: 360 }}
                             transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
-                            className="absolute inset-[-12px]"
+                            className="absolute -inset-3"
                         >
                             <motion.div
                                 animate={{ scale: [1, 1.5, 1] }}
