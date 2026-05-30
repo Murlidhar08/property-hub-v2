@@ -49,7 +49,7 @@ export default function PendingApprovalPage() {
                 initial="hidden"
                 animate="visible"
                 variants={containerVariants}
-                className="flex flex-col justify-between w-full lg:w-1/2 px-6 sm:px-12 lg:px-8 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-linear-to-b from-amber-500/[0.12] via-background to-background backdrop-blur-sm border-r border-border/50"
+                className="flex flex-col justify-between w-full lg:w-1/2 px-6 sm:px-12 lg:px-8 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-linear-to-b from-amber-500/12 via-background to-background backdrop-blur-sm border-r border-border/50"
             >
                 {/* LOGO + BRAND */}
                 <motion.div
@@ -135,8 +135,8 @@ export default function PendingApprovalPage() {
                 className="hidden lg:flex flex-1 p-12 items-center justify-center bg-linear-to-br from-amber-500 via-amber-500/90 to-amber-600 relative overflow-hidden"
             >
                 {/* Animated Background Elements */}
-                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 animate-pulse" />
-                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-black/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
+                <div className="absolute top-0 right-0 w-200 h-200 bg-white/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 animate-pulse" />
+                <div className="absolute bottom-0 left-0 w-150 h-150 bg-black/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
 
                 {/* Abstract Grid Pattern */}
                 <div className="absolute inset-0 opacity-10 mask-[radial-gradient(ellipse_at_center,black,transparent)]"

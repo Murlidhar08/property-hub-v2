@@ -19,7 +19,7 @@ import { toast } from "sonner"
 
 const QRCode = dynamic(() => import("react-qr-code"), {
   ssr: false,
-  loading: () => <div className="h-[180px] w-[180px] animate-pulse bg-muted rounded-xl" />
+  loading: () => <div className="h-45 w-45 animate-pulse bg-muted rounded-xl" />
 })
 
 /* ========================================================= */

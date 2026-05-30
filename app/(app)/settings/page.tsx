@@ -162,7 +162,7 @@ export default function SettingsPage() {
                   toast.success(tran("settings.msg.date_format_updated"))
                 }}
               >
-                <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
+                <SelectTrigger className="w-35 h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-2xl shadow-2xl">
@@ -186,7 +186,7 @@ export default function SettingsPage() {
                   toast.success(tran("settings.msg.time_format_updated"))
                 }}
               >
-                <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
+                <SelectTrigger className="w-35 h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-2xl shadow-2xl">
@@ -210,7 +210,7 @@ export default function SettingsPage() {
                   toast.success(tran("settings.msg.language_updated"))
                 }}
               >
-                <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
+                <SelectTrigger className="w-35 h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-2xl shadow-2xl">
@@ -308,18 +308,9 @@ export default function SettingsPage() {
         </motion.div>
 
         <FooterButtons>
-          <Button
-            variant="destructive"
-            className={cn(
-              "h-14 w-full text-white md:w-auto rounded-full px-8 md:px-12 gap-3 font-bold uppercase",
-              "bg-linear-to-r from-red-600 to-rose-500 hover:from-red-700 hover:to-rose-600",
-              "shadow-[0_10px_40px_rgba(225,29,72,0.3)] hover:shadow-[0_15px_50px_rgba(225,29,72,0.4)]",
-              "border-t border-white/20 transition-all duration-300"
-            )}
-            onClick={handleLogout}
-          >
+          <Button onClick={handleLogout} variant="destructive" className="h-14 w-14 md:w-auto md:px-12 rounded-full md:gap-3 font-semibold uppercase bg-rose-500 hover:bg-rose-500/70 text-white shadow-lg shadow-rose-500/50 transition-all hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 p-0 md:py-2">
             <LogOut className="size-5 md:size-6" />
-            <span className="text-center font-black tracking-[0.15em] text-sm hidden md:block">
+            <span className="hidden md:block text-center font-black tracking-[0.2em] text-sm">
               {tran("settings.logout")}
             </span>
           </Button>

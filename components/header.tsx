@@ -1,13 +1,12 @@
 "use client"
 
-import { useSession } from "@/lib/auth/auth-client"
 import { envClient } from "@/lib/env.client"
 import clsx from "clsx"
 import { motion } from "framer-motion"
 import { Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import ProfileAvatar from "./auth/profile-avatar"
 import { useNavItems } from "./navbar/use-nav-items"
 import { Button } from "./ui/button"
@@ -18,24 +17,16 @@ interface HeaderProps {
   isProfile?: boolean
 }
 
-
 const Header = ({ title, isProfile }: HeaderProps) => {
-  const router = useRouter()
   const pathname = usePathname()
   const navItems = useNavItems()
-  const { data: session } = useSession()
-  const showProfile = isProfile ?? true
-
-  const handleRedirect = () => {
-    router.push("/settings/profile" as any)
-  }
-
+  const showProfile = isProfile ?? true;
 
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="sticky top-0 z-2 h-14 sm:h-16 flex items-center justify-between bg-background/80 backdrop-blur-md text-foreground px-4 sm:px-6 border-b border-border shadow-sm"
+      className="sticky top-0 z-30 h-14 sm:h-16 flex items-center justify-between bg-background/80 backdrop-blur-md text-foreground px-4 sm:px-6 border-b border-border shadow-sm"
     >
       <div className="w-1/4 sm:w-1/3 flex items-center gap-2">
         <div className="lg:hidden">
