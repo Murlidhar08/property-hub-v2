@@ -32,7 +32,7 @@ export default function DiscordAuth({ lastLogin, loading, setLoading }: { lastLo
             {discordLoading ? (
                 <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
             ) : (
-                <Image src="/images/social/Discord.svg" alt="Discord" width={20} height={20} className="group-hover/discord:scale-110 transition-transform" />
+                <Image src="/images/social/discord.svg" alt="Discord" width={20} height={20} className="group-hover/discord:scale-110 transition-transform" />
             )}
             <span className="font-bold">{discordLoading ? "..." : "Discord"}</span>
             {lastLogin === "discord" && !discordLoading && (

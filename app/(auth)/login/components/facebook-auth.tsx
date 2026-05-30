@@ -32,7 +32,7 @@ export default function FacebookAuth({ lastLogin, loading, setLoading }: { lastL
             {facebookLoading ? (
                 <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
             ) : (
-                <Image src="/images/social/Facebook.svg" alt="Facebook" width={20} height={20} className="group-hover/facebook:scale-110 transition-transform" />
+                <Image src="/images/social/facebook.svg" alt="Facebook" width={20} height={20} className="group-hover/facebook:scale-110 transition-transform" />
             )}
             <span className="font-bold">{facebookLoading ? "..." : "Facebook"}</span>
             {lastLogin === "facebook" && !facebookLoading && (

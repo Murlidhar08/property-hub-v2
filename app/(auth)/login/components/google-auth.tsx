@@ -30,7 +30,7 @@ export default function GoogleAuth({ lastLogin, loading, setLoading }: { lastLog
             {googleLoading ? (
                 <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
             ) : (
-                <Image src="/images/social/Google.svg" alt="Google" width={20} height={20} className="group-hover/google:scale-110 transition-transform" />
+                <Image src="/images/social/google.svg" alt="Google" width={20} height={20} className="group-hover/google:scale-110 transition-transform" />
             )}
             <span className="font-bold">{googleLoading ? "..." : "Google"}</span>
             {lastLogin === "google" && !googleLoading && (
