@@ -234,7 +234,7 @@ export function AgreementView({ propertyId, agreements, userId }: AgreementViewP
 
                                     {/* Owner Start Point */}
                                     <div className="relative mb-8">
-                                        <div className="absolute sm:w-75 top-1 w-4 h-4 rounded-full border-2 border-indigo-600 bg-white dark:bg-slate-900 z-10" />
+                                        <div className="absolute -left-6.75 top-1 w-4 h-4 rounded-full border-2 border-indigo-600 bg-white dark:bg-slate-900 z-10" />
                                         <div>
                                             <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-0.5">Agreement Owner</p>
                                             <p className="text-base sm:text-lg font-bold text-foreground leading-tight">{selected.ownerName}</p>
@@ -243,7 +243,7 @@ export function AgreementView({ propertyId, agreements, userId }: AgreementViewP
 
                                     {/* Client End Point */}
                                     <div className="relative">
-                                        <div className="absolute -left-7.25 top-1 w-6 h-6 flex items-center justify-center bg-white dark:bg-slate-900 z-10">
+                                        <div className="absolute -left-8 top-1 w-6 h-6 flex items-center justify-center bg-white dark:bg-slate-900 z-10">
                                             <div className="w-4 h-4 rounded-full bg-indigo-600 shadow-sm" />
                                         </div>
                                         <div>

@@ -1,6 +1,7 @@
 import { getPropertyById } from "@/actions/property.actions";
 import { getUsersByRole } from "@/actions/user.actions";
 import { PropertyEditForm } from "@/app/(app)/property/components/property-edit-form";
+import { BackHeader } from "@/components/back-header";
 
 export default async function EditPropertyPage({ params }: { params: Promise<{ propertyId: string }> }) {
     const { propertyId } = await params;
@@ -29,24 +30,21 @@ export default async function EditPropertyPage({ params }: { params: Promise<{ p
     const googleMapsApiKey = process.env.GOOGLE_MAPS_API || "";
 
     return (
-        <div className="container mx-auto max-w-5xl py-12 px-4 sm:px-6 lg:px-8">
-            <div className="mb-12">
-                <h1 className="text-4xl font-black text-foreground tracking-tighter mb-2">
-                    Edit Property
-                </h1>
-                <p className="text-muted-foreground text-lg">
-                    Update the details of the property in the system.
-                </p>
-                <div className="h-1 w-20 bg-primary rounded-full mt-6" />
-            </div>
+        <>
+            <div className="min-h-screen bg-background pb-34">
+                <BackHeader title={"Edit Property"} />
 
-            <PropertyEditForm
-                propertyId={propertyId}
-                initialData={property}
-                allAgents={allAgentsWithNames}
-                allOwners={allOwnersWithNames}
-                googleMapsApiKey={googleMapsApiKey}
-            />
-        </div>
+                <div className="mx-auto max-w-4xl mt-6 space-y-8 px-6">
+                    <PropertyEditForm
+                        propertyId={propertyId}
+                        initialData={property}
+                        allAgents={allAgentsWithNames}
+                        allOwners={allOwnersWithNames}
+                        googleMapsApiKey={googleMapsApiKey}
+                    />
+                </div>
+            </div>
+        </>
+
     );
 }
