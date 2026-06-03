@@ -1,33 +1,5 @@
 import { format } from "date-fns";
-
-interface UserDateFormatConfig {
-    dateFormat: string;
-    timeFormat: string;
-}
-
-let globalUserConfig: UserDateFormatConfig = {
-    dateFormat: "dd/MM/yyyy",
-    timeFormat: "hh:mm a"
-};
-
-/**
- * Set the global user configuration for hook-free formatting.
- */
-export function setGlobalUserConfig(config: Partial<UserDateFormatConfig>) {
-    if (config.dateFormat) {
-        globalUserConfig.dateFormat = config.dateFormat;
-    }
-    if (config.timeFormat) {
-        globalUserConfig.timeFormat = config.timeFormat;
-    }
-}
-
-/**
- * Retrieve the active global user config preferences.
- */
-export function getGlobalUserConfig(): UserDateFormatConfig {
-    return globalUserConfig;
-}
+import { getGlobalUserConfig } from "./global-user-config";
 
 /**
  * Formats a date according to the user's preferred date format.
@@ -35,9 +7,12 @@ export function getGlobalUserConfig(): UserDateFormatConfig {
  */
 export const formatUserDate = (date: Date | string | number, customFormat?: string): string => {
     try {
+        const globalUserConfig = getGlobalUserConfig();
         const d = new Date(date);
+        const dateFormat = customFormat ?? globalUserConfig.dateFormat;
+
         if (isNaN(d.getTime())) return String(date);
-        return format(d, customFormat || globalUserConfig.dateFormat);
+        return format(d, dateFormat!);
     } catch (error) {
         return String(date);
     }
@@ -49,9 +24,12 @@ export const formatUserDate = (date: Date | string | number, customFormat?: stri
  */
 export const formatUserTime = (date: Date | string | number, customFormat?: string): string => {
     try {
+        const globalUserConfig = getGlobalUserConfig();
         const d = new Date(date);
+        const timeFormat = customFormat ?? globalUserConfig.timeFormat;
+
         if (isNaN(d.getTime())) return String(date);
-        return format(d, customFormat || globalUserConfig.timeFormat);
+        return format(d, timeFormat!);
     } catch (error) {
         return String(date);
     }

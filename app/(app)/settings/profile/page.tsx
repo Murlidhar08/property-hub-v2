@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { signOut } from "@/lib/auth/auth-client";
 import { tran } from "@/lib/languages/i18n";
 import { useCurrentUser } from "@/tanstacks/user";
-import { getInitials } from "@/utility/commonFunction";
+import { getInitials } from "@/utility/common-function";
 import { containerVariants, itemVariants } from "@/lib/animations";
 
 export default function ProfilePage() {

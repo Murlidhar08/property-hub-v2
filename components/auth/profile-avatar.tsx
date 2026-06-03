@@ -2,7 +2,7 @@
 
 import { authClient } from "@/lib/auth/auth-client";
 import { useDeviceSessions, useSetActiveSession } from "@/tanstacks/user";
-import { getInitials } from "@/utility/commonFunction";
+import { getInitials } from "@/utility/common-function";
 import { LogOut, User as UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";

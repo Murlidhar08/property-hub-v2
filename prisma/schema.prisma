@@ -25,6 +25,12 @@ enum UserStatus {
   suspended
 }
 
+enum Currency {
+  INR
+  USD
+  EUR
+}
+
 // Better Auth tables
 model User {
   id               String     @id @default(cuid())
@@ -171,6 +177,8 @@ model Passkey {
 // Application settings tables
 model UserSettings {
   userId     String    @id
+  currency   Currency  @default(INR)
+  locale     String    @default("en-IN")
   dateFormat String    @default("dd/MM/yyyy")
   timeFormat String    @default("hh:mm a")
   language   String    @default("en")

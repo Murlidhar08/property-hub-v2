@@ -17,7 +17,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { authClient } from '@/lib/auth/auth-client'
 import { tran } from '@/lib/languages/i18n'
 import { useCurrentUser } from '@/tanstacks/user'
-import { getInitials } from '@/utility/commonFunction'
+import { getInitials } from '@/utility/common-function'
 import { containerVariants, itemVariants } from '@/lib/animations'
 
 type ProfileFormValues = {
@@ -199,7 +199,7 @@ export default function EditProfilePage() {
             <Field
               label="Username"
               icon={AtSign}
-              registration={register('username', { 
+              registration={register('username', {
                 required: "Username is required",
                 onChange: (e) => {
                   setValue('username', e.target.value.toLowerCase().replace(/\s+/g, ""));
@@ -225,11 +225,11 @@ export default function EditProfilePage() {
                 )}
                 {!checkingUsername && usernameAvailable === false && (
                   <span className="text-destructive font-medium">
-                    {watchedUsername.length < 3 
-                      ? "Username must be at least 3 characters" 
+                    {watchedUsername.length < 3
+                      ? "Username must be at least 3 characters"
                       : !/^[a-zA-Z0-9_-]+$/.test(watchedUsername)
-                      ? "Only alphanumeric characters, underscores, and hyphens allowed"
-                      : "Username is already taken"}
+                        ? "Only alphanumeric characters, underscores, and hyphens allowed"
+                        : "Username is already taken"}
                   </span>
                 )}
               </div>

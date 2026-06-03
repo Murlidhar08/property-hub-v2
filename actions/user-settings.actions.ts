@@ -1,7 +1,7 @@
 "use server";
 
 import { auth, getUserSession } from "@/lib/auth/auth";
-import { ThemeMode } from "@/lib/generated/prisma/enums";
+import { Currency, ThemeMode } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma/prisma";
 import packageJson from "@/package.json";
 import { UserSettingsInput } from "@/types/user/UserSettingsInput";
@@ -21,12 +21,16 @@ export async function upsertUserSettings(data: UserSettingsInput) {
       timeFormat: data.timeFormat ?? "hh:mm a",
       language: data.language ?? "en",
       theme: data.theme ?? ThemeMode.AUTO,
+      currency: data.currency ?? Currency.INR,
+      locale: data.locale ?? "en-IN"
     },
     update: {
       dateFormat: data.dateFormat,
       timeFormat: data.timeFormat,
       language: data.language,
       theme: data.theme,
+      currency: data.currency,
+      locale: data.locale
     },
   });
 

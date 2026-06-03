@@ -10,7 +10,7 @@ import {
 } from '@/lib/auth/o-auth-providers'
 import { tran } from '@/lib/languages/i18n'
 import { cn } from '@/lib/utils'
-import { formatUserDate, formatUserTime } from '@/utility/dateTimeFn'
+import { formatUserDate, formatUserTime } from '@/utility/date-time-fn'
 import { motion } from 'framer-motion'
 import { Plus, Shield, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'

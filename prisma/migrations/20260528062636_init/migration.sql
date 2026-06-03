@@ -7,6 +7,9 @@ CREATE TYPE "UserRole" AS ENUM ('admin', 'user');
 -- CreateEnum
 CREATE TYPE "UserStatus" AS ENUM ('pendingapproval', 'approved', 'suspended');
 
+-- CreateEnum
+CREATE TYPE "Currency" AS ENUM ('INR', 'USD', 'EUR');
+
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
@@ -16,7 +19,7 @@ CREATE TABLE "user" (
     "image" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "role" "UserRole",
+    "role" "UserRole" NOT NULL DEFAULT 'user',
     "status" "UserStatus" NOT NULL DEFAULT 'pendingapproval',
     "banned" BOOLEAN DEFAULT false,
     "banReason" TEXT,
@@ -107,6 +110,8 @@ CREATE TABLE "passkey" (
 -- CreateTable
 CREATE TABLE "userSettings" (
     "userId" TEXT NOT NULL,
+    "currency" "Currency" NOT NULL DEFAULT 'INR',
+    "locale" TEXT NOT NULL DEFAULT 'en-IN',
     "dateFormat" TEXT NOT NULL DEFAULT 'dd/MM/yyyy',
     "timeFormat" TEXT NOT NULL DEFAULT 'hh:mm a',
     "language" TEXT NOT NULL DEFAULT 'en',
