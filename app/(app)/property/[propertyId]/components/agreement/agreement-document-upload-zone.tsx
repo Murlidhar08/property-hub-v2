@@ -335,7 +335,7 @@ export function AgreementDocumentUploadZone({ propertyId, initialFiles = [], onF
 
             {/* Rename Dialog */}
             <Dialog open={editingFile !== null} onOpenChange={() => setEditingFile(null)}>
-                <DialogContent className="sm:max-w-[425px] rounded-[2rem]">
+                <DialogContent className="sm:max-w-106.25 rounded-[2rem]">
                     <DialogHeader>
                         <DialogTitle className="text-xl font-black uppercase tracking-tight text-indigo-600">Edit Document Name</DialogTitle>
                     </DialogHeader>

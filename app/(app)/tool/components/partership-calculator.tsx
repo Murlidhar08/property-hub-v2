@@ -50,7 +50,7 @@ export default function PartnershipCalculator() {
 
     const captureImage = async () => {
         if (!containerRef.current) return;
-        
+
         setIsExporting(true);
         const toastId = toast.loading("Generating your deal summary...");
 
@@ -72,7 +72,7 @@ export default function PartnershipCalculator() {
             link.download = `property-partnership-${new Date().toISOString().split('T')[0]}.png`;
             link.href = dataUrl;
             link.click();
-            
+
             toast.success("Deal summary exported successfully!", { id: toastId });
         } catch (err) {
             console.error(err);
@@ -184,7 +184,7 @@ export default function PartnershipCalculator() {
                                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
                                         {field.label}
                                     </label>
-                                    <span className={`text-[10px] font-bold ${field.color}/60 italic truncate max-w-[120px]`}>
+                                    <span className={`text-[10px] font-bold ${field.color}/60 italic truncate max-w-30`}>
                                         {rupeeToWords(parseFloat(dealInputs[field.id as keyof typeof dealInputs]) || 0)}
                                     </span>
                                 </div>
@@ -251,7 +251,7 @@ export default function PartnershipCalculator() {
                         )}
                     </div>
 
-                    <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                    <div className="space-y-4 max-h-100 overflow-y-auto pr-2 custom-scrollbar">
                         <AnimatePresence initial={false}>
                             {partners.map((partner) => (
                                 <motion.div
@@ -328,7 +328,7 @@ export default function PartnershipCalculator() {
                         </div>
                     </div>
 
-                    <div className="flex-1 min-h-[260px] relative z-10">
+                    <div className="flex-1 min-h-65 relative z-10">
                         <ResponsiveContainer width="100%" height={260}>
                             <PieChart>
                                 <Pie
@@ -386,7 +386,7 @@ export default function PartnershipCalculator() {
                                     </div>
                                     <div className="text-right">
                                         <p className="text-xl font-black text-white">₹ {formatIndianNumber(partner.totalReturn)}</p>
-                                        <p className="text-[8px] font-bold text-white/10 truncate max-w-[150px] italic">
+                                        <p className="text-[8px] font-bold text-white/10 truncate max-w-37.5 italic">
                                             {rupeeToWords(partner.totalReturn)}
                                         </p>
                                     </div>

@@ -21,7 +21,7 @@ export default function PreviewLinkModal({ open, onOpenChange, link }: PreviewLi
     if (!link) return null;
 
     const detail = link.detail || {};
-    
+
     const generalDetails = [
         { label: "Price", active: !!detail.price, icon: Tag },
         { label: "Agent", active: !!detail.agent, icon: User },
@@ -37,7 +37,7 @@ export default function PreviewLinkModal({ open, onOpenChange, link }: PreviewLi
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[450px]">
+            <DialogContent className="sm:max-w-112.5">
                 <DialogHeader>
                     <div className="flex items-center gap-3 mb-1">
                         <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">

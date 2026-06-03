@@ -190,7 +190,7 @@ export function DashboardContent({ initialData, userName }: DashboardContentProp
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-[360px] relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-90 relative z-10">
               <div className="flex flex-col items-center">
                 <h4 className="text-xs font-black uppercase tracking-[0.3em] text-primary mb-2">Portfolio (Supply)</h4>
                 <ResponsiveContainer width="100%" height="100%">
@@ -279,10 +279,10 @@ export function DashboardContent({ initialData, userName }: DashboardContentProp
                     onClick={() => router.push(activity.link as any)}
                   >
                     {idx !== initialData.activities.length - 1 && (
-                      <div className="absolute left-[19px] top-10 bottom-0 w-[2px] bg-linear-to-b from-border to-transparent" />
+                      <div className="absolute left-4.75 top-10 bottom-0 w-0.5 bg-linear-to-b from-border to-transparent" />
                     )}
 
-                    <div className={`absolute left-0 top-0 h-10 w-10 rounded-[1rem] flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${activity.type === 'property'
+                    <div className={`absolute left-0 top-0 h-10 w-10 rounded-3xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${activity.type === 'property'
                       ? 'bg-blue-600 text-white shadow-blue-600/20'
                       : 'bg-amber-600 text-white shadow-amber-600/20'
                       }`}>

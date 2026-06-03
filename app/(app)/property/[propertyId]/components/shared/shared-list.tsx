@@ -71,7 +71,7 @@ export default function SharedList({ links }: SharedListProps) {
                 <Table>
                     <TableHeader className="bg-muted/50">
                         <TableRow>
-                            <TableHead className="w-[50px]"></TableHead>
+                            <TableHead className="w-12.5"></TableHead>
                             <TableHead className="font-bold text-[11px] uppercase tracking-wider">Label</TableHead>
                             <TableHead className="font-bold text-[11px] uppercase tracking-wider">Shared By</TableHead>
                             <TableHead className="font-bold text-[11px] uppercase tracking-wider">Share Link</TableHead>

@@ -34,7 +34,7 @@ import { format } from "date-fns";
 import { CalendarIcon, IndianRupee } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { AgreementDocumentUploadZone } from "./AgreementDocumentUploadZone";
+import { AgreementDocumentUploadZone } from "./agreement-document-upload-zone";
 
 interface AddAgreementModalProps {
     open: boolean;
@@ -143,7 +143,7 @@ export function AddAgreementModal({ open, onClose, propertyId, agreement, userId
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto rounded-[2rem]">
+            <DialogContent className="sm:max-w-150 max-h-[90vh] overflow-y-auto rounded-[2rem]">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-black text-indigo-600 uppercase tracking-tight">
                         {agreement ? "Edit Agreement" : "Add Agreement"}
@@ -295,7 +295,7 @@ export function AddAgreementModal({ open, onClose, propertyId, agreement, userId
                         <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Description</Label>
                         <Textarea
                             placeholder="Description ..."
-                            className="min-h-[120px] rounded-2xl border-border bg-muted/20 resize-none"
+                            className="min-h-30 rounded-2xl border-border bg-muted/20 resize-none"
                             value={form.description}
                             onChange={(e) => setForm({ ...form, description: e.target.value })}
                         />

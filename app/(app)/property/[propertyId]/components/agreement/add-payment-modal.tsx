@@ -88,7 +88,7 @@ export function AddPaymentModal({ open, onClose, agreementId, propertyId, userId
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[400px] rounded-[2rem]">
+            <DialogContent className="sm:max-w-100 rounded-[2rem]">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-black text-indigo-600 uppercase tracking-tight">
                         {payment ? "Edit Payment" : "Add Payment"}

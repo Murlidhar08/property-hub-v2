@@ -273,7 +273,7 @@ export default function RequirementEditForm({ initialData }: RequirementEditForm
                         <Textarea
                             {...register("description")}
                             placeholder="Write more about what the client is looking for... (e.g. amenities, floor preference, etc.)"
-                            className="rounded-2xl min-h-[150px] p-4 bg-muted/30 border-none focus-visible:ring-primary/10"
+                            className="rounded-2xl min-h-37.5 p-4 bg-muted/30 border-none focus-visible:ring-primary/10"
                         />
                     </div>
                 </Card>

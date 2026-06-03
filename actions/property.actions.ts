@@ -386,7 +386,10 @@ export async function getSharedLinkById(id: string) {
         }).catch(console.error);
     }
 
-    return JSON.parse(JSON.stringify(link));
+    return JSON.parse(JSON.stringify({
+        ...link,
+        googleMapsApiKey: process.env.GOOGLE_MAPS_API || ""
+    }));
 }
 
 export async function getMatchedRequirements(property: Property) {

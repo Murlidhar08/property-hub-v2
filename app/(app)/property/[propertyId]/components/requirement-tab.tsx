@@ -13,7 +13,6 @@ import {
     MapPin,
     Search,
     Trees,
-    User,
     ArrowRight
 } from "lucide-react";
 import Link from "next/link";

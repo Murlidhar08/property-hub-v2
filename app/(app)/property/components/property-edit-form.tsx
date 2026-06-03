@@ -303,7 +303,7 @@ export function PropertyEditForm({
                                         <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                     </Button>
                                 } />
-                                <DropdownMenuContent className="w-full min-w-[200px] rounded-xl" align="start">
+                                <DropdownMenuContent className="w-full min-w-50 rounded-xl" align="start">
                                     {Object.values(PropertyStatus).map((status) => (
                                         <DropdownMenuCheckboxItem
                                             key={status}
@@ -588,7 +588,7 @@ export function PropertyEditForm({
                         Description
                     </h3>
                     <div className="space-y-4">
-                        <div className="rounded-2xl border border-border p-4 bg-muted/20 min-h-[300px] flex flex-col">
+                        <div className="rounded-2xl border border-border p-4 bg-muted/20 min-h-75 flex flex-col">
                             {/* Toolbar placeholder */}
                             <div className="flex flex-wrap gap-1 mb-4 p-1.5 bg-card rounded-xl border border-border">
                                 <Button type="button" variant="ghost" size="icon" className="h-8 w-8 font-black text-xs">B</Button>
@@ -688,7 +688,7 @@ export function PropertyEditForm({
 
                     {hasLocation && (
                         <div className="space-y-4">
-                            <div className="w-full h-[400px] rounded-3xl overflow-hidden border border-border relative bg-muted animate-pulse flex items-center justify-center">
+                            <div className="w-full h-100 rounded-3xl overflow-hidden border border-border relative bg-muted animate-pulse flex items-center justify-center">
                                 <GoogleMapWrapper
                                     apiKey={googleMapsApiKey}
                                     center={mapDetails || { lat: 23.0225, lng: 72.5714 }}

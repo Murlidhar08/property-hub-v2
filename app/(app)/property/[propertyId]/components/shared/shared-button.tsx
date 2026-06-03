@@ -83,7 +83,7 @@ export default function SharedButton({ propertyId }: { propertyId: string }) {
             </button>
 
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="sm:max-w-[500px]">
+                <DialogContent className="sm:max-w-125">
                     <DialogHeader className="mb-2">
                         <DialogTitle className="text-xl font-bold">Share Property Link</DialogTitle>
                     </DialogHeader>
@@ -118,7 +118,7 @@ export default function SharedButton({ propertyId }: { propertyId: string }) {
                                     <div className="absolute -top-2 left-3 px-1.5 bg-background text-[10px] text-muted-foreground font-medium z-10 w-max">Expires On</div>
                                     <Input
                                         type="datetime-local"
-                                        className="w-full sm:w-[220px] text-sm h-11 relative z-0"
+                                        className="w-full sm:w-55 text-sm h-11 relative z-0"
                                         disabled={!hasExpiry}
                                         value={expiryDate}
                                         onChange={(e) => setExpiryDate(e.target.value)}

@@ -76,12 +76,12 @@ export function AgreementView({ propertyId, agreements, userId }: AgreementViewP
 
     if (!selected && agreements.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center p-12 border-2 border-dashed border-indigo-100 rounded-[2.5rem] bg-indigo-50/10 min-h-[400px] animate-in fade-in zoom-in duration-500">
+            <div className="flex flex-col items-center justify-center p-12 border-2 border-dashed border-indigo-100 rounded-[2.5rem] bg-indigo-50/10 min-h-100 animate-in fade-in zoom-in duration-500">
                 <div className="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mb-6">
                     <Plus size={40} />
                 </div>
                 <h3 className="text-xl font-black text-indigo-900 tracking-tight">No Agreements Record</h3>
-                <p className="text-muted-foreground font-medium text-sm mt-1 mb-8 max-w-[280px] text-center">Start managing your property deals by adding your first legal agreement.</p>
+                <p className="text-muted-foreground font-medium text-sm mt-1 mb-8 max-w-70 text-center">Start managing your property deals by adding your first legal agreement.</p>
                 <Button
                     onClick={openAddModal}
                     className="rounded-full bg-indigo-600 hover:bg-indigo-700 h-12 px-8 font-black uppercase tracking-widest text-[10px] shadow-xl shadow-indigo-100"
@@ -158,7 +158,7 @@ export function AgreementView({ propertyId, agreements, userId }: AgreementViewP
                 </div>
 
                 <Select value={selectedIndex.toString()} onValueChange={(v) => setSelectedIndex(parseInt(v ?? "0"))}>
-                    <SelectTrigger className="w-full sm:w-[300px] rounded-2xl bg-indigo-50/50 dark:bg-indigo-500/10 border-indigo-100 dark:border-indigo-500/20 font-bold text-indigo-600">
+                    <SelectTrigger className="w-full sm:w-75 rounded-2xl bg-indigo-50/50 dark:bg-indigo-500/10 border-indigo-100 dark:border-indigo-500/20 font-bold text-indigo-600">
                         <SelectValue>
                             {selected && `${selected.clientName} • ${format(new Date(selected.date), "dd MMM, yyyy")}`}
                         </SelectValue>
@@ -234,7 +234,7 @@ export function AgreementView({ propertyId, agreements, userId }: AgreementViewP
 
                                     {/* Owner Start Point */}
                                     <div className="relative mb-8">
-                                        <div className="absolute -left-[25px] top-1 w-4 h-4 rounded-full border-2 border-indigo-600 bg-white dark:bg-slate-900 z-10" />
+                                        <div className="absolute sm:w-75 top-1 w-4 h-4 rounded-full border-2 border-indigo-600 bg-white dark:bg-slate-900 z-10" />
                                         <div>
                                             <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-0.5">Agreement Owner</p>
                                             <p className="text-base sm:text-lg font-bold text-foreground leading-tight">{selected.ownerName}</p>
@@ -243,7 +243,7 @@ export function AgreementView({ propertyId, agreements, userId }: AgreementViewP
 
                                     {/* Client End Point */}
                                     <div className="relative">
-                                        <div className="absolute -left-[29px] top-1 w-6 h-6 flex items-center justify-center bg-white dark:bg-slate-900 z-10">
+                                        <div className="absolute -left-7.25 top-1 w-6 h-6 flex items-center justify-center bg-white dark:bg-slate-900 z-10">
                                             <div className="w-4 h-4 rounded-full bg-indigo-600 shadow-sm" />
                                         </div>
                                         <div>
@@ -294,7 +294,7 @@ export function AgreementView({ propertyId, agreements, userId }: AgreementViewP
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-muted/30 border-none">
-                                <TableHead className="w-[60px] text-[10px] font-black uppercase tracking-widest text-muted-foreground pl-4 sm:pl-6">Action</TableHead>
+                                <TableHead className="w-15 text-[10px] font-black uppercase tracking-widest text-muted-foreground pl-4 sm:pl-6">Action</TableHead>
                                 <TableHead className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Label</TableHead>
                                 <TableHead className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Date</TableHead>
                                 <TableHead className="text-right text-[10px] font-black uppercase tracking-widest text-muted-foreground pr-4 sm:pr-6">Amount</TableHead>

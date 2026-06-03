@@ -26,7 +26,7 @@ export default function EditLinkModal({ open, onOpenChange, link }: EditLinkModa
     const [label, setLabel] = useState("");
     const [hasExpiry, setHasExpiry] = useState(false);
     const [expiryDate, setExpiryDate] = useState("");
-    
+
     // Checkboxes states for General Details
     const [price, setPrice] = useState(false);
     const [agent, setAgent] = useState(false);
@@ -103,7 +103,7 @@ export default function EditLinkModal({ open, onOpenChange, link }: EditLinkModa
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[500px]">
+            <DialogContent className="sm:max-w-125">
                 <DialogHeader className="mb-2">
                     <DialogTitle className="text-xl font-bold text-foreground tracking-tight uppercase">Edit Shared Link</DialogTitle>
                 </DialogHeader>
@@ -137,7 +137,7 @@ export default function EditLinkModal({ open, onOpenChange, link }: EditLinkModa
                                 <div className="absolute -top-2 left-3 px-1.5 bg-background text-[10px] text-primary font-black z-10 w-max uppercase tracking-tighter">Expires On</div>
                                 <Input
                                     type="datetime-local"
-                                    className="w-full sm:w-[220px] text-sm h-11 relative z-0 font-bold"
+                                    className="w-full sm:w-55 text-sm h-11 relative z-0 font-bold"
                                     disabled={!hasExpiry}
                                     value={expiryDate}
                                     onChange={(e) => setExpiryDate(e.target.value)}
