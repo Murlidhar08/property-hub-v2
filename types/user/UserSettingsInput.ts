@@ -1,4 +1,4 @@
-import { ThemeMode } from "@/lib/generated/prisma/client";
+import { ThemeMode } from "@/lib/generated/prisma/browser";
 
 export interface UserSettingsInput {
   dateFormat?: string

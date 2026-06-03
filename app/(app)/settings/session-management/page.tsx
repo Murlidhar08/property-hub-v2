@@ -5,7 +5,7 @@ import { BackHeader } from "@/components/back-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { tran } from "@/lib/languages/i18n";
 import { useSession } from "@/lib/auth/auth-client";
-import { Session } from "@/lib/generated/prisma/client";
+import { Session } from "@/lib/generated/prisma/browser";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
