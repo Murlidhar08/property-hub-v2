@@ -1,5 +1,6 @@
 import { getRequirementById } from "@/actions/requirement.actions";
 import RequirementEditForm from "../../components/requirement-edit-form";
+import { BackHeader } from "@/components/back-header";
 
 export const metadata = {
     title: "Edit Requirement | Property Hub",
@@ -14,8 +15,10 @@ export default async function EditRequirementPage({ params }: { params: Promise<
     }
 
     return (
-        <div className="min-h-full bg-background p-4 sm:p-6 lg:p-8 space-y-8 max-w-4xl mx-auto">
-            <div className="flex items-center gap-4">
+        <>
+            <BackHeader title="Edit Requirement" />
+
+            <div className="w-full bg-background p-4 sm:p-6 lg:p-8 space-y-8 max-w-4xl mx-auto">
                 <div>
                     <h1 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground">
                         Edit Requirement
@@ -24,9 +27,9 @@ export default async function EditRequirementPage({ params }: { params: Promise<
                         Update the details for this requirement.
                     </p>
                 </div>
-            </div>
 
-            <RequirementEditForm initialData={requirement} />
-        </div>
+                <RequirementEditForm initialData={requirement} />
+            </div>
+        </>
     );
 }

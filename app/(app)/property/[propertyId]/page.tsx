@@ -21,6 +21,7 @@ import GeneralTab from "./components/general-tab";
 import { PropertyHeaderMenu } from "./components/property-header-menu";
 import RequirementTab from "./components/requirement-tab";
 import SharedTab from "./components/shared-tab";
+import { BackHeader } from "@/components/back-header";
 
 const typeIcons: Record<string, any> = {
     [PropertyType.hotel]: <Building2 className="text-rose-500" size={40} />,
@@ -40,69 +41,72 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
     }
 
     return (
-        <div className="min-h-full bg-background p-4 sm:p-6 lg:p-8 space-y-6 overflow-y-auto">
-            {/* Header section from screenshot */}
-            <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-6">
-                    <PropertyHeaderMenu propertyId={propertyId} />
-                    <div className="w-16 h-16 bg-muted/50 rounded-2xl flex items-center justify-center border border-border shadow-inner">
-                        {typeIcons[property.propertyType as PropertyType] || <Building2 size={40} />}
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-2">
-                            <h1 className="text-lg sm:text-2xl font-black text-foreground tracking-tight uppercase">
-                                {property.title}
-                            </h1>
+        <>
+            <BackHeader title={"Property Details"} />
+            <div className="w-full bg-background pb-34 p-4 sm:p-6 lg:p-8 space-y-6 overflow-y-auto">
+                {/* Header section from screenshot */}
+                <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-6">
+                        <PropertyHeaderMenu propertyId={propertyId} />
+                        <div className="w-16 h-16 bg-muted/50 rounded-2xl flex items-center justify-center border border-border shadow-inner">
+                            {typeIcons[property.propertyType as PropertyType] || <Building2 size={40} />}
                         </div>
-                        <div className="flex items-center text-muted-foreground text-sm font-bold mt-1">
-                            <MapPin size={14} className="mr-1.5" />
-                            {property.address}
+                        <div className="flex flex-col gap-1">
+                            <div className="flex items-center gap-2">
+                                <h1 className="text-lg sm:text-2xl font-black text-foreground tracking-tight uppercase">
+                                    {property.title}
+                                </h1>
+                            </div>
+                            <div className="flex items-center text-muted-foreground text-sm font-bold mt-1">
+                                <MapPin size={14} className="mr-1.5" />
+                                {property.address}
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <hr className="border-border" />
+
+                {/* Tabs */}
+                <AppTabs
+                    defaultTab="general"
+                    tabs={[
+                        {
+                            id: "general",
+                            label: "GENERAL",
+                            icon: <Info size={20} />,
+                            content: <GeneralTab property={property} />
+                        },
+                        {
+                            id: "requirements",
+                            label: "REQUIREMENTS",
+                            icon: <ListChecks size={20} />,
+                            content: <RequirementTab propertyId={propertyId} />
+                        },
+                        {
+                            id: "document",
+                            label: "DOCUMENT",
+                            icon: <FileText size={20} />,
+                            content: <DocumentTab propertyId={propertyId} />
+                        },
+                        {
+                            id: "shared",
+                            label: "SHARED",
+                            icon: <Share2 size={20} />,
+                            badgeCount: property._count?.sharedLinks || 0,
+                            content: <SharedTab propertyId={propertyId} />
+                        },
+                        {
+                            id: "agreement",
+                            label: "AGREEMENT",
+                            icon: <Handshake size={20} />,
+                            badgeCount: property._count?.agreements || 0,
+                            content: <AgreementTab propertyId={propertyId} />
+                        }
+                    ]}
+                />
             </div>
-
-            <hr className="border-border" />
-
-            {/* Tabs */}
-            <AppTabs
-                defaultTab="general"
-                tabs={[
-                    {
-                        id: "general",
-                        label: "GENERAL",
-                        icon: <Info size={20} />,
-                        content: <GeneralTab property={property} />
-                    },
-                    {
-                        id: "requirements",
-                        label: "REQUIREMENTS",
-                        icon: <ListChecks size={20} />,
-                        content: <RequirementTab propertyId={propertyId} />
-                    },
-                    {
-                        id: "document",
-                        label: "DOCUMENT",
-                        icon: <FileText size={20} />,
-                        content: <DocumentTab propertyId={propertyId} />
-                    },
-                    {
-                        id: "shared",
-                        label: "SHARED",
-                        icon: <Share2 size={20} />,
-                        badgeCount: property._count?.sharedLinks || 0,
-                        content: <SharedTab propertyId={propertyId} />
-                    },
-                    {
-                        id: "agreement",
-                        label: "AGREEMENT",
-                        icon: <Handshake size={20} />,
-                        badgeCount: property._count?.agreements || 0,
-                        content: <AgreementTab propertyId={propertyId} />
-                    }
-                ]}
-            />
-        </div>
+        </>
     );
 }
 

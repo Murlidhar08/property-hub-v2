@@ -1,15 +1,22 @@
 import { getAgents } from "@/actions/user.actions";
 import { AddAgentButton } from "./components/add-agent-button";
 import { AgentList } from "./components/agent-list";
+import { AppHeader } from "@/components/app-header";
 
 export default async function AgentsPage() {
   const agents = await getAgents();
 
   return (
-    <div className="min-h-full bg-background p-4 sm:p-6 lg:p-8 space-y-8 max-w-(--breakpoint-2xl) mx-auto">
-      <AddAgentButton />
+    <>
+      <div className="min-h-screen bg-background pb-34">
+        <AppHeader title={"Agents"} />
 
-      <AgentList initialAgents={agents as any} />
-    </div>
+        <div className="mx-auto max-w-4xl mt-6 space-y-8 px-6">
+          <AgentList initialAgents={agents as any} />
+        </div>
+
+        <AddAgentButton />
+      </div>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import { PropertyAddForm } from "@/app/(app)/property/components/property-add-form";
 import { getUsersByRole } from "@/actions/user.actions";
+import { BackHeader } from "@/components/back-header";
 
 export default async function PropertyAddPage() {
     // ⚡ Fetch users for dropdowns on the server
@@ -21,8 +22,10 @@ export default async function PropertyAddPage() {
     const googleMapsApiKey = process.env.GOOGLE_MAPS_API || "";
 
     return (
-        <div className="container mx-auto max-w-5xl py-12 px-4 sm:px-6 lg:px-8">
-            <div className="mb-12">
+        <div className="w-full bg-background pb-34">
+            <BackHeader title={"Add New Property"} />
+
+            <div className="container mx-auto max-w-5xl py-12 px-4 sm:px-6 lg:px-8">
                 <h1 className="text-4xl font-black text-foreground tracking-tighter mb-2">
                     Add New Property
                 </h1>

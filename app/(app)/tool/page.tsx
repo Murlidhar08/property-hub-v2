@@ -4,6 +4,7 @@ import AppTabs from "@/components/tab/app-tabs";
 import { Calculator, Users } from "lucide-react";
 import PartnershipCalculator from "./components/partership-calculator";
 import ProfitCalculator from "./components/profilt-calculator";
+import { AppHeader } from "@/components/app-header";
 
 export default function ToolsPage() {
   const tabs = [
@@ -22,11 +23,15 @@ export default function ToolsPage() {
   ];
 
   return (
-    <div className="min-h-full w-full p-4 sm:p-10 space-y-10 max-w-7xl mx-auto">
-      <AppTabs
-        defaultTab="profit"
-        tabs={tabs}
-      />
+    <div className="min-h-screen bg-background pb-34">
+      <AppHeader title={"Tools"} />
+
+      <div className="mx-auto max-w-4xl mt-6 space-y-8 px-6">
+        <AppTabs
+          defaultTab="profit"
+          tabs={tabs}
+        />
+      </div>
     </div>
   );
 }

@@ -1,15 +1,20 @@
 import { getOwners } from "@/actions/user.actions";
 import { AddOwnerButton } from "./components/add-owner-button";
 import { OwnerList } from "./components/owner-list";
+import { AppHeader } from "@/components/app-header";
 
 export default async function OwnersPage() {
   const owners = await getOwners();
 
   return (
-    <div className="min-h-full bg-background p-4 sm:p-6 lg:p-8 space-y-8 max-w-(--breakpoint-2xl) mx-auto">
-      <AddOwnerButton />
+    <div className="min-h-screen bg-background pb-34">
+      <AppHeader title={"Owners"} />
 
-      <OwnerList initialOwners={owners as any} />
+      <div className="mx-auto max-w-4xl mt-6 space-y-8 px-6">
+        <OwnerList initialOwners={owners as any} />
+      </div>
+
+      <AddOwnerButton />
     </div>
   );
 }

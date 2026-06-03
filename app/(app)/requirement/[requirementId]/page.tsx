@@ -13,6 +13,7 @@ import {
 import GeneralTab from "./components/general-tab";
 import PropertyMapping from "./components/property-mapping";
 import { RequirementActions } from "./components/requirement-actions";
+import { BackHeader } from "@/components/back-header";
 
 const typeIcons: Record<string, any> = {
     [PropertyType.hotel]: <Building2 className="text-rose-500" size={40} />,
@@ -48,30 +49,33 @@ export default async function RequirementDetailsPage({ params }: { params: Promi
     ];
 
     return (
-        <div className="min-h-full w-full bg-background p-4 sm:p-6 lg:p-8 space-y-6">
-            {/* Header section from screenshot */}
-            <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-6">
-                    <RequirementActions requirementId={requirement.id} />
+        <>
+            <BackHeader title={"Requirement Details"} />
+            <div className="min-h-full w-full bg-background p-4 sm:p-6 lg:p-8 space-y-6">
+                {/* Header section from screenshot */}
+                <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-6">
+                        <RequirementActions requirementId={requirement.id} />
 
-                    <div className="w-16 h-16 bg-muted/50 rounded-2xl flex items-center justify-center border border-border shadow-inner">
-                        {typeIcons[requirement.propertyType as PropertyType] || <Layout size={40} />}
-                    </div>
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <h1 className="text-2xl font-black text-foreground tracking-tight uppercase">
-                                {requirement.title}
-                            </h1>
+                        <div className="w-16 h-16 bg-muted/50 rounded-2xl flex items-center justify-center border border-border shadow-inner">
+                            {typeIcons[requirement.propertyType as PropertyType] || <Layout size={40} />}
                         </div>
-                        <div className="flex items-center text-muted-foreground text-sm font-bold mt-1">
-                            <MapPin size={14} className="mr-1.5" />
-                            {requirement.location}
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <h1 className="text-2xl font-black text-foreground tracking-tight uppercase">
+                                    {requirement.title}
+                                </h1>
+                            </div>
+                            <div className="flex items-center text-muted-foreground text-sm font-bold mt-1">
+                                <MapPin size={14} className="mr-1.5" />
+                                {requirement.location}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <AppTabs tabs={tabs} defaultTab="general" />
-        </div>
+                <AppTabs tabs={tabs} defaultTab="general" />
+            </div>
+        </>
     );
 }
