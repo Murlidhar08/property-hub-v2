@@ -22,8 +22,8 @@ export default async function PropertyMapping({ requirement }: { requirement: Re
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {matchedProperties.map((property: any) => (
-                <PropertyCard key={property.id + Math.random()} property={property} />
+            {matchedProperties.map((property: any, idx: number) => (
+                <PropertyCard key={property.id + idx.toString()} property={property} />
             ))}
         </div>
     )

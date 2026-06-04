@@ -21,19 +21,11 @@ import { Input } from "@/components/ui/input";
 import { RequirementHeaderMenu } from "./requirement-header-menu";
 import { AddRequirementButton } from "./add-requirement-button";
 import { PropertyType } from "@/lib/generated/prisma/enums";
+import { typeIcons } from "@/components/property/property-icons";
 
 interface RequirementListProps {
   initialRequirements: any[];
 }
-
-const typeIcons: Record<string, any> = {
-  [PropertyType.hotel]: <Building2 className="text-rose-500" size={38} />,
-  [PropertyType.agricultural]: <Trees className="text-emerald-500" size={38} />,
-  [PropertyType.nonagricultural]: <Layers className="text-amber-500" size={38} />,
-  [PropertyType.tenament]: <Home className="text-sky-500" size={38} />,
-  [PropertyType.flat]: <Building2 className="text-indigo-500" size={38} />,
-  [PropertyType.plot]: <Layout className="text-orange-500" size={38} />,
-};
 
 export function RequirementList({ initialRequirements }: RequirementListProps) {
   const [search, setSearch] = useState("");
@@ -153,8 +145,6 @@ export function RequirementList({ initialRequirements }: RequirementListProps) {
                     Find Matches
                   </Button>
                 </Link>
-
-                <RequirementHeaderMenu requirementId={req.id} />
               </div>
             </div>
           </motion.div>

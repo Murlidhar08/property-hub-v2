@@ -12,6 +12,7 @@ import { useConfirm } from "@/components/providers/confirm-provider";
 import { Edit2, MoreHorizontal, RefreshCcw, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { BackHeader } from "@/components/back-header";
 
 interface RequirementActionsProps {
     requirementId: string;
@@ -49,23 +50,26 @@ export function RequirementActions({ requirementId }: RequirementActionsProps) {
     };
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger render={
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                    <MoreHorizontal size={16} />
-                </Button>
-            } />
-            <DropdownMenuContent align="start" className="rounded-xl min-w-32">
-                <DropdownMenuItem onClick={handleRefresh} className="gap-2 cursor-pointer font-bold">
-                    <RefreshCcw size={14} className="text-emerald-500" /> Refresh
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleEdit} className="gap-2 cursor-pointer font-bold">
-                    <Edit2 size={14} className="text-indigo-500" /> Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleDelete} className="gap-2 text-destructive focus:text-destructive cursor-pointer font-bold">
-                    <Trash2 size={14} /> Delete
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+        <BackHeader
+            title={"Requirement Details"}
+            menuItems={[
+                {
+                    label: "Refresh",
+                    icon: <RefreshCcw size={14} className="text-emerald-500" />,
+                    onClick: handleRefresh
+                },
+                {
+                    label: "Edit",
+                    icon: <Edit2 size={14} className="text-indigo-500" />,
+                    onClick: handleEdit
+                },
+                {
+                    label: "Delete",
+                    icon: <Trash2 size={14} />,
+                    onClick: handleDelete,
+                    destructive: true,
+                }
+            ]}
+        />
     );
 }

@@ -1,5 +1,5 @@
 "use client";
-import { PropertyHeaderMenu } from "@/app/(app)/property/[propertyId]/components/property-header-menu";
+
 import { typeIcons } from "./property-icons";
 import { PropertyStatus } from "@/lib/generated/prisma/browser";
 import { cn, getFileUrl } from "@/lib/utils";
@@ -43,10 +43,6 @@ export default function PropertyCard({ property }: { property: PropertyInput }) 
             className="group"
         >
             <div className="relative bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-slate-200/40 transition-all duration-500 h-full flex flex-col overflow-hidden">
-                <div className="absolute top-4 right-4 z-50">
-                    <PropertyHeaderMenu propertyId={property.id} />
-                </div>
-
                 <Link href={`/property/${property.id}` as any} className="flex-1 flex flex-col">
                     {/* Compact Image Section */}
                     <div className="relative aspect-video overflow-hidden shrink-0 bg-slate-50">

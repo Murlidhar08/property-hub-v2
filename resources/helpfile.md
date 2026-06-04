@@ -18,3 +18,6 @@
 `git merge upstream/main --allow-unrelated-histories` # Only first time
 `git merge upstream/main` # After first time
 `git push origin main`
+
+# run script
+`npx tsx -r dotenv/config resources/scripts/seed-test-data.ts`

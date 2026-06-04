@@ -50,13 +50,12 @@ export default async function RequirementDetailsPage({ params }: { params: Promi
 
     return (
         <>
-            <BackHeader title={"Requirement Details"} />
+            <RequirementActions requirementId={requirement.id} />
+
             <div className="min-h-full w-full bg-background p-4 sm:p-6 lg:p-8 space-y-6">
                 {/* Header section from screenshot */}
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-6">
-                        <RequirementActions requirementId={requirement.id} />
-
                         <div className="w-16 h-16 bg-muted/50 rounded-2xl flex items-center justify-center border border-border shadow-inner">
                             {typeIcons[requirement.propertyType as PropertyType] || <Layout size={40} />}
                         </div>

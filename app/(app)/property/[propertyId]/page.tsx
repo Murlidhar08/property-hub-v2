@@ -42,12 +42,12 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
 
     return (
         <>
-            <BackHeader title={"Property Details"} />
+            <PropertyHeaderMenu propertyId={propertyId} />
+
             <div className="w-full bg-background pb-34 p-4 sm:p-6 lg:p-8 space-y-6 overflow-y-auto">
                 {/* Header section from screenshot */}
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-6">
-                        <PropertyHeaderMenu propertyId={propertyId} />
                         <div className="w-16 h-16 bg-muted/50 rounded-2xl flex items-center justify-center border border-border shadow-inner">
                             {typeIcons[property.propertyType as PropertyType] || <Building2 size={40} />}
                         </div>

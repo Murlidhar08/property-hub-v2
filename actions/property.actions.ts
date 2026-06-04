@@ -283,10 +283,7 @@ export async function deleteProperty(id: string) {
         await tx.propertyAgreement.deleteMany({ where: { propertyId: id } });
         await tx.propertySharedLink.deleteMany({ where: { propertyId: id } });
 
-        const property = await tx.property.delete({
-            where: { id }
-        });
-
+        const property = await tx.property.delete({ where: { id } });
         return property;
     });
 }
