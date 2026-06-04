@@ -5,7 +5,7 @@ import { ReadOnlyGoogleMap } from "@/app/(app)/property/[propertyId]/components/
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { formatInWords } from "@/utility/commonFunction";
+import { formatInWords } from "@/utility/common-function";
 import { format, formatDistanceToNow } from "date-fns";
 import { motion } from "framer-motion";
 import {

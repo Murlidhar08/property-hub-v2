@@ -1,3 +1,5 @@
+import { getGlobalUserConfig } from "./global-user-config";
+
 export function getInitials(name?: string | null) {
     if (!name) return "?";
 
@@ -42,9 +44,10 @@ export function formatInWords(num: number, isSymbolRequire = true) {
         return null;
 
     // Currency Symbol
-    // TODO: PENDING DYNAMIC SYMBOL
-    if (isSymbolRequire)
-        result = "$" + " " + result;
+    if (isSymbolRequire) {
+        const config = getGlobalUserConfig()
+        result = config.currencySymbol + " " + result;
+    }
 
     return result.trim();
 }

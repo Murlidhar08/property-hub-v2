@@ -12,12 +12,11 @@ import {
     CircleDollarSign,
     Ruler
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { ReadOnlyGoogleMap } from "./read-only-google-map";
 import Link from "next/link";
 import { PropertyMediaGallery } from "../../components/property-media-gallery";
-import { formatInWords } from "@/utility/commonFunction";
+import { formatInWords } from "@/utility/common-function";
 
 export default async function GeneralTab({ property }: { property: any }) {
     const mediaItems = (property.documents || []).filter((d: any) => d.documentType === "preview");

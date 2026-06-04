@@ -19,6 +19,7 @@ import {
 } from "./ui/dropdown-menu"
 
 interface HeaderMenuItem {
+  id?: string
   label: string
   icon?: ReactNode
   onClick: () => void
@@ -116,7 +117,7 @@ const BackHeader = ({
             <DropdownMenuContent align="end" className="w-56 rounded-2xl p-2 mt-2 shadow-2xl border-border/50">
               {menuItems.map((item, index) => (
                 <DropdownMenuItem
-                  key={index}
+                  key={item.id || index}
                   onClick={item.onClick}
                   className={cn(
                     "rounded-xl px-4 py-3 text-sm font-bold transition-all focus:scale-[0.98] active:scale-95 cursor-pointer",
