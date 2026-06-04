@@ -1,7 +1,6 @@
 import { AppHeader } from "@/components/app-header";
 import { getUserSession } from "@/lib/auth/auth";
 import { tran } from "@/lib/languages/i18n";
-
 import { DashboardContent } from "./components/dashboard-content";
 import { getDashboardStats } from "@/actions/dashboard.actions";
 
@@ -14,10 +13,12 @@ export default async function Page() {
     <>
       <AppHeader title={tran("dashboard.title")} />
 
-      <DashboardContent
-        initialData={data}
-        userName={session?.user?.name || "Admin"}
-      />
+      <div className="flex-1 px-4 space-y-6 sm:space-y-8 pb-34">
+        <DashboardContent
+          initialData={data}
+          userName={session?.user?.name || "Admin"}
+        />
+      </div>
     </>
   );
 }
