@@ -14,12 +14,12 @@ import { tran } from "@/lib/languages/i18n";
 
 // Components
 import { Input } from "@/components/ui/input";
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
 import DiscordAuth from "./components/discord-auth";
 import EmailAuth from "./components/email-auth";
 import FacebookAuth from "./components/facebook-auth";
 import GoogleAuth from "./components/google-auth";
 import PasskeyAuth from "./components/passkey-auth";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
 
 interface LoginFormProps {
   providers: {

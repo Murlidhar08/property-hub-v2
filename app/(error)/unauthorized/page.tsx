@@ -1,13 +1,12 @@
 "use client";
 
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
+import { envClient } from "@/lib/env.client";
 import { motion } from "framer-motion";
-import { Lock, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Lock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-import { envClient } from "@/lib/env.client";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
 
 export default function UnauthorizedPage() {
     const router = useRouter();

@@ -1,14 +1,13 @@
 "use client";
 
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
+import { envClient } from "@/lib/env.client";
 import { motion } from "framer-motion";
-import { ServerCrash, RefreshCw, ArrowLeft } from "lucide-react";
+import { ArrowLeft, RefreshCw, ServerCrash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-import { envClient } from "@/lib/env.client";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
 
 export default function ServerErrorPage() {
     const router = useRouter();

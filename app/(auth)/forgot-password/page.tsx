@@ -1,18 +1,16 @@
 "use client";
 
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
+import { authClient } from "@/lib/auth/auth-client";
+import { envClient } from "@/lib/env.client";
+import { AnimatePresence, motion } from "framer-motion";
 import { Mail, ShieldAlert, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { authClient } from "@/lib/auth/auth-client";
-import { envClient } from "@/lib/env.client";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
-
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");

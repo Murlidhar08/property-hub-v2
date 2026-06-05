@@ -1,18 +1,18 @@
 "use client";
 
 import { getListUserAccounts } from "@/actions/user-settings.actions";
-import AppTabs from "@/components/tab/app-tabs";
 import { BackHeader } from "@/components/back-header";
+import AppTabs from "@/components/tab/app-tabs";
 import { Skeleton } from "@/components/ui/skeleton";
+import { containerVariants } from "@/lib/animations";
 import { useSession } from "@/lib/auth/auth-client";
 import { tran } from "@/lib/languages/i18n";
 import { motion } from "framer-motion";
 import { Key, Lock, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
-import { PasskeyTab } from "./components/passkeyTab";
-import { SecureTab } from "./components/secureTab";
-import { TwoFactorTab } from "./components/twoFactorTab";
-import { containerVariants } from "@/lib/animations";
+import { PasskeyTab } from "./components/passkey-tab";
+import { SecureTab } from "./components/secure-tab";
+import { TwoFactorTab } from "./components/two-factor-tab";
 
 export default function SecurityPage() {
     const { data: session, isPending } = useSession();

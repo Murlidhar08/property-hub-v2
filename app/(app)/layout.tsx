@@ -11,8 +11,8 @@ import { ImpersonationIndicator } from "@/components/auth/impersonation-indicato
 import { LayoutTransitions } from "@/components/layout-transitions";
 import { NavBar } from "@/components/navbar/nav-bar";
 import { UserConfigProvider } from "@/components/providers/user-config-provider";
-import { getDefaultConfig, getUserConfig } from "@/lib/user-config";
 import { UserStatus } from "@/lib/generated/prisma/enums";
+import { getDefaultConfig, getUserConfig } from "@/lib/user-config";
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Check if setup is needed

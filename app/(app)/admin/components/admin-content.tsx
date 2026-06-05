@@ -1,18 +1,17 @@
 "use client";
 
+import { FooterButtons } from "@/components/footer-buttons";
 import AppTabs from "@/components/tab/app-tabs";
+import { Button } from "@/components/ui/button";
+import { UserRole } from "@/lib/generated/prisma/enums";
 import { tran } from "@/lib/languages/i18n";
 import { useAdminUsers } from "@/tanstacks/admin";
 import { Plus, Settings as SettingsIcon, Users } from "lucide-react";
+import { redirect } from "next/navigation";
 import { AdminSkeleton } from "./admin-skeleton";
 import { AdminStats } from "./admin-stats";
 import { AppSettingsTab } from "./app-settings-tab";
 import { UserList } from "./user-list";
-import { UserRole } from "@/lib/generated/prisma/enums";
-import { FooterButtons } from "@/components/footer-buttons";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
 
 export function AdminContent() {
     const { data: users, isLoading } = useAdminUsers();

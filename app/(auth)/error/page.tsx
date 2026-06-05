@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
 import { envClient } from "@/lib/env.client";
 import { motion } from "framer-motion";
 import { AlertCircle, ArrowLeft, Home } from "lucide-react";

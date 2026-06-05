@@ -3,14 +3,14 @@
 import { getListSessions } from "@/actions/user-settings.actions";
 import { BackHeader } from "@/components/back-header";
 import { Skeleton } from "@/components/ui/skeleton";
-import { tran } from "@/lib/languages/i18n";
+import { containerVariants } from "@/lib/animations";
 import { useSession } from "@/lib/auth/auth-client";
-import { Session } from "@/lib/generated/prisma/browser";
+import { Session } from "@/lib/generated/prisma/client";
+import { tran } from "@/lib/languages/i18n";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SessionModalBody } from "./components/session-body";
-import { containerVariants } from "@/lib/animations";
 
 export default function SessionManagementPage() {
     const router = useRouter();

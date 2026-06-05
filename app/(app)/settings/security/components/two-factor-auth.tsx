@@ -1,23 +1,21 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { motion } from "framer-motion"
-import { Copy, RefreshCw, ShieldCheck } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { LoadingSwap } from "@/components/ui/loading-swap"
-
 import { authClient } from "@/lib/auth/auth-client"
 import { envClient } from "@/lib/env.client"
-import dynamic from "next/dynamic"
-import { toast } from "sonner"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { motion } from 'framer-motion'
+import { Copy, RefreshCw, ShieldCheck } from 'lucide-react'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import * as z from 'zod'
 
-const QRCode = dynamic(() => import("react-qr-code"), {
+const QRCode = dynamic(() => import('react-qr-code'), {
   ssr: false,
   loading: () => <div className="h-45 w-45 animate-pulse bg-muted rounded-xl" />
 })

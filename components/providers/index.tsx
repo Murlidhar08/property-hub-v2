@@ -1,18 +1,18 @@
 "use client"
 
-import { ReactNode } from "react"
 import { ThemeProvider } from "next-themes";
-import { ConfirmProvider } from "./confirm-provider"
-import { PromptProvider } from "./prompt-provider"
-import { QueryProvider } from "./query-provider"
+import { ReactNode } from "react";
+import { ConfirmProvider } from "./confirm-provider";
+import { PromptProvider } from "./prompt-provider";
+import { QueryProvider } from "./query-provider";
 
 /* ========================================================= */
 /* EXPORTS */
 /* ========================================================= */
 
-export * from "./confirm-provider"
-export * from "./prompt-provider"
-export * from "./query-provider"
+export * from "./confirm-provider";
+export * from "./prompt-provider";
+export * from "./query-provider";
 
 /* ========================================================= */
 /* GLOBAL PROVIDER */

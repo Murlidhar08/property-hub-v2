@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Compass, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Compass } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
 import { envClient } from "@/lib/env.client";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
 
 export default function NotFoundPage() {
     const router = useRouter();

@@ -3,11 +3,11 @@
 // Lib
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
 import { authClient } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
 import { AnimatePresence, motion } from "framer-motion";
-import { Eye, EyeOff, Mail, User, Loader2, Check, X } from "lucide-react";
+import { Check, Eye, EyeOff, Loader2, Mail, User, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

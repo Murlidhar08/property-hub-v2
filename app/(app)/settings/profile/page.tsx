@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 import {
+    AtSign,
     Edit3,
     LogOut,
     Mail,
     Phone,
-    User,
-    AtSign
+    User
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -16,11 +16,11 @@ import { BackHeader } from "@/components/back-header";
 import { FooterButtons } from "@/components/footer-buttons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { containerVariants, itemVariants } from "@/lib/animations";
 import { signOut } from "@/lib/auth/auth-client";
 import { tran } from "@/lib/languages/i18n";
 import { useCurrentUser } from "@/tanstacks/user";
 import { getInitials } from "@/utility/common-function";
-import { containerVariants, itemVariants } from "@/lib/animations";
 
 export default function ProfilePage() {
     const router = useRouter();

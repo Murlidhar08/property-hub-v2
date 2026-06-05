@@ -9,8 +9,8 @@ import { AdminSkeleton } from "./components/admin-skeleton";
 // Hooks
 import { AppHeader } from "@/components/app-header";
 import { getUserSession } from "@/lib/auth/auth";
-import { tran } from "@/lib/languages/i18n";
 import { UserRole } from "@/lib/generated/prisma/enums";
+import { tran } from "@/lib/languages/i18n";
 
 export default async function AdminPage() {
     const session = await getUserSession();
