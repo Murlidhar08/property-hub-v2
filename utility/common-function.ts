@@ -12,6 +12,12 @@ export function getInitials(name?: string | null) {
     return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
 }
 
+export function getUniqueUserName(name?: string): string {
+    const base = name ? name.toLowerCase().replace(/\s+/g, '_') : 'user';
+    const random = Math.floor(Math.random() * 10000);
+    return `${base}_${Date.now().toString().slice(-6)}${random}`;
+}
+
 export function formatInWords(num: number, isSymbolRequire = true) {
     if (isNaN(num) || !num)
         return null;
