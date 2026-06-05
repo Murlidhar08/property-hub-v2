@@ -1,6 +1,7 @@
 "use client";
 
 import { removeUserRole } from "@/actions/user.actions";
+import AppTabs from "@/components/tab/app-tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -30,7 +31,6 @@ import {
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { toast } from "sonner";
-import AppTabs from "@/components/tab/app-tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { DocumentList } from "./document-list";
 
@@ -217,7 +217,7 @@ export function UserDetailView({ user, role }: UserDetailViewProps) {
                     {role === 'client' ? <Bookmark className="text-amber-500" /> : <Building2 className="text-primary" />}
                   </div>
                   <div className="min-w-0">
-                    <h5 className="font-black tracking-tight text-foreground group-hover:text-primary transition-colors truncate max-w-[200px] sm:max-w-md">{item.title}</h5>
+                    <h5 className="font-black tracking-tight text-foreground group-hover:text-primary transition-colors truncate max-w-50 sm:max-w-md">{item.title}</h5>
                     <div className="flex items-center gap-4 mt-1">
                       <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">{item.propertyType}</span>
                       <div className="h-3 w-px bg-border" />
@@ -265,7 +265,7 @@ export function UserDetailView({ user, role }: UserDetailViewProps) {
                   <MoreVertical size={24} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="rounded-2xl min-w-[200px] p-2 bg-card/95 backdrop-blur-md shadow-xl border-border/50">
+              <DropdownMenuContent align="start" className="rounded-2xl min-w-50 p-2 bg-card/95 backdrop-blur-md shadow-xl border-border/50">
                 {menuItems.map((item) => (
                   <DropdownMenuItem
                     key={item.label}
@@ -292,7 +292,7 @@ export function UserDetailView({ user, role }: UserDetailViewProps) {
 
           <div className="space-y-3 min-w-0">
             <div className="flex items-center justify-center sm:justify-start gap-3">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-foreground truncate max-w-[300px] sm:max-w-md">{user.name}</h1>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-foreground truncate min-w-75 sm:max-w-md">{user.name}</h1>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-center sm:justify-start gap-3 sm:gap-6 text-muted-foreground font-bold text-sm">
               <span className="flex items-center justify-center sm:justify-start gap-2 text-primary/80">

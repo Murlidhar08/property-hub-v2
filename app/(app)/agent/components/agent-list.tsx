@@ -1,12 +1,12 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { UserCard } from "@/components/user/user-card";
 import {
   Search
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { UserCard } from "./user-card";
 
 interface Agent {
   id: string;

@@ -93,7 +93,7 @@ export function DocumentCard({ document, isEditable = false }: DocumentCardProps
 
     return (
         <>
-            <Card className="p-5 rounded-[2.5rem] border-border bg-card shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group relative flex flex-col justify-between h-[280px] overflow-hidden">
+            <Card className="p-5 rounded-[2.5rem] border-border bg-card shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group relative flex flex-col justify-between h-70 overflow-hidden">
                 <div className="flex items-start justify-between">
                     <div className={cn(
                         "h-16 w-16 rounded-[1.5rem] flex items-center justify-center border transition-all duration-500 group-hover:scale-110",
@@ -108,7 +108,7 @@ export function DocumentCard({ document, isEditable = false }: DocumentCardProps
                                 <MoreVertical size={20} />
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="rounded-2xl min-w-[180px] p-2 bg-card/95 backdrop-blur-md shadow-xl border-border/50">
+                        <DropdownMenuContent align="end" className="rounded-2xl min-w-45 p-2 bg-card/95 backdrop-blur-md shadow-xl border-border/50">
                             <DropdownMenuItem onClick={handlePreview} className="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer hover:bg-primary/5 text-sm font-bold transition-colors">
                                 <Maximize2 size={16} className="text-primary" />
                                 Preview
@@ -159,7 +159,7 @@ export function DocumentCard({ document, isEditable = false }: DocumentCardProps
             </Card>
 
             <Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
-                <DialogContent className="sm:max-w-[425px] rounded-[2.5rem] border-border bg-card shadow-2xl p-8">
+                <DialogContent className="sm:max-w-106.25 rounded-[2.5rem] border-border bg-card shadow-2xl p-8">
                     <DialogHeader>
                         <DialogTitle className="font-black tracking-tight text-2xl uppercase">Rename Document</DialogTitle>
                     </DialogHeader>

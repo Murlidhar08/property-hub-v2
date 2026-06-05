@@ -10,10 +10,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Upload, RotateCw, FileUp } from "lucide-react";
-import { useState, useRef } from "react";
-import { toast } from "sonner";
+import { FileUp, RotateCw, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
 
 interface DocumentUploadProps {
     userId: string;
@@ -90,27 +90,27 @@ export function DocumentUpload({ userId }: DocumentUploadProps) {
                     </div>
 
                     <div className="space-y-2">
-                         <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 ml-1">Select File</label>
-                         <div 
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 ml-1">Select File</label>
+                        <div
                             onClick={() => fileInputRef.current?.click()}
                             className="h-14 border border-dashed border-border/50 rounded-2xl flex items-center px-6 gap-3 cursor-pointer hover:bg-muted/30 transition-all hover:border-primary/50 group/upload"
-                         >
+                        >
                             <Upload size={18} className="text-muted-foreground group-hover/upload:text-primary transition-colors" />
                             <span className="text-sm font-bold text-muted-foreground group-hover/upload:text-foreground transition-colors truncate">
                                 {selectedFile ? selectedFile.name : "Click to select file"}
                             </span>
-                            <input 
-                                type="file" 
-                                ref={fileInputRef} 
+                            <input
+                                type="file"
+                                ref={fileInputRef}
                                 onChange={handleFileChange}
                                 accept="image/*,.pdf"
                                 className="hidden"
                             />
-                         </div>
+                        </div>
                     </div>
                 </div>
 
-                <Button 
+                <Button
                     onClick={handleUpload}
                     disabled={!selectedFile || isUploading}
                     className="rounded-2xl h-14 font-black uppercase tracking-widest text-xs gap-3 shadow-lg shadow-primary/20 transition-all"

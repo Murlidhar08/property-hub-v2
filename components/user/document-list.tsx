@@ -1,11 +1,11 @@
 "use client";
 
 import { getUserDocuments } from "@/actions/user.actions";
-import { DocumentCard } from "./document-card";
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FileText, RotateCw } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { AnimatePresence, motion } from "framer-motion";
+import { FileText, RotateCw } from "lucide-react";
+import { useEffect, useState } from "react";
+import { DocumentCard } from "./document-card";
 
 interface DocumentListProps {
     userId: string;
@@ -78,7 +78,7 @@ export function DocumentList({ userId, isEditable = false, documents: initialDoc
                         <FileText size={48} className="text-muted-foreground/20 group-hover:text-primary/20 transition-colors duration-700" />
                     </div>
                     <h5 className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground/40 mb-3 group-hover:text-foreground/40 transition-colors duration-700 text-center">No documents in vault</h5>
-                    <p className="text-[10px] font-bold text-muted-foreground/20 text-center max-w-[200px] leading-relaxed">
+                    <p className="text-[10px] font-bold text-muted-foreground/20 text-center min-w-50 leading-relaxed">
                         {isEditable ? "Upload essential verification documents to start securing this profile" : "Verification records for this profile are currently unavailable"}
                     </p>
                 </Card>
