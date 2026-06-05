@@ -1,7 +1,7 @@
 import { getAgents } from "@/actions/user.actions";
+import { AppHeader } from "@/components/app-header";
 import { AddAgentButton } from "./components/add-agent-button";
 import { AgentList } from "./components/agent-list";
-import { AppHeader } from "@/components/app-header";
 
 export default async function AgentsPage() {
   const agents = await getAgents();
