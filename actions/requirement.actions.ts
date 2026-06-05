@@ -1,9 +1,9 @@
 "use server";
 
+import { convertToSqFeet } from "@/lib/area-convert";
 import { getUserSession } from "@/lib/auth/auth";
 import { PropertyStatus, PropertyType, Requirement } from "@/lib/generated/prisma/client";
 import { prisma } from "@/lib/prisma/prisma";
-import { convertToSqFeet } from "@/lib/area-convert";
 
 export async function getRequirements() {
     const session = await getUserSession();

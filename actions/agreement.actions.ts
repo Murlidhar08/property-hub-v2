@@ -90,13 +90,14 @@ export async function deleteAgreement(id: number, propertyId: string) {
         // Actually, let's check line 277 again: agreement PropertyAgreement @relation(fields: [agreementId], references: [id])
         // It doesn't have onDelete: Cascade. So we delete payments manually if needed or if DB allows.
 
-        await prisma.propertyAgreementPayment.deleteMany({
-            where: { agreementId: id }
-        });
-
-        await prisma.propertyAgreement.delete({
-            where: { id }
-        });
+        await prisma.$transaction([
+            prisma.propertyAgreementPayment.deleteMany({
+                where: { agreementId: id }
+            }),
+            prisma.propertyAgreement.delete({
+                where: { id }
+            })
+        ]);
 
         revalidatePath(`/property/${propertyId}`);
         return { success: true };

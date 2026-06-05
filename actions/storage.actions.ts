@@ -2,14 +2,12 @@
 
 import { getUserSession } from "@/lib/auth/auth";
 import {
-    listDirectoryContents,
-    renameItem,
-    deleteFile,
     deleteDirectory,
+    deleteFile,
+    listDirectoryContents,
     moveFile,
-    getAbsolutePath
+    renameItem
 } from "@/lib/file-operations";
-import fs from "fs";
 
 export async function getStorageItems(relativePath: string = "") {
     const session = await getUserSession();

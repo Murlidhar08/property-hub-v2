@@ -1,10 +1,10 @@
 "use server";
 
-import { prisma } from "@/lib/prisma/prisma";
 import { getUserSession } from "@/lib/auth/auth";
+import { UserRole } from "@/lib/generated/prisma/enums";
+import { prisma } from "@/lib/prisma/prisma";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { UserRole } from "@/lib/generated/prisma/enums";
 
 const appConfigSchema = z.object({
   smtpHost: z.string().optional().nullable(),

@@ -1,10 +1,10 @@
 "use server";
 
 import { auth, getUserSession } from "@/lib/auth/auth";
-import { prisma } from "@/lib/prisma/prisma";
 import { deleteFile, uploadFile } from "@/lib/file-operations";
-import { headers } from "next/headers";
 import { UserStatus } from "@/lib/generated/prisma/enums";
+import { prisma } from "@/lib/prisma/prisma";
+import { headers } from "next/headers";
 
 export async function getCurrentUser() {
     const session = await getUserSession();
