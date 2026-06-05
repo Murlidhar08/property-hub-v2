@@ -1,8 +1,8 @@
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAppConfig } from "@/tanstacks/admin";
 import { AppSettingsForm } from "./app-settings-form";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export function AppSettingsTab() {
     const { data: config, isLoading } = useAppConfig();

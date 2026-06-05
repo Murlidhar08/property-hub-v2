@@ -1,5 +1,5 @@
-import { prisma } from "./prisma/prisma";
 import { envServer } from "./env.server";
+import { prisma } from "./prisma/prisma";
 
 export async function getAppConfig() {
   try {

@@ -1,14 +1,14 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Mail, ShieldAlert, LogOut } from "lucide-react";
+import { LogOut, Mail, ShieldAlert } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
 import { authClient } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
 import { UserStatus } from "@/lib/generated/prisma/enums";
 
 function BannedAccountContent() {

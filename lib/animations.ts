@@ -61,4 +61,4 @@ export const floatTransition: Transition = {
   duration: 4,
   repeat: Infinity,
   ease: "easeInOut",
-};
+};

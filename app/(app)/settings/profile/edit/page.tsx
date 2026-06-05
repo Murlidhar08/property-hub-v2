@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Camera, CheckCircle2, Edit3, Mail, Phone, User, AtSign, Loader2, Check, X } from 'lucide-react'
+import { AtSign, Camera, Check, CheckCircle2, Edit3, Loader2, Mail, Phone, User, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm, UseFormRegisterReturn } from 'react-hook-form'
@@ -14,11 +14,11 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { LoadingSwap } from '@/components/ui/loading-swap'
 import { Skeleton } from '@/components/ui/skeleton'
+import { containerVariants, itemVariants } from '@/lib/animations'
 import { authClient } from '@/lib/auth/auth-client'
 import { tran } from '@/lib/languages/i18n'
 import { useCurrentUser } from '@/tanstacks/user'
 import { getInitials } from '@/utility/common-function'
-import { containerVariants, itemVariants } from '@/lib/animations'
 
 type ProfileFormValues = {
   name: string

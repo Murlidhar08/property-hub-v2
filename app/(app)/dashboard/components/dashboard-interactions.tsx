@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { useConfirm, usePrompt } from "@/components/providers"
+import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 
 export function DashboardInteractions() {
@@ -36,7 +36,7 @@ export function DashboardInteractions() {
 
   return (
     <div className="flex flex-wrap gap-4 pt-4">
-      <Button 
+      <Button
         onClick={handleConfirm}
         variant="outline"
         className="rounded-2xl h-12 px-6 font-bold"
@@ -44,7 +44,7 @@ export function DashboardInteractions() {
         Show Confirm
       </Button>
 
-      <Button 
+      <Button
         onClick={handlePrompt}
         variant="default"
         className="rounded-2xl h-12 px-6 font-bold"

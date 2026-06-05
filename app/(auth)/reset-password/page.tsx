@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Eye, EyeOff, ShieldAlert, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -8,10 +8,10 @@ import { Suspense, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
 import { authClient } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
 import Link from "next/link";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
 
 
 function ResetPasswordForm() {

@@ -1,15 +1,14 @@
 "use client";
 
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
+import { authClient } from "@/lib/auth/auth-client";
+import { envClient } from "@/lib/env.client";
+import { UserStatus } from "@/lib/generated/prisma/enums";
 import { motion } from "framer-motion";
 import { AlertTriangle, LogOut, Mail } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-import { authClient } from "@/lib/auth/auth-client";
-import { envClient } from "@/lib/env.client";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
-import { UserStatus } from "@/lib/generated/prisma/enums";
 
 export default function AccountSuspendedPage() {
     const router = useRouter();

@@ -1,13 +1,9 @@
+import { itemVariants } from "@/lib/animations";
 import { tran } from "@/lib/languages/i18n";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
 import { TwoFactorAuth } from "./two-factor-auth";
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0 }
-};
 
 export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPasswordAccount: boolean, isTwoFactorEnabled: boolean }) {
     return (

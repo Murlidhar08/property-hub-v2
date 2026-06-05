@@ -1,5 +1,5 @@
-import type { MetadataRoute } from 'next'
 import { envClient } from '@/lib/env.client'
+import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {

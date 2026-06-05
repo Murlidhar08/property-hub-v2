@@ -33,9 +33,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { comprehensiveDeleteUser } from "@/actions/admin.actions";
+import { UserRole, UserStatus } from "@/lib/generated/prisma/enums";
 import { tran } from "@/lib/languages/i18n";
 import { useAdminUsers } from "@/tanstacks/admin";
-import { UserRole, UserStatus } from "@/lib/generated/prisma/enums";
 import { UserStatusModal } from "./user-status-modal";
 
 interface User {

@@ -1,7 +1,7 @@
 "use client";
+import { tran } from "@/lib/languages/i18n";
 import { useEffect, useState } from "react";
 import { Header } from "./header";
-import { tran } from "@/lib/languages/i18n";
 
 export function AppHeader(props: { title: string }) {
     const [mounted, setMounted] = useState(false);

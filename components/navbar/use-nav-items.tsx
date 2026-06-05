@@ -1,10 +1,10 @@
 "use client";
 
 import { useSession } from "@/lib/auth/auth-client";
+import { UserRole } from "@/lib/generated/prisma/enums";
 import { tran } from "@/lib/languages/i18n";
 import { LayoutDashboard, Settings, UserRoundCog } from "lucide-react";
 import { TabItem } from "./tab-item";
-import { UserRole } from "@/lib/generated/prisma/enums";
 
 export const useNavItems = () => {
   const { data: session } = useSession();

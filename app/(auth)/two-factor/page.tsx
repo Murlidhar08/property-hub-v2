@@ -1,5 +1,6 @@
 "use client";
 
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
 import { authClient } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
 import { AnimatePresence, motion } from "framer-motion";
@@ -8,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BackupCodeTab } from "./components/backup-code-tab";
 import { TotpForm } from "./components/totp-form";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
 
 export default function TwoFactorPage() {
   const router = useRouter();

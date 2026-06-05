@@ -4,10 +4,10 @@
 import { setupAdmin } from "@/actions/auth/setup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { containerVariants, itemVariants, floatAnimate, floatTransition } from "@/lib/animations";
+import { containerVariants, floatAnimate, floatTransition, itemVariants } from "@/lib/animations";
 import { envClient } from "@/lib/env.client";
 import { AnimatePresence, motion } from "framer-motion";
-import { Eye, EyeOff, Mail, ShieldCheck, User, AtSign } from "lucide-react";
+import { AtSign, Eye, EyeOff, Mail, ShieldCheck, User } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

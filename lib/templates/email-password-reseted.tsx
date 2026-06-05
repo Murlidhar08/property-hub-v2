@@ -1,4 +1,4 @@
-import { envServer } from "../env.server"
+import { envServer } from "../env.server";
 
 export function getPasswordResetSuccessEmailHtml(
   email: string,
