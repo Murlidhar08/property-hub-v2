@@ -29,14 +29,28 @@ export async function getAdminUsers() {
         select: {
             id: true,
             contactNo: true,
+            userRoleMappings: {
+                select: {
+                    roleType: true
+                }
+            }
         }
     });
 
     const users = filteredUsers.map((u: any) => {
         const counts = usersWithCounts.find(uc => uc.id === u.id);
+        const mappedRoles = counts?.userRoleMappings.map(m => m.roleType) || [];
+        const isDbAdmin = u.role === "admin";
+        const roles = [
+            ...(isDbAdmin ? ["admin"] : []),
+            ...mappedRoles
+        ];
+        const finalRoles = roles.length === 0 ? ["user"] : roles;
+
         return {
             ...u,
             contactNo: counts?.contactNo,
+            roles: finalRoles,
         };
     });
 

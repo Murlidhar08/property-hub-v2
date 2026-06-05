@@ -33,8 +33,11 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { comprehensiveDeleteUser } from "@/actions/admin.actions";
+import { updateUserRole } from "@/actions/user.actions";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { UserRole, UserStatus } from "@/lib/generated/prisma/enums";
 import { tran } from "@/lib/languages/i18n";
+import { cn } from "@/lib/utils";
 import { useAdminUsers } from "@/tanstacks/admin";
 import { UserStatusModal } from "./user-status-modal";
 
@@ -43,6 +46,7 @@ interface User {
     email: string;
     name: string;
     role?: string | null;
+    roles: string[];
     status?: UserStatus | null;
     banned?: boolean | null;
     image?: string | null;
@@ -58,6 +62,7 @@ export function UserList() {
     const prompt = usePrompt();
     const { data: usersData, isLoading, refetch } = useAdminUsers();
 
+    const [loading, setLoading] = useState<string | null>(null);
     const [actionLoading, setActionLoading] = useState<string | null>(null);
     const [search, setSearch] = useState("");
     const [filterRole, setFilterRole] = useState<string>("all");
@@ -66,6 +71,8 @@ export function UserList() {
 
     // User Status Update
     const [selectedUserForStatus, setSelectedUserForStatus] = useState<User | null>(null);
+    const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+    const [selectedUserForRole, setSelectedUserForRole] = useState<User | null>(null);
 
     const users = usersData || [];
 
@@ -106,6 +113,23 @@ export function UserList() {
             () => authClient.admin.setRole({ userId, role: role as UserRole }),
             tran("admin.user_mng.msg.success_role_updated", { role })
         );
+    };
+
+    const onUpdateRole = async () => {
+        if (!selectedUserForRole) return;
+
+        setLoading(selectedUserForRole.id);
+        const filteredSelected = selectedRoles.filter(r => r !== "user");
+        try {
+            await updateUserRole(selectedUserForRole.id, filteredSelected);
+            toast.success("User roles updated successfully");
+            refetch();
+            setSelectedUserForRole(null);
+        } catch (error) {
+            toast.error("Failed to update user role");
+        } finally {
+            setLoading(null);
+        }
     };
 
     const banUser = async (userId: string) => {
@@ -167,6 +191,22 @@ export function UserList() {
             () => authClient.admin.unbanUser({ userId }),
             tran("admin.user_mng.msg.success_user_unbanned")
         );
+    };
+
+    const getRoleBadge = (role: string) => {
+        const r = role.toLowerCase();
+        switch (r) {
+            case "admin":
+                return <Badge key={r} variant="secondary" className="bg-indigo-500/10 text-indigo-500 border-none text-[9px] font-black uppercase tracking-widest h-5 px-2">Admin</Badge>;
+            case "agent":
+                return <Badge key={r} variant="secondary" className="bg-amber-500/10 text-amber-500 border-none text-[9px] font-black uppercase tracking-widest h-5 px-2">Agent</Badge>;
+            case "client":
+                return <Badge key={r} variant="secondary" className="bg-blue-500/10 text-blue-500 border-none text-[9px] font-black uppercase tracking-widest h-5 px-2">Client</Badge>;
+            case "owner":
+                return <Badge key={r} variant="secondary" className="bg-purple-500/10 text-purple-500 border-none text-[9px] font-black uppercase tracking-widest h-5 px-2">Owner</Badge>;
+            default:
+                return <Badge key={r} variant="secondary" className="bg-muted text-muted-foreground border-none text-[9px] font-black uppercase tracking-widest h-5 px-2">{role}</Badge>;
+        }
     };
 
     return (
@@ -281,11 +321,6 @@ export function UserList() {
                                                     {tran("admin.user_mng.verified")}
                                                 </Badge>
                                             )}
-                                            {user.role === UserRole.admin && (
-                                                <Badge variant="secondary" className="bg-indigo-500/10 text-indigo-600 border border-indigo-500/20 text-[9px] font-black uppercase tracking-widest h-5 px-2 shadow-sm shadow-indigo-500/5">
-                                                    {tran("admin.user_mng.admins_only").replace(" Only", "").replace("केवल ", "")}
-                                                </Badge>
-                                            )}
                                             {user.status && (
                                                 <Badge
                                                     variant="secondary"
@@ -301,6 +336,9 @@ export function UserList() {
                                                     {user.status === UserStatus.pendingapproval ? "Pending Approval" : user.status}
                                                 </Badge>
                                             )}
+                                            <div className="flex flex-wrap gap-1">
+                                                {user.roles.map((role: any) => getRoleBadge(role))}
+                                            </div>
                                         </div>
                                         <div className="flex items-center gap-4">
                                             <span className="text-[12px] font-bold text-muted-foreground/60 truncate max-w-45">{user.email}</span>
@@ -330,6 +368,21 @@ export function UserList() {
                                         />
                                         <DropdownMenuContent align="end" className="w-60 rounded-3xl p-2 border-none shadow-2xl bg-background/95 backdrop-blur-xl">
                                             <DropdownMenuGroup>
+                                                <DropdownMenuItem
+                                                    onClick={() => {
+                                                        setSelectedUserForRole(user);
+                                                        setSelectedRoles(user.roles.filter((r: any) => r !== "user"));
+                                                    }}
+                                                    className="rounded-2xl gap-3 p-3 focus:bg-indigo-500 focus:text-white transition-all duration-300 cursor-pointer active:scale-95"
+                                                >
+                                                    <div className="p-2 bg-indigo-500/10 rounded-xl">
+                                                        <Shield size={16} className="text-indigo-500" />
+                                                    </div>
+                                                    <div className="flex flex-col">
+                                                        <span className="font-bold text-sm">Update Role</span>
+                                                        <span className="text-[10px] text-muted-foreground/60">Change user permissions</span>
+                                                    </div>
+                                                </DropdownMenuItem>
                                                 <DropdownMenuItem
                                                     onClick={() => {
                                                         setSelectedUserForStatus(user);
@@ -459,6 +512,81 @@ export function UserList() {
                 onClose={() => setSelectedUserForStatus(null)}
                 onSuccess={refetch}
             />
+
+            {/* Role Update Dialog */}
+            <Dialog open={!!selectedUserForRole} onOpenChange={(open) => !open && setSelectedUserForRole(null)}>
+                <DialogContent className="sm:max-w-[400px] rounded-[2rem] border-none shadow-2xl bg-background/95 backdrop-blur-xl p-8">
+                    <DialogHeader>
+                        <DialogTitle className="text-2xl font-black tracking-tight text-foreground uppercase">Update Role</DialogTitle>
+                        <p className="text-xs text-muted-foreground font-medium">Changing role for <span className="text-primary font-bold">{selectedUserForRole?.name}</span></p>
+                    </DialogHeader>
+
+                    <div className="py-6">
+                        <div className="space-y-4">
+                            {[
+                                { id: "agent", label: "Agent", icon: <UserPlus size={16} className="text-blue-500" /> },
+                                { id: "client", label: "Client", icon: <UserCircle size={16} className="text-purple-500" /> },
+                                { id: "owner", label: "Owner", icon: <Shield size={16} className="text-amber-500" /> },
+                            ].map((role) => (
+                                <div
+                                    key={role.id}
+                                    onClick={() => {
+                                        if (selectedRoles.includes(role.id)) {
+                                            setSelectedRoles(selectedRoles.filter(r => r !== role.id));
+                                        } else {
+                                            setSelectedRoles([...selectedRoles, role.id]);
+                                        }
+                                    }}
+                                    className={cn(
+                                        "flex items-center justify-between p-4 rounded-2xl border-2 transition-all cursor-pointer select-none",
+                                        selectedRoles.includes(role.id)
+                                            ? "border-primary bg-primary/5 shadow-md shadow-primary/5 scale-[1.02]"
+                                            : "border-border/40 bg-background/50 hover:border-border hover:bg-muted/30"
+                                    )}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className={cn(
+                                            "p-2 rounded-xl transition-colors",
+                                            selectedRoles.includes(role.id) ? "bg-primary/20" : "bg-muted"
+                                        )}>
+                                            {role.icon}
+                                        </div>
+                                        <span className={cn(
+                                            "font-bold text-sm",
+                                            selectedRoles.includes(role.id) ? "text-primary" : "text-muted-foreground"
+                                        )}>{role.label}</span>
+                                    </div>
+                                    <div className={cn(
+                                        "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
+                                        selectedRoles.includes(role.id)
+                                            ? "bg-primary border-primary scale-110"
+                                            : "border-border"
+                                    )}>
+                                        {selectedRoles.includes(role.id) && <Check size={14} className="text-white" />}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <DialogFooter className="flex flex-row gap-3">
+                        <Button
+                            variant="ghost"
+                            onClick={() => setSelectedUserForRole(null)}
+                            className="flex-1 h-12 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-muted"
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={onUpdateRole}
+                            disabled={loading === selectedUserForRole?.id}
+                            className="flex-1 h-12 rounded-2xl bg-primary text-primary-foreground font-black uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20"
+                        >
+                            {loading === selectedUserForRole?.id ? "Updating..." : "Save Changes"}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }
