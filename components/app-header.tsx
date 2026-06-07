@@ -2,6 +2,7 @@
 import { tran } from "@/lib/languages/i18n";
 import { useEffect, useState } from "react";
 import { Header } from "./header";
+import MobileNav from "./tab/mobile-tab";
 
 export function AppHeader(props: { title: string }) {
     const [mounted, setMounted] = useState(false);
@@ -14,7 +15,7 @@ export function AppHeader(props: { title: string }) {
         return (
             <header className="sticky top-0 z-40 h-14 sm:h-16 flex items-center justify-between bg-background px-4 sm:px-6 border-b border-border shadow-sm">
                 <div className="flex items-center gap-4">
-                    {/* Hamburger skeleton for mobile */}
+                    {/* Logo skeleton for mobile */}
                     <div className="h-9 w-9 rounded-xl bg-muted animate-pulse lg:hidden" />
                     {/* Title skeleton */}
                     <div className="h-6 w-24 sm:h-7 sm:w-32 bg-muted rounded-lg animate-pulse" />
@@ -26,7 +27,10 @@ export function AppHeader(props: { title: string }) {
     }
 
     return (
-        <Header title={tran(props.title)} />
+        <>
+            <Header title={tran(props.title)} />
+            <MobileNav />
+        </>
     );
 }
 
