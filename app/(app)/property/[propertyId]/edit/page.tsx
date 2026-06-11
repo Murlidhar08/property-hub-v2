@@ -34,15 +34,13 @@ export default async function EditPropertyPage({ params }: { params: Promise<{ p
             <div className="min-h-screen bg-background pb-34">
                 <BackHeader title={"Edit Property"} />
 
-                <div className="mx-auto max-w-4xl mt-6 space-y-8 px-6">
-                    <PropertyEditForm
-                        propertyId={propertyId}
-                        initialData={property}
-                        allAgents={allAgentsWithNames}
-                        allOwners={allOwnersWithNames}
-                        googleMapsApiKey={googleMapsApiKey}
-                    />
-                </div>
+                <PropertyEditForm
+                    propertyId={propertyId}
+                    initialData={property}
+                    allAgents={allAgentsWithNames}
+                    allOwners={allOwnersWithNames}
+                    googleMapsApiKey={googleMapsApiKey}
+                />
             </div>
         </>
 

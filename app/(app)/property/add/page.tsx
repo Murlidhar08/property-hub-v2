@@ -1,6 +1,6 @@
-import { PropertyAddForm } from "@/app/(app)/property/components/property-add-form";
 import { getUsersByRole } from "@/actions/user.actions";
 import { BackHeader } from "@/components/back-header";
+import { PropertyAddForm } from "./components/property-add-form";
 
 export default async function PropertyAddPage() {
     // ⚡ Fetch users for dropdowns on the server
@@ -24,16 +24,6 @@ export default async function PropertyAddPage() {
     return (
         <div className="w-full bg-background pb-34">
             <BackHeader title={"Add New Property"} />
-
-            <div className="container mx-auto max-w-5xl py-12 px-4 sm:px-6 lg:px-8">
-                <h1 className="text-4xl font-black text-foreground tracking-tighter mb-2">
-                    Add New Property
-                </h1>
-                <p className="text-muted-foreground text-lg">
-                    Enter the details of the property to list it in the system.
-                </p>
-                <div className="h-1 w-20 bg-primary rounded-full mt-6" />
-            </div>
 
             <PropertyAddForm
                 allAgents={allAgentsWithNames}

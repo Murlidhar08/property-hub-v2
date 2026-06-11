@@ -1,5 +1,6 @@
 "use client";
 
+import { finalizePropertyDocuments } from "@/actions/file.actions";
 import { createProperty } from "@/actions/property.actions";
 import { FooterButtons } from "@/components/footer-buttons";
 import { Button } from "@/components/ui/button";
@@ -9,19 +10,17 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DurationType, MeasurementType, PropertyStatus, PropertyType } from "@/lib/generated/prisma/browser";
+import { DurationType, MeasurementType, PropertyDocumentType, PropertyStatus, PropertyType } from "@/lib/generated/prisma/browser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { Briefcase, ChevronDown, IndianRupee, Layers, MapPin, Plus, ShieldCheck, Trash2, User, Image, FileText } from "lucide-react";
+import { Briefcase, ChevronDown, FileText, Image, IndianRupee, Layers, MapPin, Plus, ShieldCheck, Trash2, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { PropertyImageUploadZone } from "./property-image-upload-zone";
-import { PropertyDocumentUploadZone } from "./property-document-upload-zone";
-import { finalizePropertyDocuments } from "@/actions/file.actions";
-import { PropertyDocumentType } from "@/lib/generated/prisma/browser";
+import { PropertyDocumentUploadZone } from "../../components/property-document-upload-zone";
+import { PropertyImageUploadZone } from "../../components/property-image-upload-zone";
 
 const documentSchema = z.object({
     id: z.string().optional(),
@@ -233,7 +232,7 @@ export function PropertyAddForm({ allAgents, allOwners, googleMapsApiKey }: Prop
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 pb-24">
+        <form onSubmit={handleSubmit(onSubmit)} className="mx-auto max-w-4xl mt-6 space-y-8 px-6">
             {/* Basic Information */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
                 <Card className="p-6 rounded-[2rem] border-border bg-card shadow-sm">

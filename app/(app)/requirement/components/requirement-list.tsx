@@ -1,27 +1,22 @@
 "use client";
 
+import { typeIcons } from "@/components/property/property-icons";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { formatDistanceToNow } from "date-fns";
 import { motion } from "framer-motion";
 import {
-  Building2,
   Clock,
   Filter,
-  Home,
   IndianRupee,
   Layers,
   Layout,
   MapPin,
-  Search,
-  Trees
+  Search
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { formatDistanceToNow } from "date-fns";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { RequirementHeaderMenu } from "./requirement-header-menu";
 import { AddRequirementButton } from "./add-requirement-button";
-import { PropertyType } from "@/lib/generated/prisma/enums";
-import { typeIcons } from "@/components/property/property-icons";
 
 interface RequirementListProps {
   initialRequirements: any[];
