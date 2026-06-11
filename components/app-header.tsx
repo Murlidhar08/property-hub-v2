@@ -2,9 +2,8 @@
 import { tran } from "@/lib/languages/i18n";
 import { useEffect, useState } from "react";
 import { Header } from "./header";
-import MobileNav from "./tab/mobile-tab";
 
-export function AppHeader(props: { title: string }) {
+export function AppHeader({ title }: { title: string }) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -28,9 +27,8 @@ export function AppHeader(props: { title: string }) {
 
     return (
         <>
-            <Header title={tran(props.title)} />
-            <MobileNav />
+            <Header title={tran(title)} />
         </>
-    );
+    )
 }
 
