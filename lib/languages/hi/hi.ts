@@ -272,5 +272,8 @@ export default {
                 invalid_email_format: "अमान्य ईमेल प्रारूप। 'email@example.com' या 'नाम <email@example.com>' का उपयोग करें",
             }
         },
+        storage_mng: {
+            title: "स्टोरेज मैनेजर"
+        }
     },
 }

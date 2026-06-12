@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { prisma } from "@/lib/prisma/prisma";
 
 const UPLOAD_ROOT = path.join(process.cwd(), "uploads");
 
@@ -95,11 +94,11 @@ export const listDirectoryContents = async (relativePath: string = "") => {
     if (!fs.existsSync(absolutePath)) return [];
 
     const items = fs.readdirSync(absolutePath, { withFileTypes: true });
-    
+
     return items.map(item => {
         const itemPath = path.join(relativePath, item.name).replace(/\\/g, "/");
         const stats = fs.statSync(path.join(absolutePath, item.name));
-        
+
         return {
             name: item.name,
             path: itemPath,
