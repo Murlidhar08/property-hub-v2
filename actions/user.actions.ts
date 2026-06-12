@@ -2,7 +2,7 @@
 
 import { auth, getUserSession } from "@/lib/auth/auth";
 import { deleteFile, uploadFile } from "@/lib/file-operations";
-import { UserStatus } from "@/lib/generated/prisma/enums";
+import { UserStatus, UserType } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma/prisma";
 import { headers } from "next/headers";
 
@@ -150,6 +150,31 @@ export async function updateUserRole(userId: string, roles: string[]) {
             })
         ] : [])
     ]);
+}
+
+export async function getUsersByType(type: UserType) {
+    return prisma.user.findMany({
+        where: {
+            OR: [
+                { role: "admin" },
+                {
+                    userRoleMappings: {
+                        some: { roleType: type }
+                    }
+                }
+            ]
+        },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            image: true,
+            contactNo: true,
+            createdAt: true,
+            occupation: true,
+            address: true
+        }
+    });
 }
 
 // Get list of Clients (including admins)
@@ -531,6 +556,27 @@ export async function renameUserDocument(documentId: string, newName: string) {
     return prisma.userDocument.update({
         where: { id: documentId },
         data: { fileName: newName }
+    });
+}
+
+export async function getAllUsers() {
+    return prisma.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            image: true,
+            contactNo: true,
+            createdAt: true,
+            occupation: true,
+            address: true,
+            role: true,
+            userRoleMappings: {
+                select: {
+                    roleType: true
+                }
+            }
+        }
     });
 }
 
