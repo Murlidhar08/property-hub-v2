@@ -15,6 +15,7 @@ export default {
         clients: "Client",
         agents: "Agent",
         owners: "Owner",
+        users: "Users",
         heat_map: "Heat Map",
         tools: "Tool"
     },

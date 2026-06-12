@@ -1,4 +1,8 @@
+import { getPropertyByUserId } from "@/actions/property.actions";
+import { getRequirementsByUserId } from "@/actions/requirement.actions";
 import { getUserById } from "@/actions/user.actions";
+import PropertyList from "@/components/property/property-list";
+import RequirementList from "@/components/requirement/requirement-list";
 import AppTabs from "@/components/tab/app-tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -29,16 +33,21 @@ export default async function UserDetailsPage({ params }: { params: Promise<{ us
     const { userId } = await params;
     const user = await getUserById(userId);
 
-    if (!user) {
-        notFound();
-    }
+    if (!user) notFound();
 
+    // Roles
     const roles = [];
     if (user.role === "admin") roles.push("Admin");
     user.userRoleMappings?.forEach((m) => {
         roles.push(m.roleType.charAt(0).toUpperCase() + m.roleType.slice(1));
     });
     if (roles.length === 0) roles.push("User");
+
+    // List of requirements for this user
+    const requirements = await getRequirementsByUserId(userId);
+
+    // List of property for this user
+    const property = await getPropertyByUserId(userId);
 
     const getRoleBadgeColor = (role: string) => {
         switch (role.toLowerCase()) {
@@ -143,7 +152,23 @@ export default async function UserDetailsPage({ params }: { params: Promise<{ us
                     </div>
                 </div>
             )
-        }
+        },
+        {
+            id: "requirements",
+            label: "REQUIREMENTS",
+            icon: <FileText size={18} />,
+            content: (
+                <RequirementList requirements={requirements} />
+            )
+        },
+        {
+            id: "properties",
+            label: "PROPERTIES",
+            icon: <FileText size={18} />,
+            content: (
+                <PropertyList property={property} />
+            )
+        },
     ];
 
     return (
@@ -189,7 +214,10 @@ export default async function UserDetailsPage({ params }: { params: Promise<{ us
             </div>
 
             {/* Content Tabs */}
-            <AppTabs tabs={tabs} defaultTab="general" />
+            <AppTabs
+                defaultTab="general"
+                tabs={tabs}
+            />
         </div>
     );
 }

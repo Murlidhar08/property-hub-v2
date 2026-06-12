@@ -25,6 +25,29 @@ export async function getRequirements() {
     return JSON.parse(JSON.stringify(requirements));
 }
 
+export async function getRequirementsByUserId(userId: string) {
+    const session = await getUserSession();
+    if (!session?.user?.id) return [];
+
+    const requirements = await prisma.requirement.findMany({
+        where: {
+            createdBy: userId
+        },
+        include: {
+            creator: {
+                select: {
+                    name: true
+                }
+            }
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
+    });
+
+    return JSON.parse(JSON.stringify(requirements));
+}
+
 export async function createRequirement(data: any) {
     const session = await getUserSession();
     if (!session?.user?.id) throw new Error("Unauthorized");

@@ -10,6 +10,14 @@ export default {
         dashboard: "डैशबोर्ड",
         admin: "एडमिन",
         settings: "सेटिंग्स",
+        properties: "प्रॉपर्टीज",
+        requirements: "रिक्वायरमेंट्स",
+        clients: "क्लाइंट",
+        agents: "एजेंट",
+        owners: "ओनर",
+        users: "यूजर",
+        heat_map: "हीट मैप",
+        tools: "टूल"
     },
     languages: {
         en: "अंग्रेजी (English)",

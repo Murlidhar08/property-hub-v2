@@ -2,6 +2,7 @@ import { getPropertyById } from "@/actions/property.actions";
 import { getUsersByRole } from "@/actions/user.actions";
 import { PropertyEditForm } from "@/app/(app)/property/components/property-edit-form";
 import { BackHeader } from "@/components/back-header";
+import { UserType } from "@/lib/generated/prisma/enums";
 
 export default async function EditPropertyPage({ params }: { params: Promise<{ propertyId: string }> }) {
     const { propertyId } = await params;
@@ -9,8 +10,8 @@ export default async function EditPropertyPage({ params }: { params: Promise<{ p
     // ⚡ Fetch data for the form on the server
     const [property, agents, owners] = await Promise.all([
         getPropertyById(propertyId),
-        getUsersByRole("agent"),
-        getUsersByRole("owner")
+        getUsersByRole(UserType.agent),
+        getUsersByRole(UserType.owner)
     ]);
 
     if (!property) {

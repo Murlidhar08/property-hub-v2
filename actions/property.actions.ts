@@ -2,7 +2,7 @@
 
 import { convertToSqFeet } from "@/lib/area-convert";
 import { getUserSession } from "@/lib/auth/auth";
-import { Prisma, Property, PropertyStatus, PropertyType } from "@/lib/generated/prisma/client";
+import { Prisma, Property, PropertyStatus, PropertyType, Requirement, UserType } from "@/lib/generated/prisma/client";
 import { prisma } from "@/lib/prisma/prisma";
 
 export async function getProperties() {
@@ -230,12 +230,12 @@ export async function updateProperty(id: string, data: any) {
             ...agents.map((userId: string) => ({
                 propertyId: property.id,
                 userId,
-                userType: 0 // AGENT
+                userType: UserType.agent
             })),
             ...owners.map((userId: string) => ({
                 propertyId: property.id,
                 userId,
-                userType: 2 // OWNER
+                userType: UserType.owner
             }))
         ];
 
@@ -288,6 +288,37 @@ export async function deleteProperty(id: string) {
     });
 }
 
+// User Property
+export async function getPropertyByUserId(userId: string) {
+    const session = await getUserSession();
+    if (!session?.user?.id) throw new Error("Unauthorized");
+
+    const property = await prisma.property.findMany({
+        include: {
+            status: true,
+            documents: true,
+            creator: { select: { name: true } },
+            users: {
+                include: {
+                    user: {
+                        select: {
+                            name: true,
+                            contactNo: true,
+                            email: true
+                        }
+                    }
+                }
+            }
+        },
+        where: {
+            createdBy: userId
+        }
+    });
+
+    return JSON.parse(JSON.stringify(property));
+}
+
+// Shared links
 export async function getPropertySharedLinks(propertyId: string) {
     const session = await getUserSession();
     if (!session?.user?.id) throw new Error("Unauthorized");
@@ -389,6 +420,7 @@ export async function getSharedLinkById(id: string) {
     }));
 }
 
+// Match requirements
 export async function getMatchedRequirements(property: Property) {
     const session = await getUserSession();
     if (!session?.user?.id) throw new Error("Unauthorized");
@@ -396,7 +428,7 @@ export async function getMatchedRequirements(property: Property) {
     return await findMatchedRequirements(property);
 }
 
-export async function getMatchedRequirementsById(id: string) {
+export async function getMatchedRequirementsById(id: string): Promise<Requirement[]> {
     const property = await prisma.property.findUnique({
         where: { id }
     });

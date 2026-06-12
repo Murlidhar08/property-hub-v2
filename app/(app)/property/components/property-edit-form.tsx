@@ -687,7 +687,7 @@ export function PropertyEditForm({
 
                     {hasLocation && (
                         <div className="space-y-4">
-                            <div className="w-full h-100 rounded-3xl overflow-hidden border border-border relative bg-muted animate-pulse flex items-center justify-center">
+                            <div className="w-full h-100 rounded-3xl overflow-hidden border border-border relative bg-muted flex items-center justify-center">
                                 <GoogleMapWrapper
                                     apiKey={googleMapsApiKey}
                                     center={mapDetails || { lat: 23.0225, lng: 72.5714 }}

@@ -66,7 +66,7 @@ export function UserCard({ user, delay }: AgentListProps) {
             transition={{ delay: delay * 0.1, type: "spring", stiffness: 100, damping: 15 }}
             whileHover={{ y: -8 }}
             className="cursor-pointer select-none"
-            onClick={() => router.push(`/agent/${user.id}`)}
+            onClick={() => router.push(`/user/${user.id}` as any)}
         >
             <Card className="relative overflow-hidden p-0 w-full rounded-[2rem] border border-border/80 bg-card/60 backdrop-blur-md shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 group">
                 {/* Header Banner with Animated Gradient */}
@@ -123,7 +123,7 @@ export function UserCard({ user, delay }: AgentListProps) {
 
                     {/* user Details */}
                     <div className="space-y-1">
-                        <h3 className="text-xl font-bold tracking-tight text-foreground/90 group-hover:text-primary transition-colors duration-300 uppercase">
+                        <h3 className="text-xl font-bold tracking-tight text-foreground/90 group-hover:text-primary transition-colors duration-300">
                             {user.name}
                         </h3>
                         {user.occupation ? (
@@ -136,7 +136,7 @@ export function UserCard({ user, delay }: AgentListProps) {
                     </div>
 
                     <div className="mt-5 pt-4 border-t border-border/50 flex flex-col gap-1">
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Direct Contact</p>
+                        <p className="text-[10px] font-bold tracking-widest text-muted-foreground/60">Direct Contact</p>
                         <p className="text-sm font-medium text-foreground/80 truncate group-hover:text-foreground transition-colors duration-300">
                             {user.contactNo || "N/A"}
                         </p>

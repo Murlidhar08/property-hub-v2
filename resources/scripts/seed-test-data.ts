@@ -1,4 +1,4 @@
-import { MeasurementType, PropertyStatus, PropertyType } from "@/lib/generated/prisma/enums";
+import { MeasurementType, PropertyStatus, PropertyType, UserRole, UserType } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma/prisma";
 
 
@@ -19,6 +19,54 @@ async function main() {
   }
 
   const userId = user.id;
+
+  // Add Client, Agent and Owner
+  await prisma.user.create({
+    data: {
+      name: "Test Client",
+      email: "client@test.com",
+      contactNo: "1234567890",
+      createdBy: userId,
+      updatedBy: userId,
+      userRoleMappings: {
+        create: {
+          roleType: UserType.client,
+        },
+      },
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      name: "Test Agent",
+      email: "agent@test.com",
+      contactNo: "1234567890",
+      role: UserRole.user,
+      createdBy: userId,
+      updatedBy: userId,
+      userRoleMappings: {
+        create: {
+          roleType: UserType.agent,
+        },
+      },
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      name: "Test Owner",
+      email: "owner@test.com",
+      contactNo: "1234567890",
+      createdBy: userId,
+      updatedBy: userId,
+      userRoleMappings: {
+        create: {
+          roleType: UserType.owner,
+        },
+      },
+    },
+  });
+
 
   // Clear existing test data if needed (Optional: to keep it clean)
   await prisma.propertyStatusMapping.deleteMany({});

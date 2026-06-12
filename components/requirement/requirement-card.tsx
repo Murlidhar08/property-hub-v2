@@ -1,12 +1,11 @@
 "use client";
 
-import { formatDistanceToNow } from "date-fns";
-import { ArrowRight, Clock, IndianRupee, Layers, Layout, MapPin, Target, Ruler, User } from "lucide-react";
-import Link from "next/link";
-import { Card } from "../ui/card";
-import { typeIcons } from "../property/property-icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { formatDistanceToNow } from "date-fns";
+import { ArrowRight, Clock, IndianRupee, Layout, MapPin, Ruler, User } from "lucide-react";
+import Link from "next/link";
+import { typeIcons } from "../property/property-icons";
+import { Card } from "../ui/card";
 
 export default function RequirementCard({ req }: { req: any }) {
     const formatCurrency = (value: number) => {
@@ -49,7 +48,7 @@ export default function RequirementCard({ req }: { req: any }) {
                 <div className="flex items-start justify-between gap-4 mb-6">
                     <div className="flex gap-4 items-start">
                         {/* Type Icon with Dynamic Circle Wrapper overrides default size */}
-                        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white shrink-0 shadow-lg shadow-indigo-500/5 [&>svg]:size-5! [&>svg]:text-white`}>
+                        <div className={`w-12 h-12 rounded-2xl bg-linear-to-br ${gradient} flex items-center justify-center text-white shrink-0 shadow-lg shadow-indigo-500/5 [&>svg]:size-5! [&>svg]:text-white`}>
                             {typeIcons[req.propertyType] || <Layout size={20} className="text-white" />}
                         </div>
                         <div className="space-y-1">
@@ -58,7 +57,7 @@ export default function RequirementCard({ req }: { req: any }) {
                             </h4>
                             <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground">
                                 <MapPin size={10} className="text-rose-500" />
-                                <span className="truncate max-w-[150px]">{req.location}</span>
+                                <span className="truncate max-w-37.5">{req.location}</span>
                                 <span className="text-muted-foreground/30">•</span>
                                 <span className="capitalize">{req.propertyType}</span>
                             </div>
@@ -70,11 +69,11 @@ export default function RequirementCard({ req }: { req: any }) {
                 </div>
 
                 {/* Fluent Visual Connectors: Dotted Flow representing Budget, Size & Client */}
-                <div className="relative pl-6 space-y-4 mb-6 before:absolute before:left-[9px] before:top-2 before:bottom-2 before:w-[2px] before:bg-border/60 before:border-dashed before:border-l">
-                    
+                <div className="relative pl-6 space-y-4 mb-6 before:absolute before:left-2.25 before:top-2 before:bottom-2 before:w-0.5 before:bg-border/60 before:border-dashed before:border-l">
+
                     {/* Budget Node */}
                     <div className="relative flex items-center gap-3 group/node">
-                        <div className="absolute -left-[21px] w-2.5 h-2.5 rounded-full border border-background bg-emerald-500 ring-4 ring-emerald-500/10 group-hover:scale-110 transition-transform" />
+                        <div className="absolute -left-5.25 w-2.5 h-2.5 rounded-full border border-background bg-emerald-500 ring-4 ring-emerald-500/10 group-hover:scale-110 transition-transform" />
                         <div>
                             <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground/80 flex items-center gap-1">
                                 <IndianRupee size={8} className="text-emerald-500" /> Budget Limit
@@ -87,7 +86,7 @@ export default function RequirementCard({ req }: { req: any }) {
 
                     {/* Size Node */}
                     <div className="relative flex items-center gap-3 group/node">
-                        <div className="absolute -left-[21px] w-2.5 h-2.5 rounded-full border border-background bg-blue-500 ring-4 ring-blue-500/10 group-hover:scale-110 transition-transform" />
+                        <div className="absolute -left-5.25 w-2.5 h-2.5 rounded-full border border-background bg-blue-500 ring-4 ring-blue-500/10 group-hover:scale-110 transition-transform" />
                         <div>
                             <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground/80 flex items-center gap-1">
                                 <Ruler size={8} className="text-blue-500" /> Required Area
@@ -100,7 +99,7 @@ export default function RequirementCard({ req }: { req: any }) {
 
                     {/* Client Node */}
                     <div className="relative flex items-center gap-3 group/node">
-                        <div className="absolute -left-[21px] w-2.5 h-2.5 rounded-full border border-background bg-amber-500 ring-4 ring-amber-500/10 group-hover:scale-110 transition-transform" />
+                        <div className="absolute -left-5.25 w-2.5 h-2.5 rounded-full border border-background bg-amber-500 ring-4 ring-amber-500/10 group-hover:scale-110 transition-transform" />
                         <div>
                             <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground/80 flex items-center gap-1">
                                 <User size={8} className="text-amber-500" /> Client

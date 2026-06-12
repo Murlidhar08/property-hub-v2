@@ -4,13 +4,12 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { UserCard } from "@/components/user/user-card";
+import { tran } from "@/lib/languages/i18n";
 import {
   Filter,
   Search
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { tran } from "@/lib/languages/i18n";
 
 interface User {
   id: string;

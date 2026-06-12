@@ -21,7 +21,6 @@ import GeneralTab from "./components/general-tab";
 import { PropertyHeaderMenu } from "./components/property-header-menu";
 import RequirementTab from "./components/requirement-tab";
 import SharedTab from "./components/shared-tab";
-import { BackHeader } from "@/components/back-header";
 
 const typeIcons: Record<string, any> = {
     [PropertyType.hotel]: <Building2 className="text-rose-500" size={40} />,

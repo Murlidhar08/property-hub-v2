@@ -355,10 +355,10 @@ model PropertyStatusMapping {
 }
 
 model PropertyUserMapping {
-  id         Int    @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   propertyId String
   userId     String
-  userType   Int
+  userType   UserType
 
   property Property @relation(fields: [propertyId], references: [id])
   user     User     @relation(fields: [userId], references: [id])
